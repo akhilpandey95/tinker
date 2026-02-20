@@ -1,0 +1,116 @@
+{
+  "artifact_version": "1.0",
+  "backend": "rlvr_dry_run",
+  "created_at_utc": "2026-02-20T18:49:45.084480+00:00",
+  "dataset": {
+    "dataset_jsonl": "data/synthetic/disruption_novelty_v1.jsonl",
+    "splits_json": "data/synthetic/disruption_novelty_v1.splits.json",
+    "train_count": 12,
+    "train_split": "train",
+    "val_count": 4,
+    "val_split": "val"
+  },
+  "dry_run": true,
+  "label_targets": {
+    "disruption": [
+      "disruptive",
+      "consolidating",
+      "neutral"
+    ],
+    "novelty": [
+      "novel",
+      "conventional",
+      "balanced"
+    ]
+  },
+  "model_family": "just_rl_rlvr_base",
+  "policy_state": {
+    "disruption_temperature": 0.8,
+    "disruption_weights": {
+      "consolidating": [
+        -2.8214143999999988,
+        -0.48019626666666665,
+        0.5626666666666669
+      ],
+      "disruptive": [
+        2.6606559999999986,
+        -0.6665802666666669,
+        -0.43466666666666665
+      ],
+      "neutral": [
+        0.16075840000000002,
+        0.8467765333333329,
+        -0.228
+      ]
+    },
+    "novelty_temperature": 1.0,
+    "novelty_weights": {
+      "balanced": [
+        0.0,
+        1.0,
+        0.2
+      ],
+      "conventional": [
+        -2.0,
+        -0.6,
+        -0.1
+      ],
+      "novel": [
+        2.0,
+        -0.6,
+        -0.1
+      ]
+    },
+    "revision_bias": 0.6159999999999999
+  },
+  "prompt_contract": "combined_impact_v1",
+  "reward_spec": {
+    "environment": {
+      "label_space": {
+        "disruption": [
+          "disruptive",
+          "consolidating",
+          "neutral"
+        ],
+        "novelty": [
+          "novel",
+          "conventional",
+          "balanced"
+        ]
+      },
+      "max_tokens": 320,
+      "name": "AdversarialDisruptionEnv",
+      "thresholds": {
+        "consolidating_max": -0.1,
+        "disruptive_min": 0.1
+      },
+      "turns": 2
+    },
+    "fixed_for_fair_comparison": true,
+    "reward": {
+      "R_adaptation": {
+        "max": 0.2,
+        "source": "appropriate revision or valid defense after challenge"
+      },
+      "R_correctness": {
+        "correct": 1.0,
+        "incorrect": -1.0
+      },
+      "R_reasoning": {
+        "max": 0.3,
+        "source": "quality of reasoning in final response"
+      },
+      "formula": "R = R_correctness + R_reasoning + R_adaptation",
+      "total_max": 1.5,
+      "total_min": -1.0
+    }
+  },
+  "training": {
+    "epochs": 2,
+    "exploration_temperature": 1.25,
+    "group_size": 3,
+    "learning_rate": 0.08,
+    "max_env_tokens": 320,
+    "revision_learning_rate": 0.04
+  }
+}

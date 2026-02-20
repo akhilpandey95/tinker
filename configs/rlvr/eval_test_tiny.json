@@ -1,0 +1,8 @@
+{
+  "model_artifact": "results/rlvr/just_rlvr_tiny_dry_run/model_artifact.json",
+  "dataset_jsonl": "data/synthetic/disruption_novelty_v1.jsonl",
+  "splits_json": "data/synthetic/disruption_novelty_v1.splits.json",
+  "split": "test",
+  "output_dir": "results/rlvr/just_rlvr_tiny_dry_run",
+  "n_calibration_bins": 5
+}

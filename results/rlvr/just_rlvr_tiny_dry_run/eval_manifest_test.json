@@ -1,0 +1,15 @@
+{
+  "artifacts": {
+    "calibration_disruption_csv": "results/rlvr/just_rlvr_tiny_dry_run/calibration_test_disruption.csv",
+    "calibration_novelty_csv": "results/rlvr/just_rlvr_tiny_dry_run/calibration_test_novelty.csv",
+    "metrics_csv": "results/rlvr/just_rlvr_tiny_dry_run/metrics_test.csv",
+    "metrics_json": "results/rlvr/just_rlvr_tiny_dry_run/metrics_test.json",
+    "predictions_csv": "results/rlvr/just_rlvr_tiny_dry_run/predictions_test.csv"
+  },
+  "dataset_jsonl": "data/synthetic/disruption_novelty_v1.jsonl",
+  "evaluated_at_utc": "2026-02-20T18:49:48.136816+00:00",
+  "model_artifact": "results/rlvr/just_rlvr_tiny_dry_run/model_artifact.json",
+  "record_count": 3,
+  "split": "test",
+  "splits_json": "data/synthetic/disruption_novelty_v1.splits.json"
+}
