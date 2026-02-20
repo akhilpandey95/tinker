@@ -1,0 +1,61 @@
+{
+  "artifacts": {
+    "dataset_jsonl": "data/synthetic/disruption_novelty_v1.jsonl",
+    "metadata_json": "data/synthetic/disruption_novelty_v1.metadata.json",
+    "splits_json": "data/synthetic/disruption_novelty_v1.splits.json"
+  },
+  "generated_at_utc": "2026-02-20T17:05:41Z",
+  "label_counts": {
+    "disruption": {
+      "consolidating": 21,
+      "disruptive": 10,
+      "neutral": 5
+    },
+    "novelty": {
+      "balanced": 8,
+      "conventional": 5,
+      "novel": 23
+    }
+  },
+  "label_thresholds": {
+    "consolidating_max": -0.1,
+    "disruptive_min": 0.1,
+    "novelty_margin": 0.15
+  },
+  "label_verification_mismatches": {
+    "disruption_label": 0,
+    "novelty_label": 0
+  },
+  "mode": "synthetic",
+  "query_filters": {
+    "n_papers": 36,
+    "synthetic_seed": 20260220
+  },
+  "record_count": 36,
+  "schema_fields": [
+    "openalex_id",
+    "title",
+    "abstract",
+    "publication_year",
+    "cited_by_count",
+    "cd_index",
+    "novelty_score",
+    "conventionality_score",
+    "disruption_label",
+    "novelty_label",
+    "primary_field",
+    "concepts"
+  ],
+  "split_counts": {
+    "test": 3,
+    "train": 29,
+    "val": 4
+  },
+  "split_ids_sha256": "9785f330efeb93af4f4370eb5d70bfdae9e1379b51cefee6502826b0ad962820",
+  "split_ratios": {
+    "test": 0.1,
+    "train": 0.8,
+    "val": 0.1
+  },
+  "split_seed": 20260220
+}
