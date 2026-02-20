@@ -1,0 +1,10 @@
+openalex_id,gold_disruption,pred_disruption,disruption_correct,disruption_confidence,disruption_prob_disruptive,disruption_prob_consolidating,disruption_prob_neutral,gold_novelty,pred_novelty,novelty_correct,novelty_confidence,novelty_prob_novel,novelty_prob_conventional,novelty_prob_balanced,joint_correct,parse_error,response_text
+SYNTHW0000021,consolidating,consolidating,1,0.6798477014216584,0.038163089482635755,0.6798477014216584,0.2819892090957059,novel,novel,1,0.5506786867062021,0.5506786867062021,0.058460510571434636,0.39086080272236323,1,,"disruption: consolidating
+novelty: novel
+reasoning: CD and novelty-conventionality signals support this prediction."
+SYNTHW0000013,consolidating,consolidating,1,0.9999863951688119,1.6217356312443386e-06,0.9999863951688119,1.1983095556899128e-05,novel,novel,1,0.9421010473180039,0.9421010473180039,0.007533144400669918,0.050365808281326176,1,,"disruption: consolidating
+novelty: novel
+reasoning: CD and novelty-conventionality signals support this prediction."
+SYNTHW0000012,disruptive,disruptive,1,0.936616597992841,0.936616597992841,0.007555486726955891,0.05582791528020295,novel,novel,1,0.6865874528244424,0.6865874528244424,0.0407776283592329,0.2726349188163247,1,,"disruption: disruptive
+novelty: novel
+reasoning: CD and novelty-conventionality signals support this prediction."

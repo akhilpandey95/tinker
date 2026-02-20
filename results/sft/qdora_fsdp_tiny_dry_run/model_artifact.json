@@ -1,0 +1,40 @@
+{
+  "artifact_version": "1.0",
+  "backend": "heuristic_dry_run",
+  "created_at_utc": "2026-02-20T18:20:14.661395+00:00",
+  "dataset": {
+    "dataset_jsonl": "data/synthetic/disruption_novelty_v1.jsonl",
+    "splits_json": "data/synthetic/disruption_novelty_v1.splits.json",
+    "train_count": 12,
+    "train_split": "train",
+    "val_count": 4,
+    "val_split": "val"
+  },
+  "dry_run": true,
+  "heuristic_params": {
+    "disruption_neutral_bias": 0.5,
+    "disruption_scale": 5.0,
+    "disruption_threshold": 0.1,
+    "novelty_balanced_bias": 0.5,
+    "novelty_margin": 0.15,
+    "novelty_scale": 3.0
+  },
+  "label_targets": {
+    "disruption": [
+      "disruptive",
+      "consolidating",
+      "neutral"
+    ],
+    "novelty": [
+      "novel",
+      "conventional",
+      "balanced"
+    ]
+  },
+  "model_family": "qdora_fsdp_baseline",
+  "prompt_contract": "combined_impact_v1",
+  "temperature_calibration": {
+    "disruption": 0.5,
+    "novelty": 0.5
+  }
+}

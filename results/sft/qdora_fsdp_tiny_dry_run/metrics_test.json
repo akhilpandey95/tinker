@@ -1,0 +1,97 @@
+{
+  "disruption": {
+    "accuracy": 1.0,
+    "brier": 0.06355437573860297,
+    "confusion_matrix": {
+      "consolidating": {
+        "consolidating": 2,
+        "disruptive": 0,
+        "neutral": 0
+      },
+      "disruptive": {
+        "consolidating": 0,
+        "disruptive": 1,
+        "neutral": 0
+      },
+      "neutral": {
+        "consolidating": 0,
+        "disruptive": 0,
+        "neutral": 0
+      }
+    },
+    "ece": 0.1278497684722295,
+    "macro_f1": 0.6666666666666666,
+    "nll": 0.15046044672310543,
+    "per_class": {
+      "consolidating": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 2
+      },
+      "disruptive": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 1
+      },
+      "neutral": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 0
+      }
+    },
+    "support": 3
+  },
+  "novelty": {
+    "accuracy": 1.0,
+    "brier": 0.17941507709027657,
+    "confusion_matrix": {
+      "balanced": {
+        "balanced": 0,
+        "conventional": 0,
+        "novel": 0
+      },
+      "conventional": {
+        "balanced": 0,
+        "conventional": 0,
+        "novel": 0
+      },
+      "novel": {
+        "balanced": 0,
+        "conventional": 0,
+        "novel": 3
+      }
+    },
+    "ece": 0.2735442710504505,
+    "macro_f1": 0.3333333333333333,
+    "nll": 0.34408939979256076,
+    "per_class": {
+      "balanced": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 0
+      },
+      "conventional": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 0
+      },
+      "novel": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 3
+      }
+    },
+    "support": 3
+  },
+  "overall": {
+    "joint_exact_match_accuracy": 1.0,
+    "parse_error_rate": 0.0,
+    "support": 3
+  }
+}

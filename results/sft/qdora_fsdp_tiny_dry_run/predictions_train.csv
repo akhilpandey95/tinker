@@ -1,0 +1,37 @@
+openalex_id,gold_disruption,pred_disruption,disruption_correct,disruption_confidence,disruption_prob_disruptive,disruption_prob_consolidating,disruption_prob_neutral,gold_novelty,pred_novelty,novelty_correct,novelty_confidence,novelty_prob_novel,novelty_prob_conventional,novelty_prob_balanced,joint_correct,parse_error,response_text
+SYNTHW0000019,disruptive,disruptive,1,0.9997552606419184,0.9997552606419184,2.9173646617145885e-05,0.00021556571146446934,balanced,balanced,1,0.6920813222753803,0.2044050299621155,0.10351364776250414,0.6920813222753803,1,,"disruption: disruptive
+novelty: balanced
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000007,consolidating,consolidating,1,0.640853843063322,0.042811271339866,0.640853843063322,0.316334885596812,conventional,conventional,1,0.9340980414907354,0.008574403279173984,0.9340980414907354,0.057327555230090484,1,,"disruption: consolidating
+novelty: conventional
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000004,neutral,neutral,1,0.6863045920010722,0.22081418165387479,0.09288122634505303,0.6863045920010722,novel,novel,1,0.723724700522219,0.723724700522219,0.03594575771923442,0.24032954175854657,1,,"disruption: neutral
+novelty: novel
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000020,consolidating,consolidating,1,0.5416711116529723,0.05463414273811455,0.5416711116529723,0.4036947456089131,balanced,balanced,1,0.5084753828084083,0.41547265627623736,0.0760519609153544,0.5084753828084083,1,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000026,neutral,neutral,1,0.49536459505956104,0.4375950971626633,0.06704030777777566,0.49536459505956104,novel,novel,1,0.7789250840721614,0.7789250840721614,0.028763720031299105,0.19231119589653942,1,,"disruption: neutral
+novelty: novel
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000035,consolidating,consolidating,1,0.9989343157964006,0.000127032671021854,0.9989343157964006,0.0009386515325774795,conventional,conventional,1,0.7745551392728566,0.029332286882187173,0.7745551392728566,0.1961125738449562,1,,"disruption: consolidating
+novelty: conventional
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000022,consolidating,consolidating,1,0.9992939173935108,8.416710988249368e-05,0.9992939173935108,0.0006219154966066073,novel,novel,1,0.8537864951935529,0.8537864951935529,0.01902361604163369,0.12718988876481335,1,,"disruption: consolidating
+novelty: novel
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000009,consolidating,consolidating,1,0.9999524210237192,5.671552999502701e-06,0.9999524210237192,4.190742328138379e-05,novel,novel,1,0.4749742396973829,0.4749742396973829,0.06831030067424651,0.4567154596283707,1,,"disruption: consolidating
+novelty: novel
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000011,consolidating,consolidating,1,0.9998039749367601,2.3366760327772215e-05,0.9998039749367601,0.00017265830291217604,conventional,conventional,1,0.6218512411155357,0.04920035810071878,0.6218512411155357,0.3289484007837455,1,,"disruption: consolidating
+novelty: conventional
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000023,disruptive,disruptive,1,0.9985475819093813,0.9985475819093813,0.00017313248039952953,0.0012792856102191348,novel,novel,1,0.9987782069447175,0.9987782069447175,0.00015896563041010376,0.0010628274248723336,1,,"disruption: disruptive
+novelty: novel
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000029,neutral,neutral,1,0.5867635274438474,0.07940980817952706,0.33382666437662556,0.5867635274438474,novel,novel,1,0.9858335808332972,0.9858335808332972,0.0018431711849664252,0.012323247981736321,1,,"disruption: neutral
+novelty: novel
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000034,consolidating,consolidating,1,0.9983330178149494,0.00019870914741683778,0.9983330178149494,0.0014682730376336934,balanced,balanced,1,0.6518267675046946,0.25068040290727467,0.09749282958803074,0.6518267675046946,1,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."

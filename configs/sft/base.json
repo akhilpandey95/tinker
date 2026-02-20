@@ -1,0 +1,19 @@
+{
+  "dataset_jsonl": "data/synthetic/disruption_novelty_v1.jsonl",
+  "splits_json": "data/synthetic/disruption_novelty_v1.splits.json",
+  "output_dir": "results/sft",
+  "run_name": "qdora_fsdp_baseline",
+  "seed": 20260220,
+  "train_split": "train",
+  "val_split": "val",
+  "dry_run": false,
+  "overwrite": false,
+  "n_calibration_bins": 10,
+  "disruption_threshold": 0.1,
+  "novelty_margin": 0.15,
+  "disruption_scales": "3,5,8,12",
+  "neutral_biases": "0.0,0.5,1.0",
+  "novelty_scales": "3,5,8,12",
+  "balanced_biases": "0.0,0.5,1.0",
+  "temperature_candidates": "0.5,0.75,1.0,1.25,1.5,2.0,3.0"
+}

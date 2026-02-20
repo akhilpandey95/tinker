@@ -1,0 +1,13 @@
+openalex_id,gold_disruption,pred_disruption,disruption_correct,disruption_confidence,disruption_prob_disruptive,disruption_prob_consolidating,disruption_prob_neutral,gold_novelty,pred_novelty,novelty_correct,novelty_confidence,novelty_prob_novel,novelty_prob_conventional,novelty_prob_balanced,joint_correct,parse_error,response_text
+SYNTHW0000036,consolidating,consolidating,1,0.9847989348010852,0.0018120113895593573,0.9847989348010852,0.013389053809355383,balanced,balanced,1,0.6599582385335804,0.24133271898434955,0.09870904248207005,0.6599582385335804,1,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000025,disruptive,disruptive,1,0.9895543802084574,0.9895543802084574,0.0012451484014839227,0.009200471390058529,balanced,balanced,1,0.5865847352378467,0.08773466890659967,0.3256805958555537,0.5865847352378467,1,,"disruption: disruptive
+novelty: balanced
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000014,consolidating,consolidating,1,0.9998372401509146,1.9401449598857716e-05,0.9998372401509146,0.00014335839948653525,novel,novel,1,0.8164102356832323,0.8164102356832323,0.023886584143916985,0.15970318017285068,1,,"disruption: consolidating
+novelty: novel
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."
+SYNTHW0000018,disruptive,disruptive,1,0.9999998621461991,0.9999998621461991,1.6432575884425084e-08,1.214212250599519e-07,novel,novel,1,0.9835203694348514,0.9835203694348514,0.002144139590897312,0.014335490974251292,1,,"disruption: disruptive
+novelty: novel
+reasoning: CD index thresholding and novelty-conventionality delta support this joint label prediction."

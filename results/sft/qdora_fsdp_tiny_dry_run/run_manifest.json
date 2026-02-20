@@ -1,0 +1,47 @@
+{
+  "artifacts": {
+    "calibration_val_disruption_csv": "results/sft/qdora_fsdp_tiny_dry_run/calibration_val_disruption.csv",
+    "calibration_val_novelty_csv": "results/sft/qdora_fsdp_tiny_dry_run/calibration_val_novelty.csv",
+    "metrics_train_json": "results/sft/qdora_fsdp_tiny_dry_run/metrics_train.json",
+    "metrics_val_json": "results/sft/qdora_fsdp_tiny_dry_run/metrics_val.json",
+    "model_artifact": "results/sft/qdora_fsdp_tiny_dry_run/model_artifact.json",
+    "predictions_train_csv": "results/sft/qdora_fsdp_tiny_dry_run/predictions_train.csv",
+    "predictions_val_csv": "results/sft/qdora_fsdp_tiny_dry_run/predictions_val.csv"
+  },
+  "config": {
+    "balanced_biases": [
+      0.0,
+      0.5,
+      1.0
+    ],
+    "disruption_scales": [
+      3.0,
+      5.0,
+      8.0
+    ],
+    "disruption_threshold": 0.1,
+    "neutral_biases": [
+      0.0,
+      0.5,
+      1.0
+    ],
+    "novelty_margin": 0.15,
+    "novelty_scales": [
+      3.0,
+      5.0,
+      8.0
+    ],
+    "temperature_candidates": [
+      0.5,
+      0.75,
+      1.0,
+      1.25,
+      1.5
+    ]
+  },
+  "dry_run": true,
+  "n_calibration_bins": 5,
+  "run_dir": "results/sft/qdora_fsdp_tiny_dry_run",
+  "run_name": "qdora_fsdp_tiny_dry_run",
+  "seed": 20260220
+}

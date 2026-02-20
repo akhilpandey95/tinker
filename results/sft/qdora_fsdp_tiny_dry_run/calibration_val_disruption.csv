@@ -1,0 +1,6 @@
+task,bin_index,bin_lower,bin_upper,count,avg_confidence,accuracy,gap
+disruption,0,0.0,0.2,0,0.0,0.0,0.0
+disruption,1,0.2,0.4,0,0.0,0.0,0.0
+disruption,2,0.4,0.6,0,0.0,0.0,0.0
+disruption,3,0.6,0.8,0,0.0,0.0,0.0
+disruption,4,0.8,1.0,4,0.993547604326664,1.0,0.006452395673335998

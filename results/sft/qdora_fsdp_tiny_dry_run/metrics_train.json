@@ -1,0 +1,97 @@
+{
+  "disruption": {
+    "accuracy": 1.0,
+    "brier": 0.12515500242400682,
+    "confusion_matrix": {
+      "consolidating": {
+        "consolidating": 7,
+        "disruptive": 0,
+        "neutral": 0
+      },
+      "disruptive": {
+        "consolidating": 0,
+        "disruptive": 2,
+        "neutral": 0
+      },
+      "neutral": {
+        "consolidating": 0,
+        "disruptive": 0,
+        "neutral": 3
+      }
+    },
+    "ece": 0.17120182010521542,
+    "macro_f1": 1.0,
+    "nll": 0.22295510946721456,
+    "per_class": {
+      "consolidating": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 7
+      },
+      "disruptive": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 2
+      },
+      "neutral": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 3
+      }
+    },
+    "support": 12
+  },
+  "novelty": {
+    "accuracy": 1.0,
+    "brier": 0.1551332128734112,
+    "confusion_matrix": {
+      "balanced": {
+        "balanced": 3,
+        "conventional": 0,
+        "novel": 0
+      },
+      "conventional": {
+        "balanced": 0,
+        "conventional": 3,
+        "novel": 0
+      },
+      "novel": {
+        "balanced": 0,
+        "conventional": 0,
+        "novel": 6
+      }
+    },
+    "ece": 0.2500908165224215,
+    "macro_f1": 1.0,
+    "nll": 0.31352542687207136,
+    "per_class": {
+      "balanced": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 3
+      },
+      "conventional": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 3
+      },
+      "novel": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 6
+      }
+    },
+    "support": 12
+  },
+  "overall": {
+    "joint_exact_match_accuracy": 1.0,
+    "parse_error_rate": 0.0,
+    "support": 12
+  }
+}
