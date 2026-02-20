@@ -1,0 +1,97 @@
+{
+  "disruption": {
+    "accuracy": 0.75,
+    "brier": 0.3261222011634261,
+    "confusion_matrix": {
+      "consolidating": {
+        "consolidating": 7,
+        "disruptive": 0,
+        "neutral": 0
+      },
+      "disruptive": {
+        "consolidating": 0,
+        "disruptive": 2,
+        "neutral": 0
+      },
+      "neutral": {
+        "consolidating": 3,
+        "disruptive": 0,
+        "neutral": 0
+      }
+    },
+    "ece": 0.06611487868519209,
+    "macro_f1": 0.6078431372549019,
+    "nll": 0.5638342270626385,
+    "per_class": {
+      "consolidating": {
+        "f1": 0.8235294117647058,
+        "precision": 0.7,
+        "recall": 1.0,
+        "support": 7
+      },
+      "disruptive": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 2
+      },
+      "neutral": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 3
+      }
+    },
+    "support": 12
+  },
+  "novelty": {
+    "accuracy": 0.25,
+    "brier": 0.5682352638681646,
+    "confusion_matrix": {
+      "balanced": {
+        "balanced": 3,
+        "conventional": 0,
+        "novel": 0
+      },
+      "conventional": {
+        "balanced": 3,
+        "conventional": 0,
+        "novel": 0
+      },
+      "novel": {
+        "balanced": 6,
+        "conventional": 0,
+        "novel": 0
+      }
+    },
+    "ece": 0.21632175425083439,
+    "macro_f1": 0.13333333333333333,
+    "nll": 0.884639992634262,
+    "per_class": {
+      "balanced": {
+        "f1": 0.4,
+        "precision": 0.25,
+        "recall": 1.0,
+        "support": 3
+      },
+      "conventional": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 3
+      },
+      "novel": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 6
+      }
+    },
+    "support": 12
+  },
+  "overall": {
+    "joint_exact_match_accuracy": 0.25,
+    "parse_error_rate": 0.0,
+    "support": 12
+  }
+}

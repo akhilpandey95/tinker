@@ -1,0 +1,9 @@
+{
+  "mean_R_adaptation": 0.1277777777777778,
+  "mean_R_correctness": 0.2777777777777778,
+  "mean_R_reasoning": 0.3,
+  "mean_reward": 0.7055555555555556,
+  "parse_error_rate": 0.0,
+  "revision_rate": 0.3055555555555556,
+  "reward_count": 72
+}

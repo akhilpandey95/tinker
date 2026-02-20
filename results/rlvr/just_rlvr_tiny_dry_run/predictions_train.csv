@@ -1,0 +1,37 @@
+openalex_id,gold_disruption,pred_disruption,disruption_correct,disruption_confidence,disruption_prob_disruptive,disruption_prob_consolidating,disruption_prob_neutral,gold_novelty,pred_novelty,novelty_correct,novelty_confidence,novelty_prob_novel,novelty_prob_conventional,novelty_prob_balanced,joint_correct,parse_error,response_text
+SYNTHW0000019,disruptive,disruptive,1,0.5587003322994282,0.5587003322994282,0.06132469282136682,0.37997497487920506,balanced,balanced,1,0.4233971191325468,0.3208554000644912,0.25574748080296206,0.4233971191325468,1,,"disruption: disruptive
+novelty: balanced
+reasoning: CD index and novelty-conventionality evidence support this prediction."
+SYNTHW0000007,consolidating,consolidating,1,0.7186330558611776,0.07920242023832776,0.7186330558611776,0.20216452390049458,conventional,balanced,0,0.4883849374881379,0.088576262245752,0.4230388002661101,0.4883849374881379,0,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index and novelty-conventionality evidence support this prediction."
+SYNTHW0000004,neutral,consolidating,0,0.5397115141688303,0.20664392097542306,0.5397115141688303,0.25364456485574655,novel,balanced,0,0.47174847362800887,0.38626588311147925,0.14198564326051183,0.47174847362800887,0,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index and novelty-conventionality evidence support this prediction."
+SYNTHW0000020,consolidating,consolidating,1,0.7036800681347994,0.08974232316339754,0.7036800681347994,0.206577608701803,balanced,balanced,1,0.44861498285532203,0.351695245466986,0.19968977167769195,0.44861498285532203,1,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index and novelty-conventionality evidence support this prediction."
+SYNTHW0000026,neutral,consolidating,0,0.4647405381507158,0.2485718232946438,0.4647405381507158,0.2866876385546404,novel,balanced,0,0.47567042013646904,0.3933442645932664,0.13098531527026466,0.47567042013646904,0,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index and novelty-conventionality evidence support this prediction."
+SYNTHW0000035,consolidating,consolidating,1,0.8627137294783729,0.010335029069305364,0.8627137294783729,0.12695124145232173,conventional,balanced,0,0.4753549122853256,0.1318917761683398,0.3927533115463346,0.4753549122853256,0,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index and novelty-conventionality evidence support this prediction."
+SYNTHW0000022,consolidating,consolidating,1,0.8685335580791079,0.008991679130166854,0.8685335580791079,0.1224747627907253,novel,balanced,0,0.4813215889373225,0.40477672984991936,0.11390168121275805,0.4813215889373225,0,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index and novelty-conventionality evidence support this prediction."
+SYNTHW0000009,consolidating,consolidating,1,0.9003727379619454,0.00358392687674595,0.9003727379619454,0.09604333516130867,novel,balanced,0,0.4536505605317788,0.3585138208641658,0.18783561860405543,0.4536505605317788,0,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index and novelty-conventionality evidence support this prediction."
+SYNTHW0000011,consolidating,consolidating,1,0.8848990734854464,0.005816984922646733,0.8848990734854464,0.10928394159190682,conventional,balanced,0,0.464623060385264,0.1608040356937089,0.3745729039210271,0.464623060385264,0,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index and novelty-conventionality evidence support this prediction."
+SYNTHW0000023,disruptive,disruptive,1,0.5109690953990308,0.5109690953990308,0.1011581882981356,0.38787271630283365,novel,balanced,0,0.48892787863876147,0.4847993001413484,0.026272821219890028,0.48892787863876147,0,,"disruption: disruptive
+novelty: balanced
+reasoning: CD index and novelty-conventionality evidence support this prediction."
+SYNTHW0000029,neutral,consolidating,0,0.6694998625125503,0.11571387054316243,0.6694998625125503,0.21478626694428718,novel,balanced,0,0.49360638442720717,0.45085167580198693,0.05554193977080583,0.49360638442720717,0,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index and novelty-conventionality evidence support this prediction."
+SYNTHW0000034,consolidating,consolidating,1,0.8560368232993556,0.012018969599807978,0.8560368232993556,0.13194420710083649,balanced,balanced,1,0.430560732563868,0.329168042682023,0.24027122475410898,0.430560732563868,1,,"disruption: consolidating
+novelty: balanced
+reasoning: CD index and novelty-conventionality evidence support this prediction."

@@ -1,0 +1,97 @@
+{
+  "disruption": {
+    "accuracy": 1.0,
+    "brier": 0.18687952422412812,
+    "confusion_matrix": {
+      "consolidating": {
+        "consolidating": 2,
+        "disruptive": 0,
+        "neutral": 0
+      },
+      "disruptive": {
+        "consolidating": 0,
+        "disruptive": 2,
+        "neutral": 0
+      },
+      "neutral": {
+        "consolidating": 0,
+        "disruptive": 0,
+        "neutral": 0
+      }
+    },
+    "ece": 0.28863257816361576,
+    "macro_f1": 0.6666666666666666,
+    "nll": 0.37301688683304424,
+    "per_class": {
+      "consolidating": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 2
+      },
+      "disruptive": {
+        "f1": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "support": 2
+      },
+      "neutral": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 0
+      }
+    },
+    "support": 4
+  },
+  "novelty": {
+    "accuracy": 0.5,
+    "brier": 0.5317267886610154,
+    "confusion_matrix": {
+      "balanced": {
+        "balanced": 2,
+        "conventional": 0,
+        "novel": 0
+      },
+      "conventional": {
+        "balanced": 0,
+        "conventional": 0,
+        "novel": 0
+      },
+      "novel": {
+        "balanced": 2,
+        "conventional": 0,
+        "novel": 0
+      }
+    },
+    "ece": 0.03977277295634374,
+    "macro_f1": 0.2222222222222222,
+    "nll": 0.8471949227270441,
+    "per_class": {
+      "balanced": {
+        "f1": 0.6666666666666666,
+        "precision": 0.5,
+        "recall": 1.0,
+        "support": 2
+      },
+      "conventional": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 0
+      },
+      "novel": {
+        "f1": 0.0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "support": 2
+      }
+    },
+    "support": 4
+  },
+  "overall": {
+    "joint_exact_match_accuracy": 0.5,
+    "parse_error_rate": 0.0,
+    "support": 4
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "artifacts": {
+    "calibration_val_disruption_csv": "results/rlvr/just_rlvr_tiny_dry_run/calibration_val_disruption.csv",
+    "calibration_val_novelty_csv": "results/rlvr/just_rlvr_tiny_dry_run/calibration_val_novelty.csv",
+    "metrics_train_json": "results/rlvr/just_rlvr_tiny_dry_run/metrics_train.json",
+    "metrics_val_json": "results/rlvr/just_rlvr_tiny_dry_run/metrics_val.json",
+    "model_artifact": "results/rlvr/just_rlvr_tiny_dry_run/model_artifact.json",
+    "predictions_train_csv": "results/rlvr/just_rlvr_tiny_dry_run/predictions_train.csv",
+    "predictions_val_csv": "results/rlvr/just_rlvr_tiny_dry_run/predictions_val.csv",
+    "reward_curve_csv": "results/rlvr/just_rlvr_tiny_dry_run/reward_curve.csv",
+    "reward_summary_json": "results/rlvr/just_rlvr_tiny_dry_run/reward_summary.json",
+    "reward_trace_csv": "results/rlvr/just_rlvr_tiny_dry_run/reward_trace.csv"
+  },
+  "config": {
+    "epochs": 2,
+    "exploration_temperature": 1.25,
+    "group_size": 3,
+    "inference_temperature_disruption": 0.8,
+    "inference_temperature_novelty": 1.0,
+    "learning_rate": 0.08,
+    "max_env_tokens": 320,
+    "revision_learning_rate": 0.04
+  },
+  "dry_run": true,
+  "n_calibration_bins": 5,
+  "run_dir": "results/rlvr/just_rlvr_tiny_dry_run",
+  "run_name": "just_rlvr_tiny_dry_run",
+  "seed": 20260220
+}

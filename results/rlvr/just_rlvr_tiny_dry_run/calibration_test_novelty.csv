@@ -1,0 +1,6 @@
+task,bin_index,bin_lower,bin_upper,count,avg_confidence,accuracy,gap
+novelty,0,0.0,0.2,0,0.0,0.0,0.0
+novelty,1,0.2,0.4,0,0.0,0.0,0.0
+novelty,2,0.4,0.6,3,0.4726104231741885,0.0,0.4726104231741885
+novelty,3,0.6,0.8,0,0.0,0.0,0.0
+novelty,4,0.8,1.0,0,0.0,0.0,0.0
