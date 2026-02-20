@@ -1,0 +1,13 @@
+scope,metric,value
+overall,joint_exact_match_accuracy,1.0
+overall,parse_error_rate,0.0
+disruption,accuracy,1.0
+disruption,macro_f1,0.6666666666666666
+disruption,nll,0.15046044672310543
+disruption,brier,0.06355437573860297
+disruption,ece,0.1278497684722295
+novelty,accuracy,1.0
+novelty,macro_f1,0.3333333333333333
+novelty,nll,0.34408939979256076
+novelty,brier,0.17941507709027657
+novelty,ece,0.2735442710504505
