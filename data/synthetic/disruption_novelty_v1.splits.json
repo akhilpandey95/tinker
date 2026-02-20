@@ -1,0 +1,57 @@
+{
+  "counts": {
+    "test": 3,
+    "train": 29,
+    "val": 4
+  },
+  "ids": {
+    "test": [
+      "SYNTHW0000021",
+      "SYNTHW0000013",
+      "SYNTHW0000012"
+    ],
+    "train": [
+      "SYNTHW0000019",
+      "SYNTHW0000007",
+      "SYNTHW0000004",
+      "SYNTHW0000020",
+      "SYNTHW0000026",
+      "SYNTHW0000035",
+      "SYNTHW0000022",
+      "SYNTHW0000009",
+      "SYNTHW0000011",
+      "SYNTHW0000023",
+      "SYNTHW0000029",
+      "SYNTHW0000034",
+      "SYNTHW0000006",
+      "SYNTHW0000030",
+      "SYNTHW0000017",
+      "SYNTHW0000002",
+      "SYNTHW0000027",
+      "SYNTHW0000024",
+      "SYNTHW0000005",
+      "SYNTHW0000001",
+      "SYNTHW0000031",
+      "SYNTHW0000015",
+      "SYNTHW0000008",
+      "SYNTHW0000016",
+      "SYNTHW0000028",
+      "SYNTHW0000032",
+      "SYNTHW0000010",
+      "SYNTHW0000033",
+      "SYNTHW0000003"
+    ],
+    "val": [
+      "SYNTHW0000036",
+      "SYNTHW0000025",
+      "SYNTHW0000014",
+      "SYNTHW0000018"
+    ]
+  },
+  "split_ratios": {
+    "test": 0.1,
+    "train": 0.8,
+    "val": 0.1
+  },
+  "split_seed": 20260220
+}
