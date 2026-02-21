@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import datetime as dt
 import hashlib
 import json
@@ -110,6 +111,31 @@ TITLE_SUFFIXES = [
     "through Representation Learning",
 ]
 
+SCISCINET_PAPER_COLUMNS = (
+    "paperid",
+    "doi",
+    "year",
+    "date",
+    "doctype",
+    "cited_by_count",
+    "citation_count",
+    "reference_count",
+    "disruption",
+    "Atyp_Median_Z",
+    "Atyp_10pct_Z",
+    "Atyp_Pairs",
+    "is_retracted",
+    "title",
+    "abstract",
+    "abstract_inverted_index",
+    "language",
+    "primary_field",
+    "concepts",
+    "cd_index",
+    "novelty_score",
+    "conventionality_score",
+)
+
 
 @dataclass(frozen=True)
 class LabelThresholds:
@@ -174,6 +200,53 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--request-timeout", type=float, default=30.0, help="HTTP timeout (seconds).")
 
     parser.add_argument(
+        "--sciscinet-parquet",
+        type=Path,
+        default=None,
+        help="Path to sciscinet_papers.parquet. Enables local SciSciNet parquet ingestion.",
+    )
+    parser.add_argument(
+        "--tinker-sciscinet-parquet",
+        type=Path,
+        default=None,
+        help="Optional path to tinker_sciscinet_papers.parquet for curated rows/metrics.",
+    )
+    parser.add_argument(
+        "--parquet-primary",
+        choices=("sciscinet", "tinker"),
+        default="tinker",
+        help="When both parquet paths are provided, choose which table drives row selection.",
+    )
+    parser.add_argument(
+        "--sciscinet-from-year",
+        type=int,
+        default=None,
+        help="Optional minimum publication year filter for parquet mode.",
+    )
+    parser.add_argument(
+        "--sciscinet-to-year",
+        type=int,
+        default=None,
+        help="Optional maximum publication year filter for parquet mode.",
+    )
+    parser.add_argument(
+        "--sciscinet-min-citations",
+        type=int,
+        default=None,
+        help="Optional minimum citation count filter for parquet mode.",
+    )
+    parser.add_argument(
+        "--include-retracted",
+        action="store_true",
+        help="In parquet mode, keep rows flagged as retracted (default: dropped when flag exists).",
+    )
+    parser.add_argument(
+        "--sciscinet-language",
+        default=None,
+        help="Optional language code filter for parquet mode (for example: en).",
+    )
+
+    parser.add_argument(
         "--disruptive-threshold",
         type=float,
         default=0.1,
@@ -209,6 +282,24 @@ def parse_args() -> argparse.Namespace:
 
     if args.from_year and args.to_year and args.from_year > args.to_year:
         raise ValueError("--from-year must be <= --to-year.")
+
+    if args.sciscinet_from_year and args.sciscinet_to_year and args.sciscinet_from_year > args.sciscinet_to_year:
+        raise ValueError("--sciscinet-from-year must be <= --sciscinet-to-year.")
+
+    if args.sciscinet_min_citations is not None and args.sciscinet_min_citations < 0:
+        raise ValueError("--sciscinet-min-citations must be >= 0.")
+
+    has_parquet_inputs = bool(args.sciscinet_parquet or args.tinker_sciscinet_parquet)
+    if args.synthetic and has_parquet_inputs:
+        raise ValueError("--synthetic cannot be combined with --sciscinet-parquet inputs.")
+
+    for path_arg_name in ("sciscinet_parquet", "tinker_sciscinet_parquet"):
+        path_value = getattr(args, path_arg_name)
+        if path_value is not None and not path_value.exists():
+            raise ValueError(f"--{path_arg_name.replace('_', '-')} does not exist: {path_value}")
+
+    if args.sciscinet_language is not None:
+        args.sciscinet_language = str(args.sciscinet_language).strip().lower() or None
 
     if args.splits_output is None:
         args.splits_output = args.output.with_suffix(".splits.json")
@@ -402,6 +493,373 @@ def generate_synthetic_records(n_papers: int, seed: int, thresholds: LabelThresh
         records.append(normalize_schema(record))
 
     return records
+
+
+def _import_polars() -> Any:
+    try:
+        import polars as pl  # type: ignore
+    except ImportError as exc:  # pragma: no cover - depends on local env
+        raise RuntimeError(
+            "SciSciNet parquet ingestion requires `polars`. Install with: pip install polars pyarrow"
+        ) from exc
+    return pl
+
+
+def has_sciscinet_inputs(args: argparse.Namespace) -> bool:
+    return bool(getattr(args, "sciscinet_parquet", None) or getattr(args, "tinker_sciscinet_parquet", None))
+
+
+def resolve_sciscinet_paths(args: argparse.Namespace) -> Tuple[Optional[Path], Optional[Path]]:
+    sciscinet_path = getattr(args, "sciscinet_parquet", None)
+    tinker_path = getattr(args, "tinker_sciscinet_parquet", None)
+    if not sciscinet_path and not tinker_path:
+        return None, None
+
+    primary_choice = str(getattr(args, "parquet_primary", "tinker")).lower()
+    if primary_choice == "sciscinet":
+        primary = sciscinet_path or tinker_path
+        secondary = tinker_path if (sciscinet_path and tinker_path) else None
+    else:
+        primary = tinker_path or sciscinet_path
+        secondary = sciscinet_path if (sciscinet_path and tinker_path) else None
+
+    primary_path = Path(primary) if primary is not None else None
+    secondary_path = Path(secondary) if secondary is not None else None
+    if secondary_path is not None and primary_path is not None and secondary_path == primary_path:
+        secondary_path = None
+    return primary_path, secondary_path
+
+
+def _scan_prefixed_parquet(pl: Any, path: Path, prefix: str) -> Tuple[Any, set[str]]:
+    frame = pl.scan_parquet(str(path))
+    schema_names = set(frame.collect_schema().names())
+    if "paperid" not in schema_names:
+        raise ValueError(f"Parquet file must include `paperid`: {path}")
+    prefixed = frame.select([pl.col(name).alias(f"{prefix}{name}") for name in sorted(schema_names)])
+    return prefixed, schema_names
+
+
+def _coalesced_prefixed_column(
+    pl: Any,
+    column_name: str,
+    left_schema: set[str],
+    right_schema: set[str],
+) -> Any:
+    exprs: List[Any] = []
+    if column_name in left_schema:
+        exprs.append(pl.col(f"left_{column_name}"))
+    if column_name in right_schema:
+        exprs.append(pl.col(f"right_{column_name}"))
+    if not exprs:
+        return pl.lit(None).alias(column_name)
+    return pl.coalesce(exprs).alias(column_name)
+
+
+def _as_text(value: Any) -> str:
+    if value is None:
+        return ""
+    text = str(value).strip()
+    if not text or text.lower() == "nan":
+        return ""
+    return text
+
+
+def _as_int(value: Any, default: int = 0) -> int:
+    if value is None:
+        return default
+    if isinstance(value, bool):
+        return int(value)
+    if isinstance(value, int):
+        return value
+    try:
+        if isinstance(value, float) and not math.isfinite(value):
+            return default
+        return int(float(value))
+    except (TypeError, ValueError):
+        return default
+
+
+def _as_float(value: Any, default: float = float("nan")) -> float:
+    if value is None:
+        return default
+    if isinstance(value, bool):
+        return float(int(value))
+    if isinstance(value, (int, float)):
+        out = float(value)
+        return out if math.isfinite(out) else default
+    try:
+        out = float(str(value))
+        return out if math.isfinite(out) else default
+    except (TypeError, ValueError):
+        return default
+
+
+def _sigmoid(value: float) -> float:
+    if value >= 0:
+        z = math.exp(-value)
+        return 1.0 / (1.0 + z)
+    z = math.exp(value)
+    return z / (1.0 + z)
+
+
+def _parse_publication_year(year_value: Any, date_value: Any) -> int:
+    year = _as_int(year_value, default=0)
+    if year > 0:
+        return year
+    date_text = _as_text(date_value)
+    if len(date_text) >= 4 and date_text[:4].isdigit():
+        return int(date_text[:4])
+    return CURRENT_YEAR
+
+
+def _extract_concepts(raw_value: Any, primary_field: str, doctype: str) -> List[str]:
+    concepts: List[str] = []
+    if isinstance(raw_value, Sequence) and not isinstance(raw_value, (str, bytes, bytearray)):
+        for item in raw_value:
+            token = _as_text(item)
+            if token:
+                concepts.append(token)
+    elif isinstance(raw_value, str):
+        normalized = raw_value.replace("|", ",")
+        for token in normalized.split(","):
+            cleaned = _as_text(token)
+            if cleaned:
+                concepts.append(cleaned)
+
+    if not concepts and primary_field and primary_field != "Unknown":
+        concepts.append(primary_field)
+    if doctype:
+        concepts.append(doctype)
+
+    unique: List[str] = []
+    seen: set[str] = set()
+    for concept in concepts:
+        lowered = concept.lower()
+        if lowered in seen:
+            continue
+        seen.add(lowered)
+        unique.append(concept)
+    return unique[:8] if unique else ["Unknown"]
+
+
+def _resolve_cd_index_from_sciscinet(
+    row: Mapping[str, Any],
+    cited_by_count: int,
+    reference_count: int,
+    publication_year: int,
+) -> float:
+    for key in ("cd_index", "disruption"):
+        value = _as_float(row.get(key))
+        if math.isfinite(value):
+            return clamp(value, -1.0, 1.0)
+    return compute_cd_index_proxy(cited_by_count, reference_count, publication_year)
+
+
+def _resolve_novelty_scores_from_sciscinet(
+    row: Mapping[str, Any],
+    reference_count: int,
+) -> Tuple[float, float]:
+    novelty_raw = _as_float(row.get("novelty_score"))
+    conventionality_raw = _as_float(row.get("conventionality_score"))
+    if math.isfinite(novelty_raw) and math.isfinite(conventionality_raw):
+        novelty = clamp(novelty_raw, 0.0, 1.0)
+        conventionality = clamp(conventionality_raw, 0.0, 1.0)
+        return novelty, conventionality
+
+    # Uzzi et al. style:
+    # - lower Atyp_10pct_Z => more atypical combinations => higher novelty
+    # - higher Atyp_Median_Z => more conventional combinations
+    atyp_10 = _as_float(row.get("Atyp_10pct_Z"))
+    atyp_median = _as_float(row.get("Atyp_Median_Z"))
+    if math.isfinite(atyp_10):
+        novelty = clamp(_sigmoid(clamp(-atyp_10, -8.0, 8.0)), 0.0, 1.0)
+    elif math.isfinite(novelty_raw):
+        novelty = clamp(novelty_raw, 0.0, 1.0)
+    else:
+        novelty = clamp(1.0 - (reference_count / 80.0), 0.0, 1.0)
+
+    if math.isfinite(atyp_median):
+        conventionality = clamp(_sigmoid(clamp(atyp_median, -8.0, 8.0)), 0.0, 1.0)
+    elif math.isfinite(conventionality_raw):
+        conventionality = clamp(conventionality_raw, 0.0, 1.0)
+    else:
+        conventionality = clamp(1.0 - novelty, 0.0, 1.0)
+
+    return novelty, conventionality
+
+
+def _build_sciscinet_title(row: Mapping[str, Any], paperid: str, doi: str) -> str:
+    candidate = _as_text(row.get("title"))
+    if candidate:
+        return candidate
+    if doi:
+        return f"SciSciNet record {paperid} ({doi})"
+    return f"SciSciNet record {paperid}"
+
+
+def _decode_sciscinet_abstract_inverted_index(raw_value: Any) -> str:
+    if raw_value is None:
+        return ""
+
+    payload: Any = raw_value
+    if isinstance(raw_value, str):
+        text = raw_value.strip()
+        if not text:
+            return ""
+        try:
+            payload = json.loads(text)
+        except json.JSONDecodeError:
+            try:
+                payload = ast.literal_eval(text)
+            except (SyntaxError, ValueError):
+                return ""
+
+    if not isinstance(payload, Mapping):
+        return ""
+
+    tokens: Dict[int, str] = {}
+    max_position = -1
+    for token, positions in payload.items():
+        token_text = _as_text(token)
+        if not token_text or not isinstance(positions, Sequence) or isinstance(positions, (str, bytes, bytearray)):
+            continue
+        for position in positions:
+            idx = _as_int(position, default=-1)
+            if idx < 0:
+                continue
+            tokens.setdefault(idx, token_text)
+            if idx > max_position:
+                max_position = idx
+
+    if max_position < 0:
+        return ""
+    words = [tokens.get(idx, "") for idx in range(max_position + 1)]
+    return " ".join(word for word in words if word).strip()
+
+
+def _build_sciscinet_abstract(
+    row: Mapping[str, Any],
+    title: str,
+    publication_year: int,
+    cited_by_count: int,
+    reference_count: int,
+) -> str:
+    candidate = _as_text(row.get("abstract"))
+    if candidate:
+        return candidate
+    from_inverted = _decode_sciscinet_abstract_inverted_index(row.get("abstract_inverted_index"))
+    if from_inverted:
+        return from_inverted
+    doctype = _as_text(row.get("doctype")) or "paper"
+    return (
+        f"{title}. This {doctype} was published in {publication_year} and has "
+        f"{cited_by_count} citations with {reference_count} references in the SciSciNet corpus."
+    )
+
+
+def ingest_sciscinet_records(args: argparse.Namespace, thresholds: LabelThresholds) -> List[Dict[str, Any]]:
+    pl = _import_polars()
+    primary_path, secondary_path = resolve_sciscinet_paths(args)
+    if primary_path is None:
+        raise ValueError("SciSciNet parquet mode requires --sciscinet-parquet and/or --tinker-sciscinet-parquet.")
+
+    left_lf, left_schema = _scan_prefixed_parquet(pl, primary_path, prefix="left_")
+    right_schema: set[str] = set()
+    merged_lf = left_lf
+    if secondary_path is not None:
+        right_lf, right_schema = _scan_prefixed_parquet(pl, secondary_path, prefix="right_")
+        right_lf = right_lf.unique(subset=["right_paperid"], keep="first")
+        merged_lf = left_lf.join(right_lf, left_on="left_paperid", right_on="right_paperid", how="left")
+
+    selected_lf = merged_lf.select(
+        [_coalesced_prefixed_column(pl, column_name, left_schema, right_schema) for column_name in SCISCINET_PAPER_COLUMNS]
+    )
+
+    selected_lf = selected_lf.filter(pl.col("paperid").cast(pl.Utf8, strict=False).fill_null("").str.len_bytes() > 0)
+    if args.sciscinet_from_year is not None:
+        selected_lf = selected_lf.filter(pl.col("year").cast(pl.Int64, strict=False) >= int(args.sciscinet_from_year))
+    if args.sciscinet_to_year is not None:
+        selected_lf = selected_lf.filter(pl.col("year").cast(pl.Int64, strict=False) <= int(args.sciscinet_to_year))
+    if args.sciscinet_min_citations is not None:
+        citation_expr = pl.coalesce([pl.col("cited_by_count"), pl.col("citation_count"), pl.lit(0)])
+        selected_lf = selected_lf.filter(citation_expr.cast(pl.Int64, strict=False).fill_null(0) >= int(args.sciscinet_min_citations))
+    if not args.include_retracted:
+        selected_lf = selected_lf.filter(~pl.col("is_retracted").cast(pl.Boolean, strict=False).fill_null(False))
+    if getattr(args, "sciscinet_language", None):
+        lang = str(args.sciscinet_language).lower()
+        selected_lf = selected_lf.filter(pl.col("language").cast(pl.Utf8, strict=False).str.to_lowercase() == lang)
+
+    rows = selected_lf.limit(int(args.n_papers)).collect().to_dicts()
+    records: List[Dict[str, Any]] = []
+    for row in rows:
+        paperid = _as_text(row.get("paperid"))
+        if not paperid:
+            continue
+
+        publication_year = _parse_publication_year(row.get("year"), row.get("date"))
+        cited_by_count = max(0, _as_int(row.get("cited_by_count"), default=_as_int(row.get("citation_count"), default=0)))
+        reference_count = max(0, _as_int(row.get("reference_count"), default=0))
+        cd_index = _resolve_cd_index_from_sciscinet(row, cited_by_count, reference_count, publication_year)
+        novelty_score, conventionality_score = _resolve_novelty_scores_from_sciscinet(row, reference_count=reference_count)
+
+        doi = _as_text(row.get("doi"))
+        title = _build_sciscinet_title(row, paperid=paperid, doi=doi)
+        abstract = _build_sciscinet_abstract(
+            row,
+            title=title,
+            publication_year=publication_year,
+            cited_by_count=cited_by_count,
+            reference_count=reference_count,
+        )
+        doctype = _as_text(row.get("doctype"))
+        primary_field = _as_text(row.get("primary_field")) or (_as_text(doctype).title() if doctype else "Unknown")
+        concepts = _extract_concepts(row.get("concepts"), primary_field=primary_field, doctype=doctype)
+
+        record = {
+            "openalex_id": paperid,
+            "title": title,
+            "abstract": abstract,
+            "publication_year": publication_year,
+            "cited_by_count": cited_by_count,
+            "cd_index": cd_index,
+            "novelty_score": novelty_score,
+            "conventionality_score": conventionality_score,
+            "disruption_label": label_disruption(cd_index, thresholds),
+            "novelty_label": label_novelty(novelty_score, conventionality_score, thresholds),
+            "primary_field": primary_field,
+            "concepts": concepts,
+        }
+        records.append(normalize_schema(record))
+
+    return records
+
+
+def load_from_sciscinet(
+    sciscinet_parquet: str | Path,
+    n_papers: int = 1000,
+    *,
+    tinker_sciscinet_parquet: str | Path | None = None,
+    thresholds: Optional[LabelThresholds] = None,
+    parquet_primary: str = "tinker",
+    sciscinet_from_year: Optional[int] = None,
+    sciscinet_to_year: Optional[int] = None,
+    sciscinet_min_citations: Optional[int] = None,
+    include_retracted: bool = False,
+    sciscinet_language: Optional[str] = None,
+) -> List[Dict[str, Any]]:
+    threshold_values = thresholds if thresholds is not None else LabelThresholds()
+    args = argparse.Namespace(
+        sciscinet_parquet=Path(sciscinet_parquet) if sciscinet_parquet else None,
+        tinker_sciscinet_parquet=Path(tinker_sciscinet_parquet) if tinker_sciscinet_parquet else None,
+        parquet_primary=parquet_primary,
+        sciscinet_from_year=sciscinet_from_year,
+        sciscinet_to_year=sciscinet_to_year,
+        sciscinet_min_citations=sciscinet_min_citations,
+        include_retracted=include_retracted,
+        sciscinet_language=(str(sciscinet_language).strip().lower() if sciscinet_language else None),
+        n_papers=n_papers,
+    )
+    return ingest_sciscinet_records(args, thresholds=threshold_values)
 
 
 def openalex_request(url: str, timeout_s: float) -> Mapping[str, Any]:
@@ -610,6 +1068,19 @@ def build_metadata(
     query_filters: Dict[str, Any]
     if mode == "synthetic":
         query_filters = {"synthetic_seed": args.seed, "n_papers": args.n_papers}
+    elif mode == "sciscinet_parquet":
+        primary_path, secondary_path = resolve_sciscinet_paths(args)
+        query_filters = {
+            "primary_parquet": str(primary_path) if primary_path else None,
+            "secondary_parquet": str(secondary_path) if secondary_path else None,
+            "parquet_primary": args.parquet_primary,
+            "n_papers": args.n_papers,
+            "from_year": args.sciscinet_from_year,
+            "to_year": args.sciscinet_to_year,
+            "min_citations": args.sciscinet_min_citations,
+            "include_retracted": bool(args.include_retracted),
+            "language": args.sciscinet_language,
+        }
     else:
         query_filters = {
             "openalex_filter": build_openalex_filter(args),
@@ -647,9 +1118,19 @@ def main() -> None:
         novelty_margin=args.novelty_margin,
     )
 
-    mode = "synthetic" if args.synthetic else "openalex"
+    if args.synthetic:
+        mode = "synthetic"
+    elif has_sciscinet_inputs(args):
+        mode = "sciscinet_parquet"
+    else:
+        mode = "openalex"
+
     if mode == "synthetic":
         records = generate_synthetic_records(args.n_papers, seed=args.seed, thresholds=thresholds)
+    elif mode == "sciscinet_parquet":
+        records = ingest_sciscinet_records(args, thresholds)
+        if not records:
+            raise RuntimeError("SciSciNet parquet ingestion returned no records. Check filters or parquet paths.")
     else:
         records = ingest_openalex_records(args, thresholds)
         if not records:

@@ -8,9 +8,12 @@ Implemented in `tinker_disruption_rl/disruption_novelty_dataset.py`:
 
 - Synthetic dataset generation (`--synthetic`)
 - OpenAlex ingestion (`default mode`)
+- Local SciSciNet parquet ingestion (`--sciscinet-parquet` and/or `--tinker-sciscinet-parquet`)
 - Label computation + verification for disruption and novelty
 - Frozen train/val/test split generation from a seed
 - Metadata emission with dataset versioning details
+
+For parquet mode, install `polars` (`pip install polars pyarrow`).
 
 ## Dataset Schema
 
@@ -49,6 +52,8 @@ Every row is re-labeled during build to verify consistency (`--strict-label-chec
 
 In OpenAlex mode, `cd_index`, `novelty_score`, and `conventionality_score` are deterministic citation-derived proxies computed from OpenAlex citation/reference counts and concept distributions, then mapped to labels with the thresholds above.
 
+In SciSciNet parquet mode, `cd_index` uses `disruption` (or `cd_index` if present), while novelty/conventionality are derived from Uzzi-style `Atyp_10pct_Z` and `Atyp_Median_Z` when explicit normalized scores are absent.
+
 ## Deterministic Splits
 
 Split generation is deterministic for a fixed dataset and seed:
@@ -69,7 +74,7 @@ The pipeline writes three artifacts:
 Metadata includes:
 
 - timestamp (`generated_at_utc`)
-- mode (`synthetic` or `openalex`)
+- mode (`synthetic`, `openalex`, or `sciscinet_parquet`)
 - query filters
 - split seed + ratios
 - label thresholds
@@ -78,6 +83,23 @@ Metadata includes:
 - artifact paths + split ID hash
 
 ## Commands
+
+SciSciNet parquet example (alpha parquet with title + abstract inverted index):
+
+```bash
+python3 tinker_disruption_rl/disruption_novelty_dataset.py \
+  --n-papers 500000 \
+  --tinker-sciscinet-parquet tinker_sciscinet_papers_alpha.parquet \
+  --parquet-primary tinker \
+  --sciscinet-language en \
+  --sciscinet-from-year 1950 \
+  --sciscinet-min-citations 0 \
+  --output data/sciscinet/disruption_novelty_sciscinet.jsonl \
+  --splits-output data/sciscinet/disruption_novelty_sciscinet.splits.json \
+  --metadata-output data/sciscinet/disruption_novelty_sciscinet.metadata.json
+```
+
+You can also pass both `--sciscinet-parquet` and `--tinker-sciscinet-parquet`; the loader coalesces columns by `paperid`.
 
 Synthetic example:
 

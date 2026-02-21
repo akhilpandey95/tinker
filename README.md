@@ -172,7 +172,13 @@ If you have access to your SciSciNet-v2 dataset locally:
 ```python
 from disruption_novelty_dataset import load_from_sciscinet
 
-records = load_from_sciscinet("path/to/sciscinet.parquet", n_papers=1000)
+records = load_from_sciscinet(
+    "sciscinet_papers.parquet",
+    tinker_sciscinet_parquet="tinker_sciscinet_papers_alpha.parquet",
+    n_papers=1000,
+    parquet_primary="tinker",
+    sciscinet_language="en",
+)
 ```
 
 ## References
