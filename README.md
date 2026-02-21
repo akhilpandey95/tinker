@@ -2,7 +2,7 @@
 
 A toy RL environment for training language models to predict scientific impact metrics (disruption index, novelty/conventionality).
 
-Designed for your blog post: [Tinker, smol-RL and QDoRA](https://akhilpandey95.github.io/notes/tinker/)
+Blog post: [Tinker, smol-RL and QDoRA](https://akhilpandey95.github.io/notes/tinker/)
 
 ## Overview
 
@@ -16,7 +16,7 @@ This follows the [Twenty Questions pattern](https://github.com/thinking-machines
 
 ```
 tinker_disruption_rl/
-├── disruption_novelty_dataset.py  # Dataset creation (OpenAlex API or synthetic)
+├── disruption_novelty_dataset.py  # Dataset creation (synthetic, OpenAlex, SciSciNet parquet)
 ├── tinker_disruption_env.py       # RL environments (Env, EnvGroupBuilder, RLDataset)
 ├── train_disruption.py            # Training script with Tinker
 ├── sample_dataset.jsonl           # 20-paper synthetic dataset for testing
@@ -29,11 +29,21 @@ tinker_disruption_rl/
 
 ```bash
 # Synthetic dataset (no API required) - good for testing
-python disruption_novelty_dataset.py --synthetic --n_papers 200 --output data/toy_dataset.jsonl
+python disruption_novelty_dataset.py --synthetic --n-papers 200 --output data/toy_dataset.jsonl
+
+# SciSciNet parquet dataset (alpha parquet with title + abstract_inverted_index)
+python disruption_novelty_dataset.py \
+  --n-papers 500000 \
+  --tinker-sciscinet-parquet tinker_sciscinet_papers_alpha.parquet \
+  --parquet-primary tinker \
+  --sciscinet-language en \
+  --output data/sciscinet/disruption_novelty_sciscinet.jsonl \
+  --splits-output data/sciscinet/disruption_novelty_sciscinet.splits.json \
+  --metadata-output data/sciscinet/disruption_novelty_sciscinet.metadata.json
 
 # Real dataset from OpenAlex (requires httpx, tqdm)
 pip install httpx tqdm
-python disruption_novelty_dataset.py --n_papers 500 --email your-email@example.com --output data/real_dataset.jsonl
+python disruption_novelty_dataset.py --n-papers 500 --email your-email@example.com --output data/real_dataset.jsonl
 ```
 
 ### 2. Test Environments
@@ -100,6 +110,25 @@ python train_disruption.py --task adversarial --epochs 3 --batch_size 4
 }
 ```
 
+## SciSciNet Alpha Input
+
+The parquet loader now supports your merged alpha file:
+
+- `tinker_sciscinet_papers_alpha.parquet` (~38,851,803 rows)
+- core columns:
+  `paperid`, `doi`, `year`, `date`, `doctype`, `reference_count`, `citation_count`,
+  `C3`, `C5`, `C10`, `disruption`, `Atyp_Median_Z`, `Atyp_10pct_Z`, `Atyp_Pairs`,
+  `title`, `abstract_inverted_index`, `language`
+
+How these map into training JSONL:
+
+- `openalex_id` <- `paperid`
+- `cd_index` <- `disruption`
+- `cited_by_count` <- `cited_by_count` if present, else `citation_count`
+- `title` <- `title`
+- `abstract` <- decoded from `abstract_inverted_index` (JSON/dict string), fallback to template text
+- novelty/conventionality are derived from Uzzi-style atypicality columns when explicit normalized scores are absent
+
 ## Labels
 
 **Disruption (CD Index)**:
@@ -111,6 +140,12 @@ python train_disruption.py --task adversarial --epochs 3 --batch_size 4
 - `novel`: Atypical/unusual reference combinations
 - `conventional`: Typical reference combinations
 - `balanced`: Mix of both (often high-impact)
+
+SciSciNet parquet mode uses:
+- `disruption` column as `cd_index` (Wu et al. 2019)
+- `Atyp_10pct_Z` as atypicality/novelty signal
+- `Atyp_Median_Z` as conventionality signal
+- `Atyp_Pairs` as supporting context
 
 ## Blog Post Integration
 
@@ -139,6 +174,9 @@ calibrated on scientific impact?
 ```bash
 # Core (for synthetic dataset and environments)
 # No external dependencies required!
+
+# For SciSciNet parquet ingestion
+pip install polars pyarrow
 
 # For OpenAlex API dataset
 pip install httpx tqdm
@@ -183,11 +221,11 @@ records = load_from_sciscinet(
 
 ## References
 
-- [Tinker Documentation](https://tinker-docs.thinkingmachines.ai/)
-- [Just-RL Paper](https://arxiv.org/pdf/2512.16649)
-- [CD Index: Funk & Owen-Smith 2017](https://doi.org/10.1287/mnsc.2015.2366)
-- [Novelty/Conventionality: Uzzi et al. 2013](https://doi.org/10.1126/science.1240474)
-- [Your LMRSD Paper](https://akhilpandey95.github.io/projects/)
+- [Thinking Machines Lab: Tinker Documentation](https://tinker-docs.thinkingmachines.ai/)
+- [Just-RL (arXiv:2512.16649)](https://arxiv.org/abs/2512.16649)
+- [Funk & Owen-Smith (2017), CD Index](https://doi.org/10.1287/mnsc.2015.2366)
+- [Uzzi et al. (2013), Atypical Combinations and Scientific Impact](https://doi.org/10.1126/science.1240474)
+- [AP Akella, HV Siravuri, S Rohatgi (2025), "Pre-review to Peer review: Pitfalls of Automating Reviews using Large Language Models"](https://arxiv.org/abs/2512.22145)
 
 ---
 
