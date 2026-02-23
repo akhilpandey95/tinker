@@ -153,17 +153,79 @@ upgrade the current placeholder field metadata in the base JSONL (especially for
 Recommended workflow:
 
 1. Build the base disruption/novelty JSONL from `tinker_sciscinet_papers_alpha.parquet` (current pipeline).
-2. Run a post-enrichment step that:
+2. Run the post-enrichment script `tinker_disruption_rl/enrich_sciscinet_fields.py`, which:
    - lazily scans `tinker_sciscinet_paper_fields_alpha.parquet`
-   - semi-joins on the base dataset paper IDs
+   - lazily scans the base JSONL and collects only base `openalex_id`s for a semi-join filter
    - aggregates field rows per `paperid`
-   - writes an enriched JSONL (new output path, do not overwrite by default)
+   - left-joins enrichment back onto the base JSONL
+   - writes a new enriched JSONL (does not overwrite by default)
+   - writes an enrichment report JSON with coverage + validation stats
 3. Recompute label distributions by `primary_field` on the enriched dataset.
 
 Suggested deterministic mapping:
 
-- `primary_field`: prefer `level == 0`, else lowest `level`, tie-break alphabetically
-- `concepts`: unique `display_name` values sorted deterministically, truncated to top `k` (for example `8`)
+- `primary_field`: prefer `level == 0`, else lowest `level`, tie-break by `display_name` (alphabetical) then `fieldid`
+- `concepts`: unique `display_name` values sorted deterministically by `(level, display_name, fieldid)`, truncated to top `k` (default `8`)
+- By default the selected `primary_field` is removed from `concepts` if duplicated (use `--include-primary-in-concepts` to keep it)
+
+### Enrichment Smoke Test (Recommended First)
+
+```bash
+cd /home/ec2-user/SageMaker/sciscinetv2/tinker
+
+POLARS_MAX_THREADS=8 /usr/bin/time -v python tinker_disruption_rl/enrich_sciscinet_fields.py \
+  --base-jsonl data/sciscinet/disruption_novelty_sciscinet_500k.jsonl \
+  --paper-fields-parquet ../tinker_sciscinet_paper_fields_alpha.parquet \
+  --base-limit 5000 \
+  --batch-size 1000 \
+  --output-jsonl data/sciscinet/disruption_novelty_sciscinet_500k.field_enriched_smoke5k.jsonl \
+  --report-output data/sciscinet/disruption_novelty_sciscinet_500k.field_enriched_smoke5k.report.json
+```
+
+### Enrichment Full Run (500k Base JSONL)
+
+```bash
+cd /home/ec2-user/SageMaker/sciscinetv2/tinker
+
+POLARS_MAX_THREADS=8 /usr/bin/time -v python tinker_disruption_rl/enrich_sciscinet_fields.py \
+  --base-jsonl data/sciscinet/disruption_novelty_sciscinet_500k.jsonl \
+  --paper-fields-parquet ../tinker_sciscinet_paper_fields_alpha.parquet \
+  --batch-size 1000 \
+  --row-log-interval 50000 \
+  --concepts-k 8 \
+  --output-jsonl data/sciscinet/disruption_novelty_sciscinet_500k.field_enriched.jsonl \
+  --report-output data/sciscinet/disruption_novelty_sciscinet_500k.field_enriched.report.json
+```
+
+Expected full-run artifacts:
+- `data/sciscinet/disruption_novelty_sciscinet_500k.field_enriched.jsonl`
+- `data/sciscinet/disruption_novelty_sciscinet_500k.field_enriched.report.json`
+
+Validation checklist (reported in the `*.report.json` file):
+- `output_row_count == base_row_count`
+- `order_preserved == true` (verified via contiguous base row indices through the join/write path)
+- `with_any_field_assignment_pct` (coverage of any paper-field link)
+- `with_level0_assignment_pct` (coverage with at least one level-0 concept)
+- `examples` (before/after `primary_field` and `concepts` samples)
+
+Quick spot checks after the run:
+
+```bash
+wc -l data/sciscinet/disruption_novelty_sciscinet_500k.jsonl \
+     data/sciscinet/disruption_novelty_sciscinet_500k.field_enriched.jsonl
+
+python - <<'PY'
+import json
+from pathlib import Path
+p = Path("data/sciscinet/disruption_novelty_sciscinet_500k.field_enriched.report.json")
+r = json.loads(p.read_text())
+print("rows", r["output_row_count"], "base", r["base_row_count"], "order_preserved", r["order_preserved"])
+print("coverage_any", r["with_any_field_assignment_pct"], "coverage_level0", r["with_level0_assignment_pct"])
+for ex in r.get("examples", [])[:3]:
+    print(ex["openalex_id"], ex["primary_field_before"], "=>", ex["primary_field_after"])
+    print("  ", ex["concepts_before"], "=>", ex["concepts_after"])
+PY
+```
 
 Field hierarchy references (OpenAlex concepts):
 - https://docs.openalex.org/api-entities/concepts
