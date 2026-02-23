@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+# This Source Code Form is subject to the terms of the
+# CC BY-NC-SA 4.0 License. If a copy of the same was not
+# distributed with this file, You can obtain one at
+# https://github.com/akhilpandey95/tinker/blob/main/LICENSE.
+
 from __future__ import annotations
 
 import argparse
