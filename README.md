@@ -126,8 +126,105 @@ How these map into training JSONL:
 - `cd_index` <- `disruption`
 - `cited_by_count` <- `cited_by_count` if present, else `citation_count`
 - `title` <- `title`
-- `abstract` <- decoded from `abstract_inverted_index` (JSON/dict string), fallback to template text
+- `abstract` <- decoded from `abstract_inverted_index` (JSON/dict string) when plain abstract text is absent
 - novelty/conventionality are derived from Uzzi-style atypicality columns when explicit normalized scores are absent
+- `primary_field` / `concepts` may be placeholders when no rich field assignment table is joined (for example, `"Article"`)
+
+## Paper-Field Alpha Enrichment (Next Step)
+
+A second parquet is now available for enriching `primary_field` and `concepts` with
+hierarchical field assignments after the base dataset is generated:
+
+- `tinker_sciscinet_paper_fields_alpha.parquet` (~6.3G)
+- observed row count: `274,920,196`
+- schema:
+  - `paperid`
+  - `fieldid`
+  - `doi`
+  - `display_name`
+  - `level`
+  - `description`
+  - `title`
+
+This parquet is a paper-to-field link table (many-to-many). It should be used to
+upgrade the current placeholder field metadata in the base JSONL (especially for
+`primary_field` and `concepts`) without rerunning the full 500k dataset build.
+
+Recommended workflow:
+
+1. Build the base disruption/novelty JSONL from `tinker_sciscinet_papers_alpha.parquet` (current pipeline).
+2. Run a post-enrichment step that:
+   - lazily scans `tinker_sciscinet_paper_fields_alpha.parquet`
+   - semi-joins on the base dataset paper IDs
+   - aggregates field rows per `paperid`
+   - writes an enriched JSONL (new output path, do not overwrite by default)
+3. Recompute label distributions by `primary_field` on the enriched dataset.
+
+Suggested deterministic mapping:
+
+- `primary_field`: prefer `level == 0`, else lowest `level`, tie-break alphabetically
+- `concepts`: unique `display_name` values sorted deterministically, truncated to top `k` (for example `8`)
+
+Field hierarchy references (OpenAlex concepts):
+- https://docs.openalex.org/api-entities/concepts
+- https://docs.openalex.org/api-entities/concepts/concept-object
+
+## Practical 500k Run (Local SciSciNet Alpha)
+
+Below is a practical launch command and observed runtime/memory profile for the
+current local-only dataset builder on an EC2 `ml.m7i.8xlarge` (128 GB RAM, 32 vCPU).
+
+### Launch Command (500k scan target)
+
+```bash
+cd /home/ec2-user/SageMaker/sciscinetv2/tinker
+
+POLARS_MAX_THREADS=8 /usr/bin/time -v python tinker_disruption_rl/disruption_novelty_dataset.py \
+  --n-papers 500000 \
+  --tinker-sciscinet-parquet ../tinker_sciscinet_papers_alpha.parquet \
+  --sciscinet-language en \
+  --batch-size 1000 \
+  --row-log-interval 50000 \
+  --output data/sciscinet/disruption_novelty_sciscinet_500k.jsonl \
+  --splits-output data/sciscinet/disruption_novelty_sciscinet_500k.splits.json \
+  --metadata-output data/sciscinet/disruption_novelty_sciscinet_500k.metadata.json
+```
+
+### Observed Output (Practical Run)
+
+```text
+mode=sciscinet_parquet records=491820 output=data/sciscinet/disruption_novelty_sciscinet_500k.jsonl
+splits train=393456 val=49182 test=49182
+split_ids_sha256=359d7c9d722da4e2ceeefaaffb7673655ba7373971ff82adcd3ce7fb80300123
+```
+
+### `/usr/bin/time -v` (Key Lines)
+
+```text
+User time (seconds): 142.35
+System time (seconds): 19.79
+Percent of CPU this job got: 94%
+Elapsed (wall clock) time (h:mm:ss or m:ss): 2:50.79
+Maximum resident set size (kbytes): 67253592
+Major (requiring I/O) page faults: 53073
+Minor (reclaiming a frame) page faults: 12824865
+File system inputs: 6955128
+File system outputs: 1689856
+Exit status: 0
+```
+
+### Artifact Sizes (Practical Run)
+
+```text
+data/sciscinet/disruption_novelty_sciscinet_500k.jsonl      816M
+data/sciscinet/disruption_novelty_sciscinet_500k.splits.json 9.9M
+data/sciscinet/disruption_novelty_sciscinet_500k.metadata.json 1.6K
+```
+
+Notes:
+- `--n-papers 500000` is a scan/selection limit before row-level normalization; the final JSONL may contain fewer valid rows.
+- In the run above, `500000` selected rows produced `491820` normalized records.
+- `POLARS_MAX_THREADS=8` and `--batch-size 1000` materially reduced memory pressure versus more aggressive settings.
 
 ## Labels
 
