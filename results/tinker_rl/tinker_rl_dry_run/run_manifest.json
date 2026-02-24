@@ -1,0 +1,194 @@
+{
+  "artifacts": {
+    "config_input_json": "results/tinker_rl/tinker_rl_dry_run/config_input.json",
+    "config_resolved_json": "results/tinker_rl/tinker_rl_dry_run/config_resolved.json",
+    "dataset_info_json": "results/tinker_rl/tinker_rl_dry_run/dataset_info.json",
+    "hosted_client_bootstrap_json": "results/tinker_rl/tinker_rl_dry_run/hosted_client_bootstrap.json",
+    "hosted_prereqs_json": "results/tinker_rl/tinker_rl_dry_run/hosted_prereqs.json",
+    "prompt_leakage_check_json": "results/tinker_rl/tinker_rl_dry_run/prompt_leakage_check.json",
+    "prompt_leakage_samples_jsonl": "results/tinker_rl/tinker_rl_dry_run/prompt_leakage_samples.jsonl",
+    "renderer_info_json": "results/tinker_rl/tinker_rl_dry_run/renderer_info.json",
+    "reward_summary_json": "results/tinker_rl/tinker_rl_dry_run/reward_summary.json",
+    "reward_trace_csv": "results/tinker_rl/tinker_rl_dry_run/reward_trace.csv",
+    "sample_trajectories_jsonl": "results/tinker_rl/tinker_rl_dry_run/sample_trajectories.jsonl",
+    "sampling_policy_json": "results/tinker_rl/tinker_rl_dry_run/sampling_policy.json",
+    "train_batch_histograms_json": "results/tinker_rl/tinker_rl_dry_run/train_batch_histograms.json"
+  },
+  "backend_mode": "offline_smoke",
+  "created_at_utc": "2026-02-23T17:19:38+00:00",
+  "dataset": {
+    "dataset_jsonl": "/Users/akhilpandey/code/writing/tinker/data/sciscinet/disruption_novelty_sciscinet_500k.jsonl",
+    "loaded_train_records": 16,
+    "loaded_val_records": 4,
+    "requested_train_ids": 16,
+    "requested_val_ids": 4,
+    "split_counts": {
+      "test": 49182,
+      "train": 393456,
+      "val": 49182
+    },
+    "split_seed": 20260220,
+    "splits_json": "/Users/akhilpandey/code/writing/tinker/data/sciscinet/disruption_novelty_sciscinet_500k.splits.json",
+    "train_label_histogram": {
+      "consolidating": 5,
+      "disruptive": 6,
+      "neutral": 5
+    },
+    "train_limit_mode": "stratified_scan",
+    "train_split": "train",
+    "val_label_histogram": {
+      "consolidating": 0,
+      "disruptive": 0,
+      "neutral": 4
+    },
+    "val_split": "val"
+  },
+  "dry_run": true,
+  "env_name": "disruption",
+  "hosted_client_bootstrap": {
+    "attempt_remote": false,
+    "reason": "dry_run: remote client bootstrap skipped",
+    "sampling_client_created": false,
+    "sdk_imported": true,
+    "sdk_version": "0.13.1",
+    "service_client_created": false,
+    "training_client_created": false
+  },
+  "hosted_prereqs": {
+    "tinker_api_key_present": false,
+    "tinker_base_url": null,
+    "tinker_cookbook_available": false,
+    "tinker_sdk_available": true,
+    "tinker_sdk_version": "0.13.1"
+  },
+  "hosted_status": {
+    "reason": "dry_run uses offline smoke backend for env/prompt/sampling validation",
+    "state": "not_attempted"
+  },
+  "lora": {
+    "base_lr": 1e-05,
+    "effective_lr": 0.00064,
+    "lora_lr_multiplier": 64.0,
+    "lora_lr_multiplier_source": "heuristic_qwen3_8b",
+    "rank": 32,
+    "train_all_weight_matrices_target": true
+  },
+  "model": {
+    "base_model": "Qwen/Qwen3-8B",
+    "model_family": "qwen3"
+  },
+  "reference_reward_spec_adversarial_local": {
+    "environment": {
+      "label_space": {
+        "disruption": [
+          "disruptive",
+          "consolidating",
+          "neutral"
+        ],
+        "novelty": [
+          "novel",
+          "conventional",
+          "balanced"
+        ]
+      },
+      "max_tokens": 320,
+      "name": "AdversarialDisruptionEnv",
+      "thresholds": {
+        "consolidating_max": -0.1,
+        "disruptive_min": 0.1
+      },
+      "turns": 2
+    },
+    "fixed_for_fair_comparison": true,
+    "reward": {
+      "R_adaptation": {
+        "max": 0.2,
+        "source": "appropriate revision or valid defense after challenge"
+      },
+      "R_correctness": {
+        "correct": 1.0,
+        "incorrect": -1.0
+      },
+      "R_reasoning": {
+        "max": 0.3,
+        "source": "quality of reasoning in final response"
+      },
+      "formula": "R = R_correctness + R_reasoning + R_adaptation",
+      "total_max": 1.5,
+      "total_min": -1.0
+    }
+  },
+  "renderer": {
+    "cookbook_types_available": false,
+    "model_family": "qwen3",
+    "renderer_backend": "simple_bytes_fallback",
+    "validation_scope": "offline_smoke_prompt_serialization_only"
+  },
+  "rl_hyperparams": {
+    "batch_size": 4,
+    "epochs": 1,
+    "group_size": 4,
+    "max_env_tokens": 256,
+    "sampling_strategy": "stratified",
+    "seed": 20260220
+  },
+  "run_dir": "results/tinker_rl/tinker_rl_dry_run",
+  "run_name": "tinker_rl_dry_run",
+  "sampling_policy": {
+    "batch_calls_so_far": 4,
+    "batch_size": 4,
+    "group_size": 4,
+    "label_order_cycle": [
+      "disruptive",
+      "consolidating",
+      "neutral"
+    ],
+    "novelty_label_handling": "Paper.__post_init__ compatibility: novelty_label is re-derived from novelty_score using derive_novelty_label() at env construction time.",
+    "sampling_strategy": "stratified",
+    "seed": 20260220,
+    "train_bucket_sizes": {
+      "consolidating": 5,
+      "disruptive": 6,
+      "neutral": 5
+    },
+    "train_label_histogram_natural": {
+      "consolidating": 5,
+      "disruptive": 6,
+      "neutral": 5
+    },
+    "val_label_histogram_natural": {
+      "consolidating": 0,
+      "disruptive": 0,
+      "neutral": 4
+    }
+  },
+  "task_contract": {
+    "leakage_markers_removed": [
+      "CD Index",
+      "Novelty Score",
+      "Conventionality Score"
+    ],
+    "prompt_max_chars_title_plus_abstract": 2048,
+    "response_format": [
+      "disruption: <label>",
+      "reasoning: <short justification>"
+    ],
+    "turns": 1
+  },
+  "v1_reward_spec": {
+    "R_adaptation": {
+      "max": 0.0
+    },
+    "R_correctness": {
+      "correct": 1.0,
+      "incorrect": -1.0
+    },
+    "R_reasoning": {
+      "max": 0.5
+    },
+    "environment": "DisruptionPredictionEnvV1",
+    "formula": "R = R_correctness + R_reasoning",
+    "total_max": 1.5,
+    "total_min": -1.0
+  }
+}

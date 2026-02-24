@@ -1,0 +1,6 @@
+{
+  "cookbook_types_available": false,
+  "model_family": "qwen3",
+  "renderer_backend": "simple_bytes_fallback",
+  "validation_scope": "offline_smoke_prompt_serialization_only"
+}

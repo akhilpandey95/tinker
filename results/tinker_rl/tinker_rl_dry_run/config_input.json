@@ -1,0 +1,23 @@
+{
+  "base_lr": 1e-05,
+  "base_model": "Qwen/Qwen3-8B",
+  "batch_size": 4,
+  "dataset_jsonl": "data/sciscinet/disruption_novelty_sciscinet_500k.jsonl",
+  "dry_run": true,
+  "env_name": "disruption",
+  "epochs": 1,
+  "group_size": 4,
+  "lora_rank": 32,
+  "max_env_tokens": 256,
+  "max_train": 16,
+  "max_val": 4,
+  "model_family": "qwen3",
+  "output_dir": "results/tinker_rl",
+  "overwrite": true,
+  "prompt_max_chars": 2048,
+  "run_name": "tinker_rl_dry_run",
+  "sampling_strategy": "stratified",
+  "seed": 20260220,
+  "splits_json": "data/sciscinet/disruption_novelty_sciscinet_500k.splits.json",
+  "system_prompt": "You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly."
+}

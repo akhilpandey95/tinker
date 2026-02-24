@@ -1,0 +1,27 @@
+{
+  "dataset_jsonl": "/Users/akhilpandey/code/writing/tinker/data/sciscinet/disruption_novelty_sciscinet_500k.jsonl",
+  "loaded_train_records": 16,
+  "loaded_val_records": 4,
+  "requested_train_ids": 16,
+  "requested_val_ids": 4,
+  "split_counts": {
+    "test": 49182,
+    "train": 393456,
+    "val": 49182
+  },
+  "split_seed": 20260220,
+  "splits_json": "/Users/akhilpandey/code/writing/tinker/data/sciscinet/disruption_novelty_sciscinet_500k.splits.json",
+  "train_label_histogram": {
+    "consolidating": 5,
+    "disruptive": 6,
+    "neutral": 5
+  },
+  "train_limit_mode": "stratified_scan",
+  "train_split": "train",
+  "val_label_histogram": {
+    "consolidating": 0,
+    "disruptive": 0,
+    "neutral": 4
+  },
+  "val_split": "val"
+}

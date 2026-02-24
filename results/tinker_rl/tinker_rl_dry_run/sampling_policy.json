@@ -1,0 +1,28 @@
+{
+  "batch_calls_so_far": 4,
+  "batch_size": 4,
+  "group_size": 4,
+  "label_order_cycle": [
+    "disruptive",
+    "consolidating",
+    "neutral"
+  ],
+  "novelty_label_handling": "Paper.__post_init__ compatibility: novelty_label is re-derived from novelty_score using derive_novelty_label() at env construction time.",
+  "sampling_strategy": "stratified",
+  "seed": 20260220,
+  "train_bucket_sizes": {
+    "consolidating": 5,
+    "disruptive": 6,
+    "neutral": 5
+  },
+  "train_label_histogram_natural": {
+    "consolidating": 5,
+    "disruptive": 6,
+    "neutral": 5
+  },
+  "val_label_histogram_natural": {
+    "consolidating": 0,
+    "disruptive": 0,
+    "neutral": 4
+  }
+}

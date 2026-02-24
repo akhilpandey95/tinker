@@ -1,0 +1,21 @@
+{
+  "gold_label_counts_in_rollouts": {
+    "consolidating": 16,
+    "disruptive": 32,
+    "neutral": 16
+  },
+  "max_reward": 1.5,
+  "mean_R_adaptation": 0.0,
+  "mean_R_correctness": -0.375,
+  "mean_R_reasoning": 0.5,
+  "mean_reward": 0.125,
+  "min_reward": -0.5,
+  "parse_error_rate": 0.0,
+  "predicted_label_counts_in_rollouts": {
+    "consolidating": 21,
+    "disruptive": 27,
+    "neutral": 16
+  },
+  "reward_count": 64,
+  "rewards_non_degenerate": true
+}
