@@ -1,0 +1,38 @@
+{
+  "aggregate_label_counts": {
+    "consolidating": 4,
+    "disruptive": 8,
+    "neutral": 4
+  },
+  "num_batches": 4,
+  "per_batch": [
+    {
+      "batch_index": 0,
+      "consolidating": 1,
+      "disruptive": 2,
+      "epoch": 1,
+      "neutral": 1
+    },
+    {
+      "batch_index": 1,
+      "consolidating": 1,
+      "disruptive": 2,
+      "epoch": 1,
+      "neutral": 1
+    },
+    {
+      "batch_index": 2,
+      "consolidating": 1,
+      "disruptive": 2,
+      "epoch": 1,
+      "neutral": 1
+    },
+    {
+      "batch_index": 3,
+      "consolidating": 1,
+      "disruptive": 2,
+      "epoch": 1,
+      "neutral": 1
+    }
+  ]
+}

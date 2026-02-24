@@ -1,0 +1,9 @@
+{
+  "attempt_remote": false,
+  "reason": "dry_run: remote client bootstrap skipped",
+  "sampling_client_created": false,
+  "sdk_imported": true,
+  "sdk_version": "0.13.1",
+  "service_client_created": false,
+  "training_client_created": false
+}

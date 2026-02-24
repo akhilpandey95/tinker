@@ -1,0 +1,16 @@
+{
+  "checked_prompts": 8,
+  "forbidden_markers": [
+    "CD Index:",
+    "Novelty Score:",
+    "Conventionality Score:",
+    "cd_index",
+    "novelty_score",
+    "conventionality_score"
+  ],
+  "status": "pass",
+  "title_abstract_cap": 2048,
+  "title_abstract_cap_respected": true,
+  "title_abstract_char_sum_max": 2048,
+  "with_leakage": 0
+}
