@@ -1,0 +1,562 @@
+tinker_cookbook.utils.ml_log:477 [INFO] Logging to: /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_171910
+tinker_cookbook.checkpoint_utils:21 [INFO] No checkpoints found at /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_171910/checkpoints.jsonl
+tinker_cookbook.checkpoint_utils:52 [INFO] No checkpoints found with key state_path in /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_171910
+tinker.lib.public_interfaces.service_client:67 [INFO] ServiceClient initialized for session 509619c2-2b8c-5abd-919c-6100828d4435
+tinker.lib.public_interfaces.service_client:151 [INFO] TrainingClient initialized for model 509619c2-2b8c-5abd-919c-6100828d4435:train:0
+tinker_cookbook.rl.train:1215 [INFO] Will train on 2 batches
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting save_checkpoint
+tinker_cookbook.utils.misc_utils:23 [INFO] save_checkpoint took 1.61 seconds
+tinker_cookbook.rl.train:184 [INFO] 
+====== Trajectory Group ======
+****** trajectory idx=0, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: Buckling Behavior of Sandwich Panel with Isotropic Core and Orthotropic Faces
+Abstract: A sandwich panel is a lightweight structure, economical and having low thermal conductivity. It is made up of three layers in which the middle layer is called core which is bounded with thin layers at top and bottom called faces. Generally, the core has relatively low-density which makes it lightweight. The buckling load analysis of sandwich panel having isotropic core and orthotropic faces is studied for different support conditions using the FE based software ABAQUS. The FE model is validated with suitable published results. Then it is used to find critical buckling load of sandwich panel with isotropic core and orthotropic faces. Many new results have been presented for different thickness, end conditions, aspect ratio, etc.
+Year: 2020
+Citations: 0
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let's see. The user wants me to predict the disruption label for this paper. The options are disruptive, consolidating, or neutral. The paper is titled "Buckling Behavior of Sandwich Panel with Isotropic Core and Orthotropic Faces." The abstract mentions they analyzed the buckling load using ABAQUS, validated the model with published results, and presented new results for different parameters like thickness, end conditions, aspect ratio, etc.
+
+First, I need to understand what disruption means in this context. Disruptive would mean the paper introduces something that significantly changes existing practices or knowledge. Consolidating would be about
+****** trajectory idx=1, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: Buckling Behavior of Sandwich Panel with Isotropic Core and Orthotropic Faces
+Abstract: A sandwich panel is a lightweight structure, economical and having low thermal conductivity. It is made up of three layers in which the middle layer is called core which is bounded with thin layers at top and bottom called faces. Generally, the core has relatively low-density which makes it lightweight. The buckling load analysis of sandwich panel having isotropic core and orthotropic faces is studied for different support conditions using the FE based software ABAQUS. The FE model is validated with suitable published results. Then it is used to find critical buckling load of sandwich panel with isotropic core and orthotropic faces. Many new results have been presented for different thickness, end conditions, aspect ratio, etc.
+Year: 2020
+Citations: 0
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let's tackle this disruption prediction. The paper is about the buckling behavior of a sandwich panel with specific material properties. The title and abstract mention using ABAQUS for FE analysis and validating with published results. The key points are that they studied different support conditions, thickness, end conditions, and aspect ratios. 
+
+First, I need to understand the disruption labels: disruptive, consolidating, neutral. Disruptive would mean the paper introduces something groundbreaking that changes existing practices. Consolidating suggests it builds on existing work without major changes. Neutral is if it's neither.
+
+The paper presents new results for various parameters but
+****** trajectory idx=2, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: Buckling Behavior of Sandwich Panel with Isotropic Core and Orthotropic Faces
+Abstract: A sandwich panel is a lightweight structure, economical and having low thermal conductivity. It is made up of three layers in which the middle layer is called core which is bounded with thin layers at top and bottom called faces. Generally, the core has relatively low-density which makes it lightweight. The buckling load analysis of sandwich panel having isotropic core and orthotropic faces is studied for different support conditions using the FE based software ABAQUS. The FE model is validated with suitable published results. Then it is used to find critical buckling load of sandwich panel with isotropic core and orthotropic faces. Many new results have been presented for different thickness, end conditions, aspect ratio, etc.
+Year: 2020
+Citations: 0
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let's see. The user wants me to predict the disruption label for this paper. The options are disruptive, consolidating, or neutral. The paper is about the buckling behavior of a sandwich panel with specific materials. 
+
+First, I need to understand what disruption means in this context. Disruptive would mean the paper introduces something novel that significantly changes existing practices or knowledge. Consolidating might mean it builds on existing work without major changes. Neutral would be if it's neither.
+
+The title and abstract mention studying the buckling load analysis using ABAQUS, validating with published results, and presenting new results for
+****** trajectory idx=3, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: Buckling Behavior of Sandwich Panel with Isotropic Core and Orthotropic Faces
+Abstract: A sandwich panel is a lightweight structure, economical and having low thermal conductivity. It is made up of three layers in which the middle layer is called core which is bounded with thin layers at top and bottom called faces. Generally, the core has relatively low-density which makes it lightweight. The buckling load analysis of sandwich panel having isotropic core and orthotropic faces is studied for different support conditions using the FE based software ABAQUS. The FE model is validated with suitable published results. Then it is used to find critical buckling load of sandwich panel with isotropic core and orthotropic faces. Many new results have been presented for different thickness, end conditions, aspect ratio, etc.
+Year: 2020
+Citations: 0
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let's tackle this disruption prediction. The paper is about the buckling behavior of a sandwich panel with specific material properties. The title and abstract mention using ABAQUS for FE analysis and validating it against published results. They present new results for different parameters like thickness and aspect ratio.
+
+First, I need to understand what disruption labels mean. Disruptive implies a significant innovation or shift in the field. Consolidating suggests building on existing knowledge without major changes. Neutral means it's neither disruptive nor consolidating.
+
+The paper seems to be a computational study validating existing models and providing new data. Since there are no citations,
+====== End Trajectory Group ======
+tinker_cookbook.rl.train:184 [INFO] 
+====== Trajectory Group ======
+****** trajectory idx=0, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: The State of the Discipline: How Far Along Are We in Developing an IR Theory Based on Southeast Asia’s Experiences
+Abstract: Abstract Based on reflexive stocktaking and data collected from a cross-country survey distributed in seven Southeast Asian academic communities, namely Cambodia, Indonesia, Malaysia, Singapore, Thailand, the Philippines, and Vietnam, this article explores how much progress Southeast Asian international relations (IR) academic communities have made in advancing a theory or concept based on local experiences. It is argued that while mainstream IR remains dominant, debates since the early 2000s have introduced new concepts. At the same time, new theoretical proposals are rare due to the vast diversity in Southeast Asia and a general interest in producing policy- and empirical-oriented work. Nevertheless, there are opportunities for constructing a Southeast Asian theory based on the region’s distinct perspectives on international relations shaped by ASEAN norms and institutions and the complex interactions between politics at the domestic and international levels. Any new conceptual or theoretical framework must also provide useful implications beyond the region.
+Year: 2024
+Citations: 0
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let's see. The task is to predict the disruption label for this paper. The options are disruptive, consolidating, or neutral. I need to base my answer on the title, abstract, year, citations, and field.
+
+First, the title mentions the state of the discipline regarding developing an IR theory based on Southeast Asia's experiences. The abstract discusses progress in Southeast Asian IR academic communities, noting that mainstream IR is still dominant but there are new concepts since the early 2000s. They mention debates leading to new concepts but also note that new theoretical proposals are rare due to diversity and focus on policy
+****** trajectory idx=1, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: The State of the Discipline: How Far Along Are We in Developing an IR Theory Based on Southeast Asia’s Experiences
+Abstract: Abstract Based on reflexive stocktaking and data collected from a cross-country survey distributed in seven Southeast Asian academic communities, namely Cambodia, Indonesia, Malaysia, Singapore, Thailand, the Philippines, and Vietnam, this article explores how much progress Southeast Asian international relations (IR) academic communities have made in advancing a theory or concept based on local experiences. It is argued that while mainstream IR remains dominant, debates since the early 2000s have introduced new concepts. At the same time, new theoretical proposals are rare due to the vast diversity in Southeast Asia and a general interest in producing policy- and empirical-oriented work. Nevertheless, there are opportunities for constructing a Southeast Asian theory based on the region’s distinct perspectives on international relations shaped by ASEAN norms and institutions and the complex interactions between politics at the domestic and international levels. Any new conceptual or theoretical framework must also provide useful implications beyond the region.
+Year: 2024
+Citations: 0
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let's see. The user wants me to predict the disruption label for this paper. The options are disruptive, consolidating, or neutral. The paper's title is about the state of the discipline in Southeast Asian IR theory. The abstract mentions that while mainstream IR is still dominant, there have been some new concepts since the early 2000s. However, they note that new theoretical proposals are rare due to diversity and a focus on policy and empirical work. The conclusion suggests opportunities for a Southeast Asian theory but emphasizes the need for a framework that goes beyond the region.
+
+So, disruption labels: disruptive means the
+****** trajectory idx=2, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: The State of the Discipline: How Far Along Are We in Developing an IR Theory Based on Southeast Asia’s Experiences
+Abstract: Abstract Based on reflexive stocktaking and data collected from a cross-country survey distributed in seven Southeast Asian academic communities, namely Cambodia, Indonesia, Malaysia, Singapore, Thailand, the Philippines, and Vietnam, this article explores how much progress Southeast Asian international relations (IR) academic communities have made in advancing a theory or concept based on local experiences. It is argued that while mainstream IR remains dominant, debates since the early 2000s have introduced new concepts. At the same time, new theoretical proposals are rare due to the vast diversity in Southeast Asia and a general interest in producing policy- and empirical-oriented work. Nevertheless, there are opportunities for constructing a Southeast Asian theory based on the region’s distinct perspectives on international relations shaped by ASEAN norms and institutions and the complex interactions between politics at the domestic and international levels. Any new conceptual or theoretical framework must also provide useful implications beyond the region.
+Year: 2024
+Citations: 0
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let's see. The user wants me to predict the disruption label for this paper. The options are disruptive, consolidating, or neutral. 
+
+First, I need to understand what the paper is about. The title is "The State of the Discipline: How Far Along Are We in Developing an IR Theory Based on Southeast Asia’s Experiences." The abstract mentions that the authors did a survey across seven Southeast Asian countries to assess progress in developing an IR theory based on local experiences. They note that mainstream IR is still dominant, but there have been some new concepts since the early 2000s. However,
+****** trajectory idx=3, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: The State of the Discipline: How Far Along Are We in Developing an IR Theory Based on Southeast Asia’s Experiences
+Abstract: Abstract Based on reflexive stocktaking and data collected from a cross-country survey distributed in seven Southeast Asian academic communities, namely Cambodia, Indonesia, Malaysia, Singapore, Thailand, the Philippines, and Vietnam, this article explores how much progress Southeast Asian international relations (IR) academic communities have made in advancing a theory or concept based on local experiences. It is argued that while mainstream IR remains dominant, debates since the early 2000s have introduced new concepts. At the same time, new theoretical proposals are rare due to the vast diversity in Southeast Asia and a general interest in producing policy- and empirical-oriented work. Nevertheless, there are opportunities for constructing a Southeast Asian theory based on the region’s distinct perspectives on international relations shaped by ASEAN norms and institutions and the complex interactions between politics at the domestic and international levels. Any new conceptual or theoretical framework must also provide useful implications beyond the region.
+Year: 2024
+Citations: 0
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let's tackle this. The user wants me to predict the disruption label for the paper titled "The State of the Discipline: How Far Along Are We in Developing an IR Theory Based on Southeast Asia’s Experiences." The allowed labels are disruptive, consolidating, or neutral.
+
+First, I need to understand what disruption means in this context. Disruptive would imply that the paper introduces a new approach or challenges existing theories significantly. Consolidating suggests it's building on existing frameworks without major changes. Neutral means it's neither introducing new ideas nor consolidating existing ones.
+
+Looking at the abstract: The paper is a stocktake
+====== End Trajectory Group ======
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting assemble_training_data
+tinker_cookbook.utils.misc_utils:23 [INFO] assemble_training_data took 0.01 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting train
+tinker_cookbook.utils.misc_utils:23 [INFO] train took 2.12 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting compute_kl_sample_train
+tinker_cookbook.utils.misc_utils:23 [INFO] compute_kl_sample_train took 0.01 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting save_checkpoint
+tinker_cookbook.utils.misc_utils:23 [INFO] save_checkpoint took 1.27 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_171910/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                    Step 0                     
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃ Metric                         ┃ Value      ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│ env/all/R_correctness          │ -1.000000  │
+│ env/all/R_reasoning            │ 0.000000   │
+│ env/all/ac_tokens_per_turn     │ 128.000000 │
+│ env/all/by_group/frac_all_bad  │ 1.000000   │
+│ env/all/by_group/frac_all_good │ 0.000000   │
+│ env/all/by_group/frac_mixed    │ 0.000000   │
+│ env/all/label_correct          │ 0.000000   │
+│ env/all/label_parsed           │ 0.000000   │
+│ env/all/ob_tokens_per_turn     │ 338.000000 │
+│ env/all/parse_success          │ 0.000000   │
+│ env/all/reward/total           │ -1.000000  │
+│ env/all/total_ac_tokens        │ 3072       │
+│ env/all/total_episodes         │ 24         │
+│ env/all/total_ob_tokens        │ 8112       │
+│ env/all/total_turns            │ 24         │
+│ env/all/turns_per_episode      │ 1.000000   │
+│ optim/entropy                  │ 0.154774   │
+│ optim/kl_sample_train_v1       │ 0.000534   │
+│ optim/kl_sample_train_v2       │ 0.000917   │
+│ optim/lr                       │ 0.000010   │
+│ progress/batch                 │ 0          │
+│ progress/done_frac             │ 0.500000   │
+│ time/assemble_training_data    │ 0.006897   │
+│ time/compute_kl_sample_train   │ 0.007485   │
+│ time/save_checkpoint           │ 1.267004   │
+│ time/total                     │ 14.028279  │
+│ time/train                     │ 2.118031   │
+└────────────────────────────────┴────────────┘
+tinker_cookbook.rl.train:184 [INFO] 
+====== Trajectory Group ======
+****** trajectory idx=0, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: Consumers who avoid relationships: social anxiety in commercial contexts
+Abstract: Abstract This article focuses on the study of consumers with social anxiety who avoid relationships in commercial settings. While relationship marketing recommends fostering personal relationships with customers, our research shows that too much closeness can be a problem for people with social anxiety who are apprehensive about interacting with strangers. A qualitative study based on 17 in‐depth interviews with individuals with social anxiety allows us to specify the contexts that give rise to social anxiety—physical closeness between consumer and salesperson, when the interaction is relatively long, in new situations, or in situations designed to be repeated. Our study shows that social anxiety has psychological, economic, and time costs for the consumer. Additionally, the study sets out the relational preferences of people with social anxiety, showing that they prefer neutral, distant or anonymous relationships, that they do not like or benefit from special treatment, nor do they like to be surprised by novelty. The conventional recommendations of relational marketing (e.g., creating a close relationship with customers) are partly called into question by this study, which shows that not all individuals necessarily want such relationships in a commercial context. Copyright © 2016 John Wiley &amp; Sons, Ltd.
+Year: 2016
+Citations: 29
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let me try to figure out the disruption label for this paper. The title is about consumers with social anxiety avoiding relationships in commercial contexts. The abstract mentions that traditional relationship marketing suggests building close customer relationships, but this study shows that for people with social anxiety, too much closeness can be problematic. They did interviews and found that these consumers prefer neutral, distant, or anonymous interactions. The study questions the conventional wisdom of relational marketing, suggesting not all customers want close relationships.
+
+So, disruption labels are disruptive, consolidating, or neutral. Disruptive would mean the paper challenges existing practices or theories. Consolidating would mean
+****** trajectory idx=1, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: Consumers who avoid relationships: social anxiety in commercial contexts
+Abstract: Abstract This article focuses on the study of consumers with social anxiety who avoid relationships in commercial settings. While relationship marketing recommends fostering personal relationships with customers, our research shows that too much closeness can be a problem for people with social anxiety who are apprehensive about interacting with strangers. A qualitative study based on 17 in‐depth interviews with individuals with social anxiety allows us to specify the contexts that give rise to social anxiety—physical closeness between consumer and salesperson, when the interaction is relatively long, in new situations, or in situations designed to be repeated. Our study shows that social anxiety has psychological, economic, and time costs for the consumer. Additionally, the study sets out the relational preferences of people with social anxiety, showing that they prefer neutral, distant or anonymous relationships, that they do not like or benefit from special treatment, nor do they like to be surprised by novelty. The conventional recommendations of relational marketing (e.g., creating a close relationship with customers) are partly called into question by this study, which shows that not all individuals necessarily want such relationships in a commercial context. Copyright © 2016 John Wiley &amp; Sons, Ltd.
+Year: 2016
+Citations: 29
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let me try to figure this out. The task is to predict whether the paper is disruptive, consolidating, or neutral. The labels have specific meanings: disruptive means it introduces a new idea that challenges existing paradigms, consolidating means it builds on previous work without major shifts, and neutral means it's neither.
+
+First, I'll look at the abstract. The paper discusses consumers with social anxiety avoiding relationships in commercial settings. It challenges the traditional relationship marketing approach, which usually promotes building close customer relationships. The study shows that for people with social anxiety, too much closeness can be problematic. They prefer neutral or
+****** trajectory idx=2, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: Consumers who avoid relationships: social anxiety in commercial contexts
+Abstract: Abstract This article focuses on the study of consumers with social anxiety who avoid relationships in commercial settings. While relationship marketing recommends fostering personal relationships with customers, our research shows that too much closeness can be a problem for people with social anxiety who are apprehensive about interacting with strangers. A qualitative study based on 17 in‐depth interviews with individuals with social anxiety allows us to specify the contexts that give rise to social anxiety—physical closeness between consumer and salesperson, when the interaction is relatively long, in new situations, or in situations designed to be repeated. Our study shows that social anxiety has psychological, economic, and time costs for the consumer. Additionally, the study sets out the relational preferences of people with social anxiety, showing that they prefer neutral, distant or anonymous relationships, that they do not like or benefit from special treatment, nor do they like to be surprised by novelty. The conventional recommendations of relational marketing (e.g., creating a close relationship with customers) are partly called into question by this study, which shows that not all individuals necessarily want such relationships in a commercial context. Copyright © 2016 John Wiley &amp; Sons, Ltd.
+Year: 2016
+Citations: 29
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let me try to figure out the disruption label for this paper. The title is about consumers with social anxiety avoiding relationships in commercial contexts. The abstract mentions that relationship marketing usually suggests building close personal relationships with customers, but this study shows that too much closeness can be problematic for people with social anxiety. They did qualitative interviews and found that these consumers prefer neutral, distant, or anonymous relationships. They don't want special treatment or surprises.
+
+So, the key point here is that the traditional approach in relational marketing is being challenged. The study is pointing out that not all consumers want close relationships, especially those with social anxiety.
+****** trajectory idx=3, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: Consumers who avoid relationships: social anxiety in commercial contexts
+Abstract: Abstract This article focuses on the study of consumers with social anxiety who avoid relationships in commercial settings. While relationship marketing recommends fostering personal relationships with customers, our research shows that too much closeness can be a problem for people with social anxiety who are apprehensive about interacting with strangers. A qualitative study based on 17 in‐depth interviews with individuals with social anxiety allows us to specify the contexts that give rise to social anxiety—physical closeness between consumer and salesperson, when the interaction is relatively long, in new situations, or in situations designed to be repeated. Our study shows that social anxiety has psychological, economic, and time costs for the consumer. Additionally, the study sets out the relational preferences of people with social anxiety, showing that they prefer neutral, distant or anonymous relationships, that they do not like or benefit from special treatment, nor do they like to be surprised by novelty. The conventional recommendations of relational marketing (e.g., creating a close relationship with customers) are partly called into question by this study, which shows that not all individuals necessarily want such relationships in a commercial context. Copyright © 2016 John Wiley &amp; Sons, Ltd.
+Year: 2016
+Citations: 29
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let's see. The user wants me to predict the disruption label for this paper. The options are disruptive, consolidating, or neutral. The paper is titled "Consumers who avoid relationships: social anxiety in commercial contexts." The abstract talks about how social anxiety affects consumer relationships in commercial settings. They did a qualitative study with 17 interviews, and found that people with social anxiety prefer more distant or anonymous interactions. The traditional marketing approach of building close relationships might not be suitable for everyone.
+
+So, disruption labels: disruptive means it introduces new ideas that change the field. Consolidating would mean it builds on existing knowledge
+====== End Trajectory Group ======
+tinker_cookbook.rl.train:184 [INFO] 
+====== Trajectory Group ======
+****** trajectory idx=0, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: Canadians’ Opinions and Preferences regarding Seafood, and the Factors That Contribute to Their Consumption and Purchasing Habits
+Abstract: Seafood provides rich sources of nutrients and generates relatively minimal environmental impacts; however, it tends to be underrepresented in discussions around food security. The objective of this study was to determine Canadians’ preferences and opinions regarding seafood consumption. Of the 1000 Canadians that were surveyed, most consume seafood regularly (87%). Apart from preference, nutrition was the primary reason for eating seafood (64%), and not affordability (21%). Younger Canadians, including Millennials (57%) and Gen Z (58%), placed a higher emphasis on preparation and cooking methods when purchasing seafood. Frozen seafood was the most popular selection for home consumption. Most Canadians prefer wild seafood; however, nearly as many had no preference for wild or farmed seafood. Most Canadians indicated that farmed seafood is a sustainable method of harvesting (49%), and many were willing to pay more for certified sustainable seafood. The environment and climate change are important factors when making food choices (54%), and most Canadians prefer to buy seafood that was harvested in Canada (74%). These results provide valuable insight into the attributes that Canadians value in their seafood choices. Sustainable, nutritious seafood with minimal environmental impacts should remain key areas of consideration to grow the seafood sector in Canada.
+Year: 2024
+Citations: 1
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let's tackle this disruption prediction. The paper is about Canadians' opinions on seafood, factors affecting their consumption, and their preferences. The title and abstract mention things like nutrition, sustainability, environmental impact, and purchasing habits.
+
+First, I need to recall the disruption labels: disruptive, consolidating, neutral. Disruptive means the research introduces something that changes existing practices or creates new opportunities. Consolidating would mean it's building on existing knowledge without major changes. Neutral is if it doesn't significantly impact the field.
+
+The study found that most Canadians consume seafood regularly, prioritize nutrition, and care about sustainability and environmental impact.
+****** trajectory idx=1, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: Canadians’ Opinions and Preferences regarding Seafood, and the Factors That Contribute to Their Consumption and Purchasing Habits
+Abstract: Seafood provides rich sources of nutrients and generates relatively minimal environmental impacts; however, it tends to be underrepresented in discussions around food security. The objective of this study was to determine Canadians’ preferences and opinions regarding seafood consumption. Of the 1000 Canadians that were surveyed, most consume seafood regularly (87%). Apart from preference, nutrition was the primary reason for eating seafood (64%), and not affordability (21%). Younger Canadians, including Millennials (57%) and Gen Z (58%), placed a higher emphasis on preparation and cooking methods when purchasing seafood. Frozen seafood was the most popular selection for home consumption. Most Canadians prefer wild seafood; however, nearly as many had no preference for wild or farmed seafood. Most Canadians indicated that farmed seafood is a sustainable method of harvesting (49%), and many were willing to pay more for certified sustainable seafood. The environment and climate change are important factors when making food choices (54%), and most Canadians prefer to buy seafood that was harvested in Canada (74%). These results provide valuable insight into the attributes that Canadians value in their seafood choices. Sustainable, nutritious seafood with minimal environmental impacts should remain key areas of consideration to grow the seafood sector in Canada.
+Year: 2024
+Citations: 1
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let me try to figure out the disruption label for this paper. The title is about Canadians' opinions and preferences regarding seafood, factors affecting their consumption and purchasing habits. The abstract mentions that seafood is nutritious and has minimal environmental impact, but it's underrepresented in food security discussions. The study found that most Canadians consume seafood regularly, with nutrition being the main reason. Younger generations care more about preparation methods, frozen seafood is popular, and there's a preference for wild but also acceptance of farmed seafood. Sustainability is important, and people are willing to pay more for certified sustainable options. Environment and climate change are key
+****** trajectory idx=2, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: Canadians’ Opinions and Preferences regarding Seafood, and the Factors That Contribute to Their Consumption and Purchasing Habits
+Abstract: Seafood provides rich sources of nutrients and generates relatively minimal environmental impacts; however, it tends to be underrepresented in discussions around food security. The objective of this study was to determine Canadians’ preferences and opinions regarding seafood consumption. Of the 1000 Canadians that were surveyed, most consume seafood regularly (87%). Apart from preference, nutrition was the primary reason for eating seafood (64%), and not affordability (21%). Younger Canadians, including Millennials (57%) and Gen Z (58%), placed a higher emphasis on preparation and cooking methods when purchasing seafood. Frozen seafood was the most popular selection for home consumption. Most Canadians prefer wild seafood; however, nearly as many had no preference for wild or farmed seafood. Most Canadians indicated that farmed seafood is a sustainable method of harvesting (49%), and many were willing to pay more for certified sustainable seafood. The environment and climate change are important factors when making food choices (54%), and most Canadians prefer to buy seafood that was harvested in Canada (74%). These results provide valuable insight into the attributes that Canadians value in their seafood choices. Sustainable, nutritious seafood with minimal environmental impacts should remain key areas of consideration to grow the seafood sector in Canada.
+Year: 2024
+Citations: 1
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let's tackle this. The user wants me to predict the disruption label for the given paper. The options are disruptive, consolidating, or neutral. I need to look at the paper's content and determine which label fits best.
+
+First, the title is about Canadians' opinions on seafood, their preferences, and factors affecting consumption and purchasing habits. The abstract mentions that seafood is nutritious and has minimal environmental impact, but it's underrepresented in food security discussions. The study found that most Canadians consume seafood regularly, with nutrition being the main reason. Younger generations care about preparation methods and prefer frozen seafood. They also value
+****** trajectory idx=3, reward=-1 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.0
+    parse_success: 0
+    label_parsed: 0
+    label_correct: 0
+---- datum ----
+<|im_start|>system
+You are a scientific impact prediction model. Predict the disruption label and provide brief reasoning. Follow the output format exactly.<|im_end|>
+<|im_start|>user
+Predict the disruption label for the paper.
+Allowed labels: disruptive, consolidating, neutral.
+Return exactly:
+disruption: <label>
+reasoning: <short justification>
+
+Title: Canadians’ Opinions and Preferences regarding Seafood, and the Factors That Contribute to Their Consumption and Purchasing Habits
+Abstract: Seafood provides rich sources of nutrients and generates relatively minimal environmental impacts; however, it tends to be underrepresented in discussions around food security. The objective of this study was to determine Canadians’ preferences and opinions regarding seafood consumption. Of the 1000 Canadians that were surveyed, most consume seafood regularly (87%). Apart from preference, nutrition was the primary reason for eating seafood (64%), and not affordability (21%). Younger Canadians, including Millennials (57%) and Gen Z (58%), placed a higher emphasis on preparation and cooking methods when purchasing seafood. Frozen seafood was the most popular selection for home consumption. Most Canadians prefer wild seafood; however, nearly as many had no preference for wild or farmed seafood. Most Canadians indicated that farmed seafood is a sustainable method of harvesting (49%), and many were willing to pay more for certified sustainable seafood. The environment and climate change are important factors when making food choices (54%), and most Canadians prefer to buy seafood that was harvested in Canada (74%). These results provide valuable insight into the attributes that Canadians value in their seafood choices. Sustainable, nutritious seafood with minimal environmental impacts should remain key areas of consideration to grow the seafood sector in Canada.
+Year: 2024
+Citations: 1
+Field: Article<|im_end|>
+<|im_start|>assistant
+<think>
+Okay, let me try to figure out the disruption label for this paper. The title is about Canadians' opinions and preferences regarding seafood, factors contributing to their consumption and purchasing habits. The abstract mentions that most Canadians consume seafood regularly, nutrition is the main reason, and they prefer wild seafood but also consider sustainability. They're willing to pay more for certified sustainable seafood, and environmental factors are important.
+
+So, disruption labels are disruptive, consolidating, or neutral. Disruptive would mean the paper introduces something that changes the industry or creates new opportunities. Consolidating might mean it's bringing together existing knowledge or reinforcing current practices. Neutral
+====== End Trajectory Group ======
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting assemble_training_data
+tinker_cookbook.utils.misc_utils:23 [INFO] assemble_training_data took 0.01 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting train
+tinker_cookbook.utils.misc_utils:23 [INFO] train took 2.00 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting compute_kl_sample_train
+tinker_cookbook.utils.misc_utils:23 [INFO] compute_kl_sample_train took 0.00 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting save_checkpoint
+tinker_cookbook.utils.misc_utils:23 [INFO] save_checkpoint took 1.20 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_171910/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+                    Step 1                     
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃ Metric                         ┃ Value      ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│ env/all/R_correctness          │ -1.000000  │
+│ env/all/R_reasoning            │ 0.000000   │
+│ env/all/ac_tokens_per_turn     │ 128.000000 │
+│ env/all/by_group/frac_all_bad  │ 1.000000   │
+│ env/all/by_group/frac_all_good │ 0.000000   │
+│ env/all/by_group/frac_mixed    │ 0.000000   │
+│ env/all/label_correct          │ 0.000000   │
+│ env/all/label_parsed           │ 0.000000   │
+│ env/all/ob_tokens_per_turn     │ 351.500000 │
+│ env/all/parse_success          │ 0.000000   │
+│ env/all/reward/total           │ -1.000000  │
+│ env/all/total_ac_tokens        │ 3072       │
+│ env/all/total_episodes         │ 24         │
+│ env/all/total_ob_tokens        │ 8436       │
+│ env/all/total_turns            │ 24         │
+│ env/all/turns_per_episode      │ 1.000000   │
+│ optim/entropy                  │ 0.181152   │
+│ optim/kl_sample_train_v1       │ -0.000780  │
+│ optim/kl_sample_train_v2       │ 0.001064   │
+│ optim/lr                       │ 0.000010   │
+│ progress/batch                 │ 1          │
+│ progress/done_frac             │ 1.000000   │
+│ time/assemble_training_data    │ 0.010477   │
+│ time/compute_kl_sample_train   │ 0.001458   │
+│ time/save_checkpoint           │ 1.204360   │
+│ time/total                     │ 13.261670  │
+│ time/train                     │ 2.000916   │
+└────────────────────────────────┴────────────┘
+tinker_cookbook.checkpoint_utils:84 [INFO] Saved checkpoints: {'state_path': 'tinker://509619c2-2b8c-5abd-919c-6100828d4435:train:0/weights/final', 'sampler_path': 'tinker://509619c2-2b8c-5abd-919c-6100828d4435:train:0/sampler_weights/final'}
+tinker_cookbook.rl.train:1263 [INFO] Training completed successfully

@@ -323,4 +323,7 @@ auto-save-list
 tramp
 .\#*
 
+# env
+.env
+
 # End of https://www.gitignore.io/api/r,c++,linux,julia,macos,python,windows,microsoftoffice,jupyternotebooks

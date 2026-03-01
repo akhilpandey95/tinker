@@ -1,0 +1,5 @@
+tinker_cookbook.utils.ml_log:477 [INFO] Logging to: /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_171709
+tinker_cookbook.checkpoint_utils:21 [INFO] No checkpoints found at /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_171709/checkpoints.jsonl
+tinker_cookbook.checkpoint_utils:52 [INFO] No checkpoints found with key state_path in /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_171709
+tinker.lib.public_interfaces.service_client:67 [INFO] ServiceClient initialized for session 3c20c0ba-e4a9-556a-a4c3-8118e5fb23e1
+tinker.lib.public_interfaces.service_client:151 [INFO] TrainingClient initialized for model 3c20c0ba-e4a9-556a-a4c3-8118e5fb23e1:train:0

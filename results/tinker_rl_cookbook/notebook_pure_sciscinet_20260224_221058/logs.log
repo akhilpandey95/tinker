@@ -1,0 +1,586 @@
+tinker_cookbook.utils.ml_log:477 [INFO] Logging to: /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_221058
+tinker_cookbook.checkpoint_utils:21 [INFO] No checkpoints found at /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_221058/checkpoints.jsonl
+tinker_cookbook.checkpoint_utils:52 [INFO] No checkpoints found with key state_path in /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_221058
+tinker.lib.public_interfaces.service_client:67 [INFO] ServiceClient initialized for session d4cc4d7c-f3c4-558a-96d4-2012c4dd3ce8
+tinker.lib.public_interfaces.service_client:151 [INFO] TrainingClient initialized for model d4cc4d7c-f3c4-558a-96d4-2012c4dd3ce8:train:0
+tinker_cookbook.rl.train:1215 [INFO] Will train on 2 batches
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting save_checkpoint
+tinker_cookbook.utils.misc_utils:23 [INFO] save_checkpoint took 1.24 seconds
+tinker_cookbook.rl.train:184 [INFO] 
+====== Trajectory Group ======
+****** trajectory idx=0, reward=1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: 1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 1
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Buckling Behavior of Sandwich Panel with Isotropic Core and Orthotropic Faces
+[0m[33mAbstract: A sandwich panel is a lightweight structure, economical and having low thermal conductivity. It is made up of three layers in which the middle layer is called core which is bounded with thin layers at top and bottom called faces. Generally, the core has relatively low-density which makes it lightweight. The buckling load analysis of sandwich panel having isotropic core and orthotropic faces is studied for different support conditions using the FE based software ABAQUS. The FE model is validated with suitable published results. Then it is used to find critical buckling load of sandwich panel with isotropic core and orthotropic faces. Many new results have been presented for different thickness, end conditions, aspect ratio, etc.
+[0m[33mYear: 2020
+[0m[33mCitations: 0
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The research focuses on the buckling behavior of a specific composite structure without introducing significant technological or methodological advancements that would disrupt existing practices or fields.<|im_end|>[0m
+****** trajectory idx=1, reward=1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: 1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 1
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Buckling Behavior of Sandwich Panel with Isotropic Core and Orthotropic Faces
+[0m[33mAbstract: A sandwich panel is a lightweight structure, economical and having low thermal conductivity. It is made up of three layers in which the middle layer is called core which is bounded with thin layers at top and bottom called faces. Generally, the core has relatively low-density which makes it lightweight. The buckling load analysis of sandwich panel having isotropic core and orthotropic faces is studied for different support conditions using the FE based software ABAQUS. The FE model is validated with suitable published results. Then it is used to find critical buckling load of sandwich panel with isotropic core and orthotropic faces. Many new results have been presented for different thickness, end conditions, aspect ratio, etc.
+[0m[33mYear: 2020
+[0m[33mCitations: 0
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper presents a numerical study on the buckling behavior of a specific sandwich panel configuration, contributing to existing knowledge but not introducing a novel concept or technology that would disrupt the field.<|im_end|>[0m
+****** trajectory idx=2, reward=1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: 1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 1
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Buckling Behavior of Sandwich Panel with Isotropic Core and Orthotropic Faces
+[0m[33mAbstract: A sandwich panel is a lightweight structure, economical and having low thermal conductivity. It is made up of three layers in which the middle layer is called core which is bounded with thin layers at top and bottom called faces. Generally, the core has relatively low-density which makes it lightweight. The buckling load analysis of sandwich panel having isotropic core and orthotropic faces is studied for different support conditions using the FE based software ABAQUS. The FE model is validated with suitable published results. Then it is used to find critical buckling load of sandwich panel with isotropic core and orthotropic faces. Many new results have been presented for different thickness, end conditions, aspect ratio, etc.
+[0m[33mYear: 2020
+[0m[33mCitations: 0
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper presents a study on the buckling behavior of a specific type of sandwich panel, contributing to existing knowledge but not introducing a novel concept or significant technological advancement that would disrupt the field.<|im_end|>[0m
+****** trajectory idx=3, reward=1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: 1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 1
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Buckling Behavior of Sandwich Panel with Isotropic Core and Orthotropic Faces
+[0m[33mAbstract: A sandwich panel is a lightweight structure, economical and having low thermal conductivity. It is made up of three layers in which the middle layer is called core which is bounded with thin layers at top and bottom called faces. Generally, the core has relatively low-density which makes it lightweight. The buckling load analysis of sandwich panel having isotropic core and orthotropic faces is studied for different support conditions using the FE based software ABAQUS. The FE model is validated with suitable published results. Then it is used to find critical buckling load of sandwich panel with isotropic core and orthotropic faces. Many new results have been presented for different thickness, end conditions, aspect ratio, etc.
+[0m[33mYear: 2020
+[0m[33mCitations: 0
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper provides a detailed analysis of the buckling behavior of a specific type of sandwich panel without introducing novel methodologies or significant advancements that would disrupt existing practices or knowledge in the field.<|im_end|>[0m
+====== End Trajectory Group ======
+tinker_cookbook.rl.train:184 [INFO] 
+====== Trajectory Group ======
+****** trajectory idx=0, reward=1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: 1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 1
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: The State of the Discipline: How Far Along Are We in Developing an IR Theory Based on Southeast Asia’s Experiences
+[0m[33mAbstract: Abstract Based on reflexive stocktaking and data collected from a cross-country survey distributed in seven Southeast Asian academic communities, namely Cambodia, Indonesia, Malaysia, Singapore, Thailand, the Philippines, and Vietnam, this article explores how much progress Southeast Asian international relations (IR) academic communities have made in advancing a theory or concept based on local experiences. It is argued that while mainstream IR remains dominant, debates since the early 2000s have introduced new concepts. At the same time, new theoretical proposals are rare due to the vast diversity in Southeast Asia and a general interest in producing policy- and empirical-oriented work. Nevertheless, there are opportunities for constructing a Southeast Asian theory based on the region’s distinct perspectives on international relations shaped by ASEAN norms and institutions and the complex interactions between politics at the domestic and international levels. Any new conceptual or theoretical framework must also provide useful implications beyond the region.
+[0m[33mYear: 2024
+[0m[33mCitations: 0
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper reviews the state of IR theory development in Southeast Asia without introducing a new disruptive framework or challenging existing paradigms significantly. It highlights existing trends and opportunities but does not propose a transformative theory.<|im_end|>[0m
+****** trajectory idx=1, reward=1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: 1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 1
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: The State of the Discipline: How Far Along Are We in Developing an IR Theory Based on Southeast Asia’s Experiences
+[0m[33mAbstract: Abstract Based on reflexive stocktaking and data collected from a cross-country survey distributed in seven Southeast Asian academic communities, namely Cambodia, Indonesia, Malaysia, Singapore, Thailand, the Philippines, and Vietnam, this article explores how much progress Southeast Asian international relations (IR) academic communities have made in advancing a theory or concept based on local experiences. It is argued that while mainstream IR remains dominant, debates since the early 2000s have introduced new concepts. At the same time, new theoretical proposals are rare due to the vast diversity in Southeast Asia and a general interest in producing policy- and empirical-oriented work. Nevertheless, there are opportunities for constructing a Southeast Asian theory based on the region’s distinct perspectives on international relations shaped by ASEAN norms and institutions and the complex interactions between politics at the domestic and international levels. Any new conceptual or theoretical framework must also provide useful implications beyond the region.
+[0m[33mYear: 2024
+[0m[33mCitations: 0
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper contributes to academic discourse by reviewing progress in Southeast Asian IR theory but does not introduce groundbreaking concepts or challenge existing frameworks significantly.<|im_end|>[0m
+****** trajectory idx=2, reward=1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: 1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 1
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: The State of the Discipline: How Far Along Are We in Developing an IR Theory Based on Southeast Asia’s Experiences
+[0m[33mAbstract: Abstract Based on reflexive stocktaking and data collected from a cross-country survey distributed in seven Southeast Asian academic communities, namely Cambodia, Indonesia, Malaysia, Singapore, Thailand, the Philippines, and Vietnam, this article explores how much progress Southeast Asian international relations (IR) academic communities have made in advancing a theory or concept based on local experiences. It is argued that while mainstream IR remains dominant, debates since the early 2000s have introduced new concepts. At the same time, new theoretical proposals are rare due to the vast diversity in Southeast Asia and a general interest in producing policy- and empirical-oriented work. Nevertheless, there are opportunities for constructing a Southeast Asian theory based on the region’s distinct perspectives on international relations shaped by ASEAN norms and institutions and the complex interactions between politics at the domestic and international levels. Any new conceptual or theoretical framework must also provide useful implications beyond the region.
+[0m[33mYear: 2024
+[0m[33mCitations: 0
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper contributes to academic discourse by assessing progress in Southeast Asian IR theory but does not introduce novel disruptive concepts or challenge existing paradigms significantly.<|im_end|>[0m
+****** trajectory idx=3, reward=1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: 1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 1
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: The State of the Discipline: How Far Along Are We in Developing an IR Theory Based on Southeast Asia’s Experiences
+[0m[33mAbstract: Abstract Based on reflexive stocktaking and data collected from a cross-country survey distributed in seven Southeast Asian academic communities, namely Cambodia, Indonesia, Malaysia, Singapore, Thailand, the Philippines, and Vietnam, this article explores how much progress Southeast Asian international relations (IR) academic communities have made in advancing a theory or concept based on local experiences. It is argued that while mainstream IR remains dominant, debates since the early 2000s have introduced new concepts. At the same time, new theoretical proposals are rare due to the vast diversity in Southeast Asia and a general interest in producing policy- and empirical-oriented work. Nevertheless, there are opportunities for constructing a Southeast Asian theory based on the region’s distinct perspectives on international relations shaped by ASEAN norms and institutions and the complex interactions between politics at the domestic and international levels. Any new conceptual or theoretical framework must also provide useful implications beyond the region.
+[0m[33mYear: 2024
+[0m[33mCitations: 0
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper reviews the state of IR theory development in Southeast Asia without introducing a novel theory or disruptive framework, focusing instead on existing trends and opportunities for future work.<|im_end|>[0m
+====== End Trajectory Group ======
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting assemble_training_data
+tinker_cookbook.utils.misc_utils:23 [INFO] assemble_training_data took 0.01 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting train
+tinker_cookbook.utils.misc_utils:23 [INFO] train took 2.47 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting compute_kl_sample_train
+tinker_cookbook.utils.misc_utils:23 [INFO] compute_kl_sample_train took 0.01 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting save_checkpoint
+tinker_cookbook.utils.misc_utils:23 [INFO] save_checkpoint took 2.02 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_221058/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+[3m                    Step 0                     [0m
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃[1;35m [0m[1;35mMetric                        [0m[1;35m [0m┃[1;35m [0m[1;35mValue     [0m[1;35m [0m┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│[36m [0m[36menv/all/R_correctness         [0m[36m [0m│[32m [0m[32m0.166667  [0m[32m [0m│
+│[36m [0m[36menv/all/R_reasoning           [0m[36m [0m│[32m [0m[32m0.500000  [0m[32m [0m│
+│[36m [0m[36menv/all/ac_tokens_per_turn    [0m[36m [0m│[32m [0m[32m42.041667 [0m[32m [0m│
+│[36m [0m[36menv/all/by_group/frac_all_bad [0m[36m [0m│[32m [0m[32m0.333333  [0m[32m [0m│
+│[36m [0m[36menv/all/by_group/frac_all_good[0m[36m [0m│[32m [0m[32m0.500000  [0m[32m [0m│
+│[36m [0m[36menv/all/by_group/frac_mixed   [0m[36m [0m│[32m [0m[32m0.166667  [0m[32m [0m│
+│[36m [0m[36menv/all/label_correct         [0m[36m [0m│[32m [0m[32m0.583333  [0m[32m [0m│
+│[36m [0m[36menv/all/label_parsed          [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/ob_tokens_per_turn    [0m[36m [0m│[32m [0m[32m362.000000[0m[32m [0m│
+│[36m [0m[36menv/all/parse_success         [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/reward/total          [0m[36m [0m│[32m [0m[32m0.666667  [0m[32m [0m│
+│[36m [0m[36menv/all/total_ac_tokens       [0m[36m [0m│[32m [0m[32m1009      [0m[32m [0m│
+│[36m [0m[36menv/all/total_episodes        [0m[36m [0m│[32m [0m[32m24        [0m[32m [0m│
+│[36m [0m[36menv/all/total_ob_tokens       [0m[36m [0m│[32m [0m[32m8688      [0m[32m [0m│
+│[36m [0m[36menv/all/total_turns           [0m[36m [0m│[32m [0m[32m24        [0m[32m [0m│
+│[36m [0m[36menv/all/turns_per_episode     [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36moptim/entropy                 [0m[36m [0m│[32m [0m[32m0.202368  [0m[32m [0m│
+│[36m [0m[36moptim/kl_sample_train_v1      [0m[36m [0m│[32m [0m[32m0.002125  [0m[32m [0m│
+│[36m [0m[36moptim/kl_sample_train_v2      [0m[36m [0m│[32m [0m[32m0.001406  [0m[32m [0m│
+│[36m [0m[36moptim/lr                      [0m[36m [0m│[32m [0m[32m0.000010  [0m[32m [0m│
+│[36m [0m[36mprogress/batch                [0m[36m [0m│[32m [0m[32m0         [0m[32m [0m│
+│[36m [0m[36mprogress/done_frac            [0m[36m [0m│[32m [0m[32m0.500000  [0m[32m [0m│
+│[36m [0m[36mtime/assemble_training_data   [0m[36m [0m│[32m [0m[32m0.010069  [0m[32m [0m│
+│[36m [0m[36mtime/compute_kl_sample_train  [0m[36m [0m│[32m [0m[32m0.009383  [0m[32m [0m│
+│[36m [0m[36mtime/save_checkpoint          [0m[36m [0m│[32m [0m[32m2.019774  [0m[32m [0m│
+│[36m [0m[36mtime/total                    [0m[36m [0m│[32m [0m[32m13.727132 [0m[32m [0m│
+│[36m [0m[36mtime/train                    [0m[36m [0m│[32m [0m[32m2.471354  [0m[32m [0m│
+└────────────────────────────────┴────────────┘
+tinker_cookbook.rl.train:184 [INFO] 
+====== Trajectory Group ======
+****** trajectory idx=0, reward=-0.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Consumers who avoid relationships: social anxiety in commercial contexts
+[0m[33mAbstract: Abstract This article focuses on the study of consumers with social anxiety who avoid relationships in commercial settings. While relationship marketing recommends fostering personal relationships with customers, our research shows that too much closeness can be a problem for people with social anxiety who are apprehensive about interacting with strangers. A qualitative study based on 17 in‐depth interviews with individuals with social anxiety allows us to specify the contexts that give rise to social anxiety—physical closeness between consumer and salesperson, when the interaction is relatively long, in new situations, or in situations designed to be repeated. Our study shows that social anxiety has psychological, economic, and time costs for the consumer. Additionally, the study sets out the relational preferences of people with social anxiety, showing that they prefer neutral, distant or anonymous relationships, that they do not like or benefit from special treatment, nor do they like to be surprised by novelty. The conventional recommendations of relational marketing (e.g., creating a close relationship with customers) are partly called into question by this study, which shows that not all individuals necessarily want such relationships in a commercial context. Copyright © 2016 John Wiley &amp; Sons, Ltd.
+[0m[33mYear: 2016
+[0m[33mCitations: 29
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: consolidating  
+[0m[33mreasoning: The paper challenges traditional relationship marketing strategies by highlighting the needs of socially anxious consumers, which may lead to a more nuanced approach in marketing rather than a disruptive shift.<|im_end|>[0m
+****** trajectory idx=1, reward=-0.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Consumers who avoid relationships: social anxiety in commercial contexts
+[0m[33mAbstract: Abstract This article focuses on the study of consumers with social anxiety who avoid relationships in commercial settings. While relationship marketing recommends fostering personal relationships with customers, our research shows that too much closeness can be a problem for people with social anxiety who are apprehensive about interacting with strangers. A qualitative study based on 17 in‐depth interviews with individuals with social anxiety allows us to specify the contexts that give rise to social anxiety—physical closeness between consumer and salesperson, when the interaction is relatively long, in new situations, or in situations designed to be repeated. Our study shows that social anxiety has psychological, economic, and time costs for the consumer. Additionally, the study sets out the relational preferences of people with social anxiety, showing that they prefer neutral, distant or anonymous relationships, that they do not like or benefit from special treatment, nor do they like to be surprised by novelty. The conventional recommendations of relational marketing (e.g., creating a close relationship with customers) are partly called into question by this study, which shows that not all individuals necessarily want such relationships in a commercial context. Copyright © 2016 John Wiley &amp; Sons, Ltd.
+[0m[33mYear: 2016
+[0m[33mCitations: 29
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: consolidating  
+[0m[33mreasoning: The study challenges traditional relationship marketing approaches by highlighting the negative impacts of closeness on socially anxious consumers, suggesting a need to adjust marketing strategies to accommodate diverse consumer preferences.<|im_end|>[0m
+****** trajectory idx=2, reward=-0.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Consumers who avoid relationships: social anxiety in commercial contexts
+[0m[33mAbstract: Abstract This article focuses on the study of consumers with social anxiety who avoid relationships in commercial settings. While relationship marketing recommends fostering personal relationships with customers, our research shows that too much closeness can be a problem for people with social anxiety who are apprehensive about interacting with strangers. A qualitative study based on 17 in‐depth interviews with individuals with social anxiety allows us to specify the contexts that give rise to social anxiety—physical closeness between consumer and salesperson, when the interaction is relatively long, in new situations, or in situations designed to be repeated. Our study shows that social anxiety has psychological, economic, and time costs for the consumer. Additionally, the study sets out the relational preferences of people with social anxiety, showing that they prefer neutral, distant or anonymous relationships, that they do not like or benefit from special treatment, nor do they like to be surprised by novelty. The conventional recommendations of relational marketing (e.g., creating a close relationship with customers) are partly called into question by this study, which shows that not all individuals necessarily want such relationships in a commercial context. Copyright © 2016 John Wiley &amp; Sons, Ltd.
+[0m[33mYear: 2016
+[0m[33mCitations: 29
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: consolidating  
+[0m[33mreasoning: The paper challenges traditional relationship marketing by highlighting the needs of socially anxious consumers, potentially leading to more nuanced marketing strategies rather than a disruptive shift.<|im_end|>[0m
+****** trajectory idx=3, reward=-0.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Consumers who avoid relationships: social anxiety in commercial contexts
+[0m[33mAbstract: Abstract This article focuses on the study of consumers with social anxiety who avoid relationships in commercial settings. While relationship marketing recommends fostering personal relationships with customers, our research shows that too much closeness can be a problem for people with social anxiety who are apprehensive about interacting with strangers. A qualitative study based on 17 in‐depth interviews with individuals with social anxiety allows us to specify the contexts that give rise to social anxiety—physical closeness between consumer and salesperson, when the interaction is relatively long, in new situations, or in situations designed to be repeated. Our study shows that social anxiety has psychological, economic, and time costs for the consumer. Additionally, the study sets out the relational preferences of people with social anxiety, showing that they prefer neutral, distant or anonymous relationships, that they do not like or benefit from special treatment, nor do they like to be surprised by novelty. The conventional recommendations of relational marketing (e.g., creating a close relationship with customers) are partly called into question by this study, which shows that not all individuals necessarily want such relationships in a commercial context. Copyright © 2016 John Wiley &amp; Sons, Ltd.
+[0m[33mYear: 2016
+[0m[33mCitations: 29
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: consolidating  
+[0m[33mreasoning: The study challenges traditional relationship marketing by highlighting the limitations of close customer relationships for socially anxious consumers, suggesting a shift towards more neutral and distant interactions in commercial contexts.<|im_end|>[0m
+====== End Trajectory Group ======
+tinker_cookbook.rl.train:184 [INFO] 
+====== Trajectory Group ======
+****** trajectory idx=0, reward=1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: 1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 1
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Canadians’ Opinions and Preferences regarding Seafood, and the Factors That Contribute to Their Consumption and Purchasing Habits
+[0m[33mAbstract: Seafood provides rich sources of nutrients and generates relatively minimal environmental impacts; however, it tends to be underrepresented in discussions around food security. The objective of this study was to determine Canadians’ preferences and opinions regarding seafood consumption. Of the 1000 Canadians that were surveyed, most consume seafood regularly (87%). Apart from preference, nutrition was the primary reason for eating seafood (64%), and not affordability (21%). Younger Canadians, including Millennials (57%) and Gen Z (58%), placed a higher emphasis on preparation and cooking methods when purchasing seafood. Frozen seafood was the most popular selection for home consumption. Most Canadians prefer wild seafood; however, nearly as many had no preference for wild or farmed seafood. Most Canadians indicated that farmed seafood is a sustainable method of harvesting (49%), and many were willing to pay more for certified sustainable seafood. The environment and climate change are important factors when making food choices (54%), and most Canadians prefer to buy seafood that was harvested in Canada (74%). These results provide valuable insight into the attributes that Canadians value in their seafood choices. Sustainable, nutritious seafood with minimal environmental impacts should remain key areas of consideration to grow the seafood sector in Canada.
+[0m[33mYear: 2024
+[0m[33mCitations: 1
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[32mdisruption: neutral  
+[0m[32mreasoning: The study provides insights into consumer preferences and sustainability concerns but does not introduce novel methodologies or significant technological advancements that would disrupt existing practices in the seafood industry.<|im_end|>[0m
+****** trajectory idx=1, reward=-0.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Canadians’ Opinions and Preferences regarding Seafood, and the Factors That Contribute to Their Consumption and Purchasing Habits
+[0m[33mAbstract: Seafood provides rich sources of nutrients and generates relatively minimal environmental impacts; however, it tends to be underrepresented in discussions around food security. The objective of this study was to determine Canadians’ preferences and opinions regarding seafood consumption. Of the 1000 Canadians that were surveyed, most consume seafood regularly (87%). Apart from preference, nutrition was the primary reason for eating seafood (64%), and not affordability (21%). Younger Canadians, including Millennials (57%) and Gen Z (58%), placed a higher emphasis on preparation and cooking methods when purchasing seafood. Frozen seafood was the most popular selection for home consumption. Most Canadians prefer wild seafood; however, nearly as many had no preference for wild or farmed seafood. Most Canadians indicated that farmed seafood is a sustainable method of harvesting (49%), and many were willing to pay more for certified sustainable seafood. The environment and climate change are important factors when making food choices (54%), and most Canadians prefer to buy seafood that was harvested in Canada (74%). These results provide valuable insight into the attributes that Canadians value in their seafood choices. Sustainable, nutritious seafood with minimal environmental impacts should remain key areas of consideration to grow the seafood sector in Canada.
+[0m[33mYear: 2024
+[0m[33mCitations: 1
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[31mdisruption: consolidating  
+[0m[31mreasoning: The study provides insights into consumer preferences and sustainable practices but does not introduce new technologies or significant changes that would disrupt the seafood industry.<|im_end|>[0m
+****** trajectory idx=2, reward=-0.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Canadians’ Opinions and Preferences regarding Seafood, and the Factors That Contribute to Their Consumption and Purchasing Habits
+[0m[33mAbstract: Seafood provides rich sources of nutrients and generates relatively minimal environmental impacts; however, it tends to be underrepresented in discussions around food security. The objective of this study was to determine Canadians’ preferences and opinions regarding seafood consumption. Of the 1000 Canadians that were surveyed, most consume seafood regularly (87%). Apart from preference, nutrition was the primary reason for eating seafood (64%), and not affordability (21%). Younger Canadians, including Millennials (57%) and Gen Z (58%), placed a higher emphasis on preparation and cooking methods when purchasing seafood. Frozen seafood was the most popular selection for home consumption. Most Canadians prefer wild seafood; however, nearly as many had no preference for wild or farmed seafood. Most Canadians indicated that farmed seafood is a sustainable method of harvesting (49%), and many were willing to pay more for certified sustainable seafood. The environment and climate change are important factors when making food choices (54%), and most Canadians prefer to buy seafood that was harvested in Canada (74%). These results provide valuable insight into the attributes that Canadians value in their seafood choices. Sustainable, nutritious seafood with minimal environmental impacts should remain key areas of consideration to grow the seafood sector in Canada.
+[0m[33mYear: 2024
+[0m[33mCitations: 1
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[31mdisruption: consolidating  
+[0m[31mreasoning: The study provides insights into consumer preferences and sustainable practices related to seafood, which supports existing trends rather than introducing revolutionary changes in the industry.<|im_end|>[0m
+****** trajectory idx=3, reward=-0.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -1.0
+    R_reasoning: 0.5
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Canadians’ Opinions and Preferences regarding Seafood, and the Factors That Contribute to Their Consumption and Purchasing Habits
+[0m[33mAbstract: Seafood provides rich sources of nutrients and generates relatively minimal environmental impacts; however, it tends to be underrepresented in discussions around food security. The objective of this study was to determine Canadians’ preferences and opinions regarding seafood consumption. Of the 1000 Canadians that were surveyed, most consume seafood regularly (87%). Apart from preference, nutrition was the primary reason for eating seafood (64%), and not affordability (21%). Younger Canadians, including Millennials (57%) and Gen Z (58%), placed a higher emphasis on preparation and cooking methods when purchasing seafood. Frozen seafood was the most popular selection for home consumption. Most Canadians prefer wild seafood; however, nearly as many had no preference for wild or farmed seafood. Most Canadians indicated that farmed seafood is a sustainable method of harvesting (49%), and many were willing to pay more for certified sustainable seafood. The environment and climate change are important factors when making food choices (54%), and most Canadians prefer to buy seafood that was harvested in Canada (74%). These results provide valuable insight into the attributes that Canadians value in their seafood choices. Sustainable, nutritious seafood with minimal environmental impacts should remain key areas of consideration to grow the seafood sector in Canada.
+[0m[33mYear: 2024
+[0m[33mCitations: 1
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[31mdisruption: consolidating  
+[0m[31mreasoning: The study consolidates existing knowledge about consumer preferences and sustainability concerns related to seafood in Canada, providing insights that support ongoing efforts in the seafood industry rather than introducing new disruptive technologies or practices.<|im_end|>[0m
+====== End Trajectory Group ======
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting assemble_training_data
+tinker_cookbook.utils.misc_utils:23 [INFO] assemble_training_data took 0.01 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting train
+tinker_cookbook.utils.misc_utils:23 [INFO] train took 2.22 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting compute_kl_sample_train
+tinker_cookbook.utils.misc_utils:23 [INFO] compute_kl_sample_train took 0.00 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting save_checkpoint
+tinker_cookbook.utils.misc_utils:23 [INFO] save_checkpoint took 1.31 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_221058/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+[3m                    Step 1                     [0m
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃[1;35m [0m[1;35mMetric                        [0m[1;35m [0m┃[1;35m [0m[1;35mValue     [0m[1;35m [0m┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│[36m [0m[36menv/all/R_correctness         [0m[36m [0m│[32m [0m[32m-0.500000 [0m[32m [0m│
+│[36m [0m[36menv/all/R_reasoning           [0m[36m [0m│[32m [0m[32m0.500000  [0m[32m [0m│
+│[36m [0m[36menv/all/ac_tokens_per_turn    [0m[36m [0m│[32m [0m[32m43.000000 [0m[32m [0m│
+│[36m [0m[36menv/all/by_group/frac_all_bad [0m[36m [0m│[32m [0m[32m0.500000  [0m[32m [0m│
+│[36m [0m[36menv/all/by_group/frac_all_good[0m[36m [0m│[32m [0m[32m0.166667  [0m[32m [0m│
+│[36m [0m[36menv/all/by_group/frac_mixed   [0m[36m [0m│[32m [0m[32m0.333333  [0m[32m [0m│
+│[36m [0m[36menv/all/label_correct         [0m[36m [0m│[32m [0m[32m0.250000  [0m[32m [0m│
+│[36m [0m[36menv/all/label_parsed          [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/ob_tokens_per_turn    [0m[36m [0m│[32m [0m[32m375.500000[0m[32m [0m│
+│[36m [0m[36menv/all/parse_success         [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/reward/total          [0m[36m [0m│[32m [0m[32m0.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/total_ac_tokens       [0m[36m [0m│[32m [0m[32m1032      [0m[32m [0m│
+│[36m [0m[36menv/all/total_episodes        [0m[36m [0m│[32m [0m[32m24        [0m[32m [0m│
+│[36m [0m[36menv/all/total_ob_tokens       [0m[36m [0m│[32m [0m[32m9012      [0m[32m [0m│
+│[36m [0m[36menv/all/total_turns           [0m[36m [0m│[32m [0m[32m24        [0m[32m [0m│
+│[36m [0m[36menv/all/turns_per_episode     [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36moptim/entropy                 [0m[36m [0m│[32m [0m[32m0.217466  [0m[32m [0m│
+│[36m [0m[36moptim/kl_sample_train_v1      [0m[36m [0m│[32m [0m[32m0.000853  [0m[32m [0m│
+│[36m [0m[36moptim/kl_sample_train_v2      [0m[36m [0m│[32m [0m[32m0.001436  [0m[32m [0m│
+│[36m [0m[36moptim/lr                      [0m[36m [0m│[32m [0m[32m0.000010  [0m[32m [0m│
+│[36m [0m[36mprogress/batch                [0m[36m [0m│[32m [0m[32m1         [0m[32m [0m│
+│[36m [0m[36mprogress/done_frac            [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36mtime/assemble_training_data   [0m[36m [0m│[32m [0m[32m0.007347  [0m[32m [0m│
+│[36m [0m[36mtime/compute_kl_sample_train  [0m[36m [0m│[32m [0m[32m0.002140  [0m[32m [0m│
+│[36m [0m[36mtime/save_checkpoint          [0m[36m [0m│[32m [0m[32m1.311952  [0m[32m [0m│
+│[36m [0m[36mtime/total                    [0m[36m [0m│[32m [0m[32m11.043641 [0m[32m [0m│
+│[36m [0m[36mtime/train                    [0m[36m [0m│[32m [0m[32m2.220592  [0m[32m [0m│
+└────────────────────────────────┴────────────┘
+tinker_cookbook.checkpoint_utils:84 [INFO] Saved checkpoints: {'state_path': 'tinker://d4cc4d7c-f3c4-558a-96d4-2012c4dd3ce8:train:0/weights/final', 'sampler_path': 'tinker://d4cc4d7c-f3c4-558a-96d4-2012c4dd3ce8:train:0/sampler_weights/final'}
+tinker_cookbook.rl.train:1263 [INFO] Training completed successfully

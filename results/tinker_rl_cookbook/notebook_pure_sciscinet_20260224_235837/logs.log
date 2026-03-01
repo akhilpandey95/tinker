@@ -1,0 +1,658 @@
+tinker_cookbook.utils.ml_log:477 [INFO] Logging to: /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_235837
+tinker_cookbook.checkpoint_utils:21 [INFO] No checkpoints found at /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_235837/checkpoints.jsonl
+tinker_cookbook.checkpoint_utils:52 [INFO] No checkpoints found with key state_path in /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_235837
+tinker.lib.public_interfaces.service_client:67 [INFO] ServiceClient initialized for session 1ca6a056-55e2-5164-b3a4-ae0820d3dd83
+tinker.lib.public_interfaces.service_client:151 [INFO] TrainingClient initialized for model 1ca6a056-55e2-5164-b3a4-ae0820d3dd83:train:0
+tinker_cookbook.rl.train:1215 [INFO] Will train on 2 batches
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting save_checkpoint
+tinker_cookbook.utils.misc_utils:23 [INFO] save_checkpoint took 48.55 seconds
+tinker_cookbook.rl.train:184 [INFO] 
+====== Trajectory Group ======
+****** trajectory idx=0, reward=-1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -2.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 2.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Drug Interactions Due to Cytochrome P450
+[0m[33mAbstract: Cytochrome P450 is a family of isozymes responsible for the biotransformation of several drugs. Drug metabolism via the cytochrome P450 system has emerged as an important determinant in the occurrence of several drug interactions that can result in drug toxicities, reduced pharmacological effect, and adverse drug reactions. Recognizing whether the drugs involved act as enzyme substrates, inducers, or inhibitors can prevent clinically significant interactions from occurring. Avoiding coadministration or anticipating potential problems and adjusting a patient's drug regimen early in the course of therapy can provide optimal response with minimal adverse effects.
+[0m[33mYear: 2000
+[0m[33mCitations: 332
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: consolidating  
+[0m[33mreasoning: The paper consolidates existing knowledge on cytochrome P450's role in drug interactions and provides guidelines for clinical practice, rather than introducing novel disruptive concepts.<|im_end|>[0m
+****** trajectory idx=1, reward=-1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -2.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 2.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Drug Interactions Due to Cytochrome P450
+[0m[33mAbstract: Cytochrome P450 is a family of isozymes responsible for the biotransformation of several drugs. Drug metabolism via the cytochrome P450 system has emerged as an important determinant in the occurrence of several drug interactions that can result in drug toxicities, reduced pharmacological effect, and adverse drug reactions. Recognizing whether the drugs involved act as enzyme substrates, inducers, or inhibitors can prevent clinically significant interactions from occurring. Avoiding coadministration or anticipating potential problems and adjusting a patient's drug regimen early in the course of therapy can provide optimal response with minimal adverse effects.
+[0m[33mYear: 2000
+[0m[33mCitations: 332
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: consolidating  
+[0m[33mreasoning: The paper provides foundational knowledge on cytochrome P450 drug interactions, reinforcing established practices rather than introducing novel disruptive technologies or paradigms.<|im_end|>[0m
+****** trajectory idx=2, reward=-1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -2.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 2.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Drug Interactions Due to Cytochrome P450
+[0m[33mAbstract: Cytochrome P450 is a family of isozymes responsible for the biotransformation of several drugs. Drug metabolism via the cytochrome P450 system has emerged as an important determinant in the occurrence of several drug interactions that can result in drug toxicities, reduced pharmacological effect, and adverse drug reactions. Recognizing whether the drugs involved act as enzyme substrates, inducers, or inhibitors can prevent clinically significant interactions from occurring. Avoiding coadministration or anticipating potential problems and adjusting a patient's drug regimen early in the course of therapy can provide optimal response with minimal adverse effects.
+[0m[33mYear: 2000
+[0m[33mCitations: 332
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: consolidating  
+[0m[33mreasoning: The paper consolidates existing knowledge on cytochrome P450 drug interactions, providing a foundation for clinical practice rather than introducing novel disruptive technologies or concepts.<|im_end|>[0m
+****** trajectory idx=3, reward=-1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -2.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 2.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Drug Interactions Due to Cytochrome P450
+[0m[33mAbstract: Cytochrome P450 is a family of isozymes responsible for the biotransformation of several drugs. Drug metabolism via the cytochrome P450 system has emerged as an important determinant in the occurrence of several drug interactions that can result in drug toxicities, reduced pharmacological effect, and adverse drug reactions. Recognizing whether the drugs involved act as enzyme substrates, inducers, or inhibitors can prevent clinically significant interactions from occurring. Avoiding coadministration or anticipating potential problems and adjusting a patient's drug regimen early in the course of therapy can provide optimal response with minimal adverse effects.
+[0m[33mYear: 2000
+[0m[33mCitations: 332
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper provides foundational knowledge on drug interactions related to Cytochrome P450, which is crucial for clinical practice but does not introduce novel disruptive technologies or methodologies.<|im_end|>[0m
+====== End Trajectory Group ======
+tinker_cookbook.rl.train:184 [INFO] 
+====== Trajectory Group ======
+****** trajectory idx=0, reward=3.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: 3.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 3.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 1
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: End Point of the<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi mathvariant="italic">rp</mml:mi></mml:math>Process on Accreting Neutron Stars
+[0m[33mAbstract: We calculate the rapid proton ( rp) capture process of hydrogen burning on the surface of an accreting neutron star with an updated reaction network that extends up to Xe, far beyond previous work. In both steady-state nuclear burning appropriate for rapidly accreting neutron stars (such as the magnetic polar caps of accreting x-ray pulsars) and unstable burning of type I x-ray bursts, we find that the rp process ends in a closed SnSbTe cycle. This prevents the synthesis of elements heavier than Te and has important consequences for x-ray burst profiles, the composition of accreting neutron stars, and potentially galactic nucleosynthesis of light p nuclei.
+[0m[33mYear: 2001
+[0m[33mCitations: 499
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[32mdisruption: consolidating
+[0m[32mreasoning: The study provides detailed insights into nuclear burning processes on neutron stars, consolidating existing knowledge about the rp process and its limitations in synthesizing heavier elements.<|im_end|>[0m
+****** trajectory idx=1, reward=3.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: 3.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 3.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 1
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: End Point of the<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi mathvariant="italic">rp</mml:mi></mml:math>Process on Accreting Neutron Stars
+[0m[33mAbstract: We calculate the rapid proton ( rp) capture process of hydrogen burning on the surface of an accreting neutron star with an updated reaction network that extends up to Xe, far beyond previous work. In both steady-state nuclear burning appropriate for rapidly accreting neutron stars (such as the magnetic polar caps of accreting x-ray pulsars) and unstable burning of type I x-ray bursts, we find that the rp process ends in a closed SnSbTe cycle. This prevents the synthesis of elements heavier than Te and has important consequences for x-ray burst profiles, the composition of accreting neutron stars, and potentially galactic nucleosynthesis of light p nuclei.
+[0m[33mYear: 2001
+[0m[33mCitations: 499
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[32mdisruption: consolidating  
+[0m[32mreasoning: The study provides a detailed analysis of the rp process on neutron stars, confirming earlier findings and reinforcing the understanding of nuclear burning in astrophysical contexts.<|im_end|>[0m
+****** trajectory idx=2, reward=-2.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -3.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 3.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: End Point of the<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi mathvariant="italic">rp</mml:mi></mml:math>Process on Accreting Neutron Stars
+[0m[33mAbstract: We calculate the rapid proton ( rp) capture process of hydrogen burning on the surface of an accreting neutron star with an updated reaction network that extends up to Xe, far beyond previous work. In both steady-state nuclear burning appropriate for rapidly accreting neutron stars (such as the magnetic polar caps of accreting x-ray pulsars) and unstable burning of type I x-ray bursts, we find that the rp process ends in a closed SnSbTe cycle. This prevents the synthesis of elements heavier than Te and has important consequences for x-ray burst profiles, the composition of accreting neutron stars, and potentially galactic nucleosynthesis of light p nuclei.
+[0m[33mYear: 2001
+[0m[33mCitations: 499
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[31mdisruption: disruptive  
+[0m[31mreasoning: The study reveals a fundamental change in the understanding of nucleosynthesis processes on neutron stars, altering predictions about element synthesis and x-ray burst behavior.<|im_end|>[0m
+****** trajectory idx=3, reward=3.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: 3.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 3.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 1
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: End Point of the<mml:math xmlns:mml="http://www.w3.org/1998/Math/MathML" display="inline"><mml:mi mathvariant="italic">rp</mml:mi></mml:math>Process on Accreting Neutron Stars
+[0m[33mAbstract: We calculate the rapid proton ( rp) capture process of hydrogen burning on the surface of an accreting neutron star with an updated reaction network that extends up to Xe, far beyond previous work. In both steady-state nuclear burning appropriate for rapidly accreting neutron stars (such as the magnetic polar caps of accreting x-ray pulsars) and unstable burning of type I x-ray bursts, we find that the rp process ends in a closed SnSbTe cycle. This prevents the synthesis of elements heavier than Te and has important consequences for x-ray burst profiles, the composition of accreting neutron stars, and potentially galactic nucleosynthesis of light p nuclei.
+[0m[33mYear: 2001
+[0m[33mCitations: 499
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[32mdisruption: consolidating
+[0m[32mreasoning: The paper provides foundational insights into nuclear burning processes on neutron stars, but does not introduce novel disruptive technologies or paradigm shifts in the field.<|im_end|>[0m
+====== End Trajectory Group ======
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting assemble_training_data
+tinker_cookbook.utils.misc_utils:23 [INFO] assemble_training_data took 0.01 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting train
+tinker_cookbook.utils.misc_utils:23 [INFO] train took 2.12 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting compute_kl_sample_train
+tinker_cookbook.utils.misc_utils:23 [INFO] compute_kl_sample_train took 0.01 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting save_checkpoint
+tinker_cookbook.utils.misc_utils:23 [INFO] save_checkpoint took 1.38 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_235837/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+[3m                    Step 0                     [0m
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃[1;35m [0m[1;35mMetric                        [0m[1;35m [0m┃[1;35m [0m[1;35mValue     [0m[1;35m [0m┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│[36m [0m[36menv/all/R_correctness         [0m[36m [0m│[32m [0m[32m-0.583333 [0m[32m [0m│
+│[36m [0m[36menv/all/R_format              [0m[36m [0m│[32m [0m[32m0.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/R_reasoning           [0m[36m [0m│[32m [0m[32m0.500000  [0m[32m [0m│
+│[36m [0m[36menv/all/ac_tokens_per_turn    [0m[36m [0m│[32m [0m[32m39.416667 [0m[32m [0m│
+│[36m [0m[36menv/all/by_group/frac_all_bad [0m[36m [0m│[32m [0m[32m0.500000  [0m[32m [0m│
+│[36m [0m[36menv/all/by_group/frac_all_good[0m[36m [0m│[32m [0m[32m0.333333  [0m[32m [0m│
+│[36m [0m[36menv/all/by_group/frac_mixed   [0m[36m [0m│[32m [0m[32m0.166667  [0m[32m [0m│
+│[36m [0m[36menv/all/correctness_weight    [0m[36m [0m│[32m [0m[32m2.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/format_strict_ok      [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/has_forbidden_output_…[0m[36m [0m│[32m [0m[32m0.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/label_correct         [0m[36m [0m│[32m [0m[32m0.458333  [0m[32m [0m│
+│[36m [0m[36menv/all/label_parsed          [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/ob_tokens_per_turn    [0m[36m [0m│[32m [0m[32m357.333333[0m[32m [0m│
+│[36m [0m[36menv/all/parse_success         [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/reward/total          [0m[36m [0m│[32m [0m[32m-0.083333 [0m[32m [0m│
+│[36m [0m[36menv/all/total_ac_tokens       [0m[36m [0m│[32m [0m[32m946       [0m[32m [0m│
+│[36m [0m[36menv/all/total_episodes        [0m[36m [0m│[32m [0m[32m24        [0m[32m [0m│
+│[36m [0m[36menv/all/total_ob_tokens       [0m[36m [0m│[32m [0m[32m8576      [0m[32m [0m│
+│[36m [0m[36menv/all/total_turns           [0m[36m [0m│[32m [0m[32m24        [0m[32m [0m│
+│[36m [0m[36menv/all/turns_per_episode     [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36moptim/entropy                 [0m[36m [0m│[32m [0m[32m0.236492  [0m[32m [0m│
+│[36m [0m[36moptim/kl_sample_train_v1      [0m[36m [0m│[32m [0m[32m0.001111  [0m[32m [0m│
+│[36m [0m[36moptim/kl_sample_train_v2      [0m[36m [0m│[32m [0m[32m0.001930  [0m[32m [0m│
+│[36m [0m[36moptim/lr                      [0m[36m [0m│[32m [0m[32m0.000010  [0m[32m [0m│
+│[36m [0m[36mprogress/batch                [0m[36m [0m│[32m [0m[32m0         [0m[32m [0m│
+│[36m [0m[36mprogress/done_frac            [0m[36m [0m│[32m [0m[32m0.500000  [0m[32m [0m│
+│[36m [0m[36mtime/assemble_training_data   [0m[36m [0m│[32m [0m[32m0.008637  [0m[32m [0m│
+│[36m [0m[36mtime/compute_kl_sample_train  [0m[36m [0m│[32m [0m[32m0.009483  [0m[32m [0m│
+│[36m [0m[36mtime/save_checkpoint          [0m[36m [0m│[32m [0m[32m1.384569  [0m[32m [0m│
+│[36m [0m[36mtime/total                    [0m[36m [0m│[32m [0m[32m10.850785 [0m[32m [0m│
+│[36m [0m[36mtime/train                    [0m[36m [0m│[32m [0m[32m2.116795  [0m[32m [0m│
+└────────────────────────────────┴────────────┘
+tinker_cookbook.rl.train:184 [INFO] 
+====== Trajectory Group ======
+****** trajectory idx=0, reward=-1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -2.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 2.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: The Optical Constants of Liquid Alloys
+[0m[33mAbstract: This paper describes a determination of the two optical constants of molten metals, the index of refraction, $\ensuremath{\nu}$, and the index of absorption, $\ensuremath{\kappa}$ from the reflection of polarized light at molten-metal surfaces, placed in an inactive atmosphere.The purpose of this experiment is to throw some light upon the behaviour of free electrons in metals.Method.---The constants, $\ensuremath{\nu}$ and $\ensuremath{\kappa}$, are computed from the phase change $\ensuremath{\Delta}$, and the azimuth change $\ensuremath{\psi}$, of polarized light reflected from the surface of the liquid metal at an angle of incidence $\ensuremath{\varphi}$. A Jamin circle is employed, the azimuth of the analyzer being determined by a bi-field of new design.A furnace for melting the metals is made up by winding a few yards of nichrome wire on a hollow iron cone, thus maintaining a temperature of about 400\ifmmode^\circ\else\textdegree\fi{} C. The whole furnace is operated in a water-cooled container through which a stream of hydrogen is made to flow continuously.The metals employed are bismuth, cadmium, tin, lead and binary alloys of these. As a source of light, three strong rays from a quartz mercury arc are used.Results.---A good optical surface is obtained, free from the scratches and impurities of polishing materials.Values of ${v}^{2}\ensuremath{-}{\ensuremath{\kappa}}^{2}$ and $2\ensuremath{\nu}\ensuremath{\kappa}$, are plotted as functions of the composition (atomic concentration) of each alloy. The parameters of the free electrons are also computed and plotted as functions of the composition of the alloy. These parameters are: (1) the product $N\frac{{e}^{2}}{m}$, where the symbols have the meanings usually given in the e...
+[0m[33mYear: 1919
+[0m[33mCitations: 42
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper presents foundational research on optical constants of liquid alloys, contributing to the understanding of free electrons in metals but not introducing transformative technology or significant paradigm shifts.<|im_end|>[0m
+****** trajectory idx=1, reward=-1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -2.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 2.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: The Optical Constants of Liquid Alloys
+[0m[33mAbstract: This paper describes a determination of the two optical constants of molten metals, the index of refraction, $\ensuremath{\nu}$, and the index of absorption, $\ensuremath{\kappa}$ from the reflection of polarized light at molten-metal surfaces, placed in an inactive atmosphere.The purpose of this experiment is to throw some light upon the behaviour of free electrons in metals.Method.---The constants, $\ensuremath{\nu}$ and $\ensuremath{\kappa}$, are computed from the phase change $\ensuremath{\Delta}$, and the azimuth change $\ensuremath{\psi}$, of polarized light reflected from the surface of the liquid metal at an angle of incidence $\ensuremath{\varphi}$. A Jamin circle is employed, the azimuth of the analyzer being determined by a bi-field of new design.A furnace for melting the metals is made up by winding a few yards of nichrome wire on a hollow iron cone, thus maintaining a temperature of about 400\ifmmode^\circ\else\textdegree\fi{} C. The whole furnace is operated in a water-cooled container through which a stream of hydrogen is made to flow continuously.The metals employed are bismuth, cadmium, tin, lead and binary alloys of these. As a source of light, three strong rays from a quartz mercury arc are used.Results.---A good optical surface is obtained, free from the scratches and impurities of polishing materials.Values of ${v}^{2}\ensuremath{-}{\ensuremath{\kappa}}^{2}$ and $2\ensuremath{\nu}\ensuremath{\kappa}$, are plotted as functions of the composition (atomic concentration) of each alloy. The parameters of the free electrons are also computed and plotted as functions of the composition of the alloy. These parameters are: (1) the product $N\frac{{e}^{2}}{m}$, where the symbols have the meanings usually given in the e...
+[0m[33mYear: 1919
+[0m[33mCitations: 42
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: consolidating  
+[0m[33mreasoning: The paper provides foundational research on optical constants of liquid alloys, contributing to the understanding of free electrons in metals but not introducing transformative technology or concepts that would disrupt existing fields.<|im_end|>[0m
+****** trajectory idx=2, reward=-1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -2.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 2.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: The Optical Constants of Liquid Alloys
+[0m[33mAbstract: This paper describes a determination of the two optical constants of molten metals, the index of refraction, $\ensuremath{\nu}$, and the index of absorption, $\ensuremath{\kappa}$ from the reflection of polarized light at molten-metal surfaces, placed in an inactive atmosphere.The purpose of this experiment is to throw some light upon the behaviour of free electrons in metals.Method.---The constants, $\ensuremath{\nu}$ and $\ensuremath{\kappa}$, are computed from the phase change $\ensuremath{\Delta}$, and the azimuth change $\ensuremath{\psi}$, of polarized light reflected from the surface of the liquid metal at an angle of incidence $\ensuremath{\varphi}$. A Jamin circle is employed, the azimuth of the analyzer being determined by a bi-field of new design.A furnace for melting the metals is made up by winding a few yards of nichrome wire on a hollow iron cone, thus maintaining a temperature of about 400\ifmmode^\circ\else\textdegree\fi{} C. The whole furnace is operated in a water-cooled container through which a stream of hydrogen is made to flow continuously.The metals employed are bismuth, cadmium, tin, lead and binary alloys of these. As a source of light, three strong rays from a quartz mercury arc are used.Results.---A good optical surface is obtained, free from the scratches and impurities of polishing materials.Values of ${v}^{2}\ensuremath{-}{\ensuremath{\kappa}}^{2}$ and $2\ensuremath{\nu}\ensuremath{\kappa}$, are plotted as functions of the composition (atomic concentration) of each alloy. The parameters of the free electrons are also computed and plotted as functions of the composition of the alloy. These parameters are: (1) the product $N\frac{{e}^{2}}{m}$, where the symbols have the meanings usually given in the e...
+[0m[33mYear: 1919
+[0m[33mCitations: 42
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: consolidating  
+[0m[33mreasoning: The paper provides foundational research on optical constants of liquid alloys, which is essential for understanding metal properties but does not introduce revolutionary concepts or technologies that would disrupt existing fields.<|im_end|>[0m
+****** trajectory idx=3, reward=-1.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -2.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 2.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: The Optical Constants of Liquid Alloys
+[0m[33mAbstract: This paper describes a determination of the two optical constants of molten metals, the index of refraction, $\ensuremath{\nu}$, and the index of absorption, $\ensuremath{\kappa}$ from the reflection of polarized light at molten-metal surfaces, placed in an inactive atmosphere.The purpose of this experiment is to throw some light upon the behaviour of free electrons in metals.Method.---The constants, $\ensuremath{\nu}$ and $\ensuremath{\kappa}$, are computed from the phase change $\ensuremath{\Delta}$, and the azimuth change $\ensuremath{\psi}$, of polarized light reflected from the surface of the liquid metal at an angle of incidence $\ensuremath{\varphi}$. A Jamin circle is employed, the azimuth of the analyzer being determined by a bi-field of new design.A furnace for melting the metals is made up by winding a few yards of nichrome wire on a hollow iron cone, thus maintaining a temperature of about 400\ifmmode^\circ\else\textdegree\fi{} C. The whole furnace is operated in a water-cooled container through which a stream of hydrogen is made to flow continuously.The metals employed are bismuth, cadmium, tin, lead and binary alloys of these. As a source of light, three strong rays from a quartz mercury arc are used.Results.---A good optical surface is obtained, free from the scratches and impurities of polishing materials.Values of ${v}^{2}\ensuremath{-}{\ensuremath{\kappa}}^{2}$ and $2\ensuremath{\nu}\ensuremath{\kappa}$, are plotted as functions of the composition (atomic concentration) of each alloy. The parameters of the free electrons are also computed and plotted as functions of the composition of the alloy. These parameters are: (1) the product $N\frac{{e}^{2}}{m}$, where the symbols have the meanings usually given in the e...
+[0m[33mYear: 1919
+[0m[33mCitations: 42
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The research focuses on fundamental optical properties of liquid alloys and free electrons, contributing to theoretical understanding without significant technological or industry disruption.<|im_end|>[0m
+====== End Trajectory Group ======
+tinker_cookbook.rl.train:184 [INFO] 
+====== Trajectory Group ======
+****** trajectory idx=0, reward=-2.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -3.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 3.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Suicide by Ligature Strangulation
+[0m[33mAbstract: Suicide by ligature strangulation, which gives the initial impression of a homicide, is very rare. In this article, 3 suicidal death cases caused by ligature strangulation in Konya between 2001 and 2006 are presented. The first victim was a 68-year-old man who suffered from depression and lived alone in a cottage house. He terminated his life by applying a tourniquet to his neck after leaving a suicide note. The second victim was a 70-year-old woman who was found dead on the floor of the living room in her house. After she cut the vessels in her wrist, she tied pantyhose with 3 knots around her neck. It was reported that she had been intermittently receiving treatment for bronchial asthma and depression for 20 years. The third victim was a 30-year-old woman who suffered from schizophrenia for 6 years. She tied a scarf around her neck with 3 knots and died in the hospital after 1 day due to "hypoxic brain syndrome." As a result of the death scene investigations, autopsies, and judicial inquiries, it was concluded that death was by suicide in all 3 cases. Because the use of the ligature strangulation method, and particularly the tourniquet method, in suicidal cases is extremely rare in the literature, our aim is to present and discuss these cases.
+[0m[33mYear: 2009
+[0m[33mCitations: 20
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper presents case studies of rare suicide methods and does not introduce new methodologies or significant findings that would disrupt existing practices or knowledge in the field.<|im_end|>[0m
+****** trajectory idx=1, reward=-2.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -3.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 3.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Suicide by Ligature Strangulation
+[0m[33mAbstract: Suicide by ligature strangulation, which gives the initial impression of a homicide, is very rare. In this article, 3 suicidal death cases caused by ligature strangulation in Konya between 2001 and 2006 are presented. The first victim was a 68-year-old man who suffered from depression and lived alone in a cottage house. He terminated his life by applying a tourniquet to his neck after leaving a suicide note. The second victim was a 70-year-old woman who was found dead on the floor of the living room in her house. After she cut the vessels in her wrist, she tied pantyhose with 3 knots around her neck. It was reported that she had been intermittently receiving treatment for bronchial asthma and depression for 20 years. The third victim was a 30-year-old woman who suffered from schizophrenia for 6 years. She tied a scarf around her neck with 3 knots and died in the hospital after 1 day due to "hypoxic brain syndrome." As a result of the death scene investigations, autopsies, and judicial inquiries, it was concluded that death was by suicide in all 3 cases. Because the use of the ligature strangulation method, and particularly the tourniquet method, in suicidal cases is extremely rare in the literature, our aim is to present and discuss these cases.
+[0m[33mYear: 2009
+[0m[33mCitations: 20
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper presents case studies of rare suicidal methods and does not introduce new methodologies or technologies that would disrupt existing practices in the field.<|im_end|>[0m
+****** trajectory idx=2, reward=-2.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -3.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 3.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Suicide by Ligature Strangulation
+[0m[33mAbstract: Suicide by ligature strangulation, which gives the initial impression of a homicide, is very rare. In this article, 3 suicidal death cases caused by ligature strangulation in Konya between 2001 and 2006 are presented. The first victim was a 68-year-old man who suffered from depression and lived alone in a cottage house. He terminated his life by applying a tourniquet to his neck after leaving a suicide note. The second victim was a 70-year-old woman who was found dead on the floor of the living room in her house. After she cut the vessels in her wrist, she tied pantyhose with 3 knots around her neck. It was reported that she had been intermittently receiving treatment for bronchial asthma and depression for 20 years. The third victim was a 30-year-old woman who suffered from schizophrenia for 6 years. She tied a scarf around her neck with 3 knots and died in the hospital after 1 day due to "hypoxic brain syndrome." As a result of the death scene investigations, autopsies, and judicial inquiries, it was concluded that death was by suicide in all 3 cases. Because the use of the ligature strangulation method, and particularly the tourniquet method, in suicidal cases is extremely rare in the literature, our aim is to present and discuss these cases.
+[0m[33mYear: 2009
+[0m[33mCitations: 20
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper presents case studies on rare suicide methods and does not introduce novel methodologies or findings that significantly impact the field of forensic science or psychiatry.<|im_end|>[0m
+****** trajectory idx=3, reward=-2.5 ******
+Per-step metrics:
+  Step 0:
+    R_correctness: -3.0
+    R_reasoning: 0.5
+    R_format: 0.0
+    correctness_weight: 3.0
+    parse_success: 1
+    label_parsed: 1
+    label_correct: 0
+    format_strict_ok: 1
+    has_forbidden_output_marker: 0
+---- datum ----
+[33m<|im_start|>system
+[0m[33mYou are a scientific impact prediction model. Return exactly two lines. First line must be: disruption: <label>. Second line must be: reasoning: <short justification>. Do not output <think> or hidden reasoning.<|im_end|>
+[0m[33m<|im_start|>user
+[0m[33mPredict the disruption label for the paper.
+[0m[33mAllowed labels: disruptive, consolidating, neutral.
+[0m[33mReturn exactly:
+[0m[33mdisruption: <label>
+[0m[33mreasoning: <short justification>
+[0m[33m
+[0m[33mTitle: Suicide by Ligature Strangulation
+[0m[33mAbstract: Suicide by ligature strangulation, which gives the initial impression of a homicide, is very rare. In this article, 3 suicidal death cases caused by ligature strangulation in Konya between 2001 and 2006 are presented. The first victim was a 68-year-old man who suffered from depression and lived alone in a cottage house. He terminated his life by applying a tourniquet to his neck after leaving a suicide note. The second victim was a 70-year-old woman who was found dead on the floor of the living room in her house. After she cut the vessels in her wrist, she tied pantyhose with 3 knots around her neck. It was reported that she had been intermittently receiving treatment for bronchial asthma and depression for 20 years. The third victim was a 30-year-old woman who suffered from schizophrenia for 6 years. She tied a scarf around her neck with 3 knots and died in the hospital after 1 day due to "hypoxic brain syndrome." As a result of the death scene investigations, autopsies, and judicial inquiries, it was concluded that death was by suicide in all 3 cases. Because the use of the ligature strangulation method, and particularly the tourniquet method, in suicidal cases is extremely rare in the literature, our aim is to present and discuss these cases.
+[0m[33mYear: 2009
+[0m[33mCitations: 20
+[0m[33mField: Article<|im_end|>
+[0m[33m<|im_start|>assistant
+[0m[33m<think>
+[0m[33m
+[0m[33m</think>
+[0m[33m
+[0m[33mdisruption: neutral  
+[0m[33mreasoning: The paper presents case studies on a rare suicide method and does not introduce new methodologies or significant findings that would disrupt existing practices or knowledge in the field.<|im_end|>[0m
+====== End Trajectory Group ======
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting assemble_training_data
+tinker_cookbook.utils.misc_utils:23 [INFO] assemble_training_data took 0.01 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting train
+tinker_cookbook.utils.misc_utils:23 [INFO] train took 1.83 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting compute_kl_sample_train
+tinker_cookbook.utils.misc_utils:23 [INFO] compute_kl_sample_train took 0.00 seconds
+tinker_cookbook.utils.misc_utils:20 [INFO] Starting save_checkpoint
+tinker_cookbook.utils.misc_utils:23 [INFO] save_checkpoint took 1.38 seconds
+tinker_cookbook.utils.ml_log:145 [INFO] Wrote metrics to /Users/akhilpandey/code/writing/tinker/results/tinker_rl_cookbook/notebook_pure_sciscinet_20260224_235837/metrics.jsonl
+tinker_cookbook.utils.ml_log:197 [INFO] 
+[3m                    Step 1                     [0m
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃[1;35m [0m[1;35mMetric                        [0m[1;35m [0m┃[1;35m [0m[1;35mValue     [0m[1;35m [0m┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│[36m [0m[36menv/all/R_correctness         [0m[36m [0m│[32m [0m[32m-0.833333 [0m[32m [0m│
+│[36m [0m[36menv/all/R_format              [0m[36m [0m│[32m [0m[32m0.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/R_reasoning           [0m[36m [0m│[32m [0m[32m0.500000  [0m[32m [0m│
+│[36m [0m[36menv/all/ac_tokens_per_turn    [0m[36m [0m│[32m [0m[32m35.666667 [0m[32m [0m│
+│[36m [0m[36menv/all/by_group/frac_all_bad [0m[36m [0m│[32m [0m[32m0.500000  [0m[32m [0m│
+│[36m [0m[36menv/all/by_group/frac_all_good[0m[36m [0m│[32m [0m[32m0.333333  [0m[32m [0m│
+│[36m [0m[36menv/all/by_group/frac_mixed   [0m[36m [0m│[32m [0m[32m0.166667  [0m[32m [0m│
+│[36m [0m[36menv/all/correctness_weight    [0m[36m [0m│[32m [0m[32m2.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/format_strict_ok      [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/has_forbidden_output_…[0m[36m [0m│[32m [0m[32m0.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/label_correct         [0m[36m [0m│[32m [0m[32m0.416667  [0m[32m [0m│
+│[36m [0m[36menv/all/label_parsed          [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/ob_tokens_per_turn    [0m[36m [0m│[32m [0m[32m309.833333[0m[32m [0m│
+│[36m [0m[36menv/all/parse_success         [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36menv/all/reward/total          [0m[36m [0m│[32m [0m[32m-0.333333 [0m[32m [0m│
+│[36m [0m[36menv/all/total_ac_tokens       [0m[36m [0m│[32m [0m[32m856       [0m[32m [0m│
+│[36m [0m[36menv/all/total_episodes        [0m[36m [0m│[32m [0m[32m24        [0m[32m [0m│
+│[36m [0m[36menv/all/total_ob_tokens       [0m[36m [0m│[32m [0m[32m7436      [0m[32m [0m│
+│[36m [0m[36menv/all/total_turns           [0m[36m [0m│[32m [0m[32m24        [0m[32m [0m│
+│[36m [0m[36menv/all/turns_per_episode     [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36moptim/entropy                 [0m[36m [0m│[32m [0m[32m0.193824  [0m[32m [0m│
+│[36m [0m[36moptim/kl_sample_train_v1      [0m[36m [0m│[32m [0m[32m0.000620  [0m[32m [0m│
+│[36m [0m[36moptim/kl_sample_train_v2      [0m[36m [0m│[32m [0m[32m0.001104  [0m[32m [0m│
+│[36m [0m[36moptim/lr                      [0m[36m [0m│[32m [0m[32m0.000010  [0m[32m [0m│
+│[36m [0m[36mprogress/batch                [0m[36m [0m│[32m [0m[32m1         [0m[32m [0m│
+│[36m [0m[36mprogress/done_frac            [0m[36m [0m│[32m [0m[32m1.000000  [0m[32m [0m│
+│[36m [0m[36mtime/assemble_training_data   [0m[36m [0m│[32m [0m[32m0.006158  [0m[32m [0m│
+│[36m [0m[36mtime/compute_kl_sample_train  [0m[36m [0m│[32m [0m[32m0.001745  [0m[32m [0m│
+│[36m [0m[36mtime/save_checkpoint          [0m[36m [0m│[32m [0m[32m1.385281  [0m[32m [0m│
+│[36m [0m[36mtime/total                    [0m[36m [0m│[32m [0m[32m10.597582 [0m[32m [0m│
+│[36m [0m[36mtime/train                    [0m[36m [0m│[32m [0m[32m1.831783  [0m[32m [0m│
+└────────────────────────────────┴────────────┘
+tinker_cookbook.checkpoint_utils:84 [INFO] Saved checkpoints: {'state_path': 'tinker://1ca6a056-55e2-5164-b3a4-ae0820d3dd83:train:0/weights/final', 'sampler_path': 'tinker://1ca6a056-55e2-5164-b3a4-ae0820d3dd83:train:0/sampler_weights/final'}
+tinker_cookbook.rl.train:1263 [INFO] Training completed successfully
