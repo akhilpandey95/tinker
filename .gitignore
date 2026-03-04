@@ -326,4 +326,7 @@ tramp
 # env
 .env
 
+# dataset
+data/sci_balanced_from2m_no_ovr.rl_balanced.jsonl
+
 # End of https://www.gitignore.io/api/r,c++,linux,julia,macos,python,windows,microsoftoffice,jupyternotebooks

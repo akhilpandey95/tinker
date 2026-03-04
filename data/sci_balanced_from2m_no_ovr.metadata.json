@@ -1,0 +1,64 @@
+{
+  "artifacts": {
+    "dataset_jsonl": "/home/ec2-user/SageMaker/sciscinetv2/tinker_smolrl_data/sci_balanced_from2m_no_ovr.jsonl",
+    "metadata_json": "/home/ec2-user/SageMaker/sciscinetv2/tinker_smolrl_data/sci_balanced_from2m_no_ovr.metadata.json",
+    "splits_json": "/home/ec2-user/SageMaker/sciscinetv2/tinker_smolrl_data/sci_balanced_from2m_no_ovr.splits.json"
+  },
+  "generated_at_utc": "2026-03-02T08:49:27Z",
+  "label_counts": {
+    "disruption": {
+      "consolidating": 583215,
+      "disruptive": 247090,
+      "neutral": 1142492
+    },
+    "novelty": {
+      "balanced": 500380,
+      "conventional": 1421745,
+      "novel": 50672
+    }
+  },
+  "label_thresholds": {
+    "consolidating_max": -0.001,
+    "disruptive_min": 0.001,
+    "novelty_margin": 0.15
+  },
+  "mode": "sciscinet_parquet",
+  "query_filters": {
+    "from_year": null,
+    "include_retracted": false,
+    "language": "en",
+    "min_citations": null,
+    "n_papers": 2000000,
+    "parquet_primary": "tinker",
+    "primary_parquet": "/home/ec2-user/SageMaker/sciscinetv2/tinker_sciscinet_papers_alpha.parquet",
+    "secondary_parquet": null,
+    "to_year": null
+  },
+  "record_count": 1972797,
+  "schema_fields": [
+    "openalex_id",
+    "title",
+    "abstract",
+    "publication_year",
+    "cited_by_count",
+    "cd_index",
+    "novelty_score",
+    "conventionality_score",
+    "disruption_label",
+    "novelty_label",
+    "primary_field",
+    "concepts"
+  ],
+  "split_counts": {
+    "test": 197280,
+    "train": 1578237,
+    "val": 197280
+  },
+  "split_ids_sha256": "129919a3352b19b952e97d7f4e9dc734cc69e416662eac4a60bfcf4d8e4678ae",
+  "split_ratios": {
+    "test": 0.1,
+    "train": 0.8,
+    "val": 0.1
+  },
+  "split_seed": 20260220
+}
