@@ -1,0 +1,8 @@
+{
+  "experiment_slug": "exp2_batch_diversity",
+  "output_dir": "agent_runs/exp2_batch_diversity/runs",
+  "group_size": 1,
+  "groups_per_batch": 24,
+  "n_batches": 96,
+  "run_note": "Exp2: maximize prompt diversity per batch"
+}

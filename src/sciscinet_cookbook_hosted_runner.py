@@ -132,11 +132,70 @@ def add_bool_arg(parser: argparse.ArgumentParser, name: str, *, default: bool, h
 
 
 # ----------------------------
+# Config overlays
+# ----------------------------
+
+def deep_merge_dict(base: dict[str, Any], override: Mapping[str, Any]) -> dict[str, Any]:
+    for key, value in override.items():
+        if isinstance(base.get(key), dict) and isinstance(value, Mapping):
+            deep_merge_dict(base[key], value)
+        else:
+            base[key] = value
+    return base
+
+
+def load_config_overlays(config_paths: Sequence[Path]) -> tuple[dict[str, Any], list[Path]]:
+    merged: dict[str, Any] = {}
+    resolved_paths: list[Path] = []
+    for raw_path in config_paths:
+        cfg_path = Path(raw_path).expanduser().resolve()
+        if not cfg_path.exists():
+            raise FileNotFoundError(f"Config file not found: {cfg_path}")
+        payload = json.loads(cfg_path.read_text(encoding="utf-8"))
+        if not isinstance(payload, dict):
+            raise ValueError(f"Config file must contain a JSON object: {cfg_path}")
+        deep_merge_dict(merged, payload)
+        resolved_paths.append(cfg_path)
+    return merged, resolved_paths
+
+
+def apply_config_defaults(parser: argparse.ArgumentParser, merged: Mapping[str, Any]) -> list[str]:
+    dest_to_action: dict[str, argparse.Action] = {}
+    for action in parser._actions:
+        if not action.dest or action.dest == argparse.SUPPRESS:
+            continue
+        dest_to_action[action.dest] = action
+
+    defaults: dict[str, Any] = {}
+    ignored: list[str] = []
+    for key, value in merged.items():
+        action = dest_to_action.get(str(key))
+        if action is None:
+            ignored.append(str(key))
+            continue
+        if action.type is Path and value is not None and not isinstance(value, Path):
+            defaults[str(key)] = Path(str(value))
+        else:
+            defaults[str(key)] = value
+    if defaults:
+        parser.set_defaults(**defaults)
+    return sorted(ignored)
+
+
+# ----------------------------
 # CLI
 # ----------------------------
 
-def parse_args(dataset_choices: Sequence[str], default_data_root: Path, default_output_root: Path) -> argparse.Namespace:
+def build_parser(dataset_choices: Sequence[str], default_data_root: Path, default_output_root: Path) -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description="Hosted RL runner (lean) for SciSciNet cookbook")
+    p.add_argument(
+        "--config",
+        type=Path,
+        action="append",
+        default=[],
+        help="JSON config overlay(s); later files override earlier files.",
+    )
+    add_bool_arg(p, "--config-only", default=False, help="Build manifest from config and exit (implies --dry-run)")
 
     p.add_argument("--data-root", type=Path, default=default_data_root)
     p.add_argument("--dataset-key", choices=sorted(dataset_choices), default="sci_balanced_from2m_no_ovr_rl_balanced")
@@ -260,8 +319,39 @@ def parse_args(dataset_choices: Sequence[str], default_data_root: Path, default_
 
     add_bool_arg(p, "--clean-logdir-before-run", default=False, help="Delete run_dir before starting")
     add_bool_arg(p, "--dry-run", default=False, help="Build manifest and exit without training")
+    return p
 
-    return p.parse_args()
+
+def parse_args(
+    dataset_choices: Sequence[str],
+    default_data_root: Path,
+    default_output_root: Path,
+    argv: Sequence[str] | None = None,
+) -> argparse.Namespace:
+    argv_list = list(argv) if argv is not None else sys.argv[1:]
+
+    pre = argparse.ArgumentParser(add_help=False)
+    pre.add_argument("--config", type=Path, action="append", default=[])
+    pre_args, _ = pre.parse_known_args(argv_list)
+
+    merged_cfg, resolved_cfg_paths = load_config_overlays(pre_args.config)
+    parser = build_parser(dataset_choices, default_data_root, default_output_root)
+    ignored_cfg_keys = apply_config_defaults(parser, merged_cfg)
+    args = parser.parse_args(argv_list)
+
+    args.config = [Path(pth).expanduser().resolve() for pth in (args.config or [])]
+    args.config_resolved = [str(pth) for pth in resolved_cfg_paths]
+    args.config_ignored_keys = ignored_cfg_keys
+    if ignored_cfg_keys:
+        print(
+            "[hosted_runner] Ignored config keys not recognized by this CLI:",
+            ", ".join(ignored_cfg_keys),
+            file=sys.stderr,
+        )
+
+    if bool(args.config_only):
+        args.dry_run = True
+    return args
 
 
 def default_system_prompt(env_variant: str) -> str:
@@ -320,22 +410,37 @@ async def run(args: argparse.Namespace, mini: Any) -> int:
     load_status_repo = load_env_file(repo / ".env", override=False)
 
     added_paths = bootstrap_paths(script_dir, repo)
+    is_dry_run = bool(args.dry_run) or bool(getattr(args, "config_only", False))
 
-    if not importlib.util.find_spec("tinker") or not importlib.util.find_spec("tinker_cookbook"):
-        raise ImportError(
-            "Missing `tinker` and/or `tinker_cookbook` in active environment. "
-            f"python={sys.executable} added_paths={added_paths}"
-        )
+    if is_dry_run:
+        tinker = None
+        model_info = None
+        renderers = None
+        cookbook_rl_train = None
+        CookbookEnv = object
+        CookbookEnvGroupBuilder = object
+        CookbookRLDataset = object
+        CookbookStepResult = Any
+        Trajectory = Any
 
-    import tinker
-    from tinker_cookbook import model_info, renderers
-    from tinker_cookbook.rl import train as cookbook_rl_train
-    from tinker_cookbook.rl.types import Env as CookbookEnv
-    from tinker_cookbook.rl.types import EnvGroupBuilder as CookbookEnvGroupBuilder
-    from tinker_cookbook.rl.types import RLDataset as CookbookRLDataset
-    from tinker_cookbook.rl.types import StepResult as CookbookStepResult
-    from tinker_cookbook.rl.types import Trajectory
-    from tinker_cookbook.tokenizer_utils import get_tokenizer
+        def get_tokenizer(_: str):
+            raise RuntimeError("Tokenizer unavailable in dry-run mode")
+    else:
+        if not importlib.util.find_spec("tinker") or not importlib.util.find_spec("tinker_cookbook"):
+            raise ImportError(
+                "Missing `tinker` and/or `tinker_cookbook` in active environment. "
+                f"python={sys.executable} added_paths={added_paths}"
+            )
+
+        import tinker
+        from tinker_cookbook import model_info, renderers
+        from tinker_cookbook.rl import train as cookbook_rl_train
+        from tinker_cookbook.rl.types import Env as CookbookEnv
+        from tinker_cookbook.rl.types import EnvGroupBuilder as CookbookEnvGroupBuilder
+        from tinker_cookbook.rl.types import RLDataset as CookbookRLDataset
+        from tinker_cookbook.rl.types import StepResult as CookbookStepResult
+        from tinker_cookbook.rl.types import Trajectory
+        from tinker_cookbook.tokenizer_utils import get_tokenizer
 
     # Stable RNG for python-side sampling.
     random.seed(int(args.seed))
@@ -399,11 +504,12 @@ async def run(args: argparse.Namespace, mini: Any) -> int:
         if missing:
             raise RuntimeError(f"Cannot stratify with missing train labels: {missing}")
 
-    renderer_name = (
-        args.renderer_name.strip()
-        if str(args.renderer_name).strip()
-        else model_info.get_recommended_renderer_name(args.model_name)
-    )
+    if str(args.renderer_name).strip():
+        renderer_name = str(args.renderer_name).strip()
+    elif is_dry_run:
+        renderer_name = "auto"
+    else:
+        renderer_name = model_info.get_recommended_renderer_name(args.model_name)
 
     system_prompt = args.system_prompt.strip() if str(args.system_prompt).strip() else default_system_prompt(args.env_variant)
 
@@ -721,26 +827,14 @@ async def run(args: argparse.Namespace, mini: Any) -> int:
         val_records=val_records,
     )
 
-    cfg = cookbook_rl_train.Config(
-        learning_rate=float(args.learning_rate),
-        dataset_builder=dataset_builder,
-        model_name=args.model_name,
-        lora_rank=int(args.lora_rank),
-        max_tokens=int(args.max_tokens),
-        temperature=float(args.temperature),
-        log_path=str(run_dir),
-        eval_every=int(args.eval_every),
-        save_every=int(args.save_every),
-        base_url=args.base_url,
-        num_groups_to_log=int(args.num_groups_to_log),
-    )
-
     manifest = {
         "run_at_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "script": str(Path(__file__).resolve()),
         "python": sys.executable,
         "git_commit": try_git_commit(repo),
         "repo_root": str(repo),
+        "config_files": [str(pth) for pth in getattr(args, "config_resolved", [])],
+        "config_ignored_keys": list(getattr(args, "config_ignored_keys", [])),
         "env_load": {"script_dir": load_status_script, "repo_root": load_status_repo},
         "sys_path_added": added_paths,
         "dataset_key": args.dataset_key,
@@ -805,6 +899,7 @@ async def run(args: argparse.Namespace, mini: Any) -> int:
             "run_note": args.run_note,
             "experiment_slug": args.experiment_slug,
             "dry_run": bool(args.dry_run),
+            "config_only": bool(getattr(args, "config_only", False)),
         },
         "manifest_sha256": None,
     }
@@ -829,12 +924,26 @@ async def run(args: argparse.Namespace, mini: Any) -> int:
     print("run_dir:", run_dir)
     print("manifest:", manifest_path)
 
-    if bool(args.dry_run):
+    if is_dry_run:
         print("dry_run=True -> skipping hosted training launch")
         return 0
 
     if not os.environ.get("TINKER_API_KEY"):
         raise RuntimeError("TINKER_API_KEY is not set; cannot launch hosted training")
+
+    cfg = cookbook_rl_train.Config(
+        learning_rate=float(args.learning_rate),
+        dataset_builder=dataset_builder,
+        model_name=args.model_name,
+        lora_rank=int(args.lora_rank),
+        max_tokens=int(args.max_tokens),
+        temperature=float(args.temperature),
+        log_path=str(run_dir),
+        eval_every=int(args.eval_every),
+        save_every=int(args.save_every),
+        base_url=args.base_url,
+        num_groups_to_log=int(args.num_groups_to_log),
+    )
 
     await cookbook_rl_train.main(cfg)
     return 0
@@ -850,7 +959,7 @@ def main() -> None:
     args = parse_args(
         dataset_choices=tuple(mini.dataset_catalog().keys()),
         default_data_root=mini.default_data_root(),
-        default_output_root=mini.repo_root() / "results" / "tinker_rl_cookbook",
+        default_output_root=mini.repo_root() / "agent_runs" / "default" / "runs",
     )
 
     rc = asyncio.run(run(args, mini))

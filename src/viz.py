@@ -743,8 +743,10 @@ def write_summary_csv(stats: list[RunStats], out_path: Path) -> None:
 # ----------------------------
 
 def default_results_root() -> Path:
-    outside = Path("../results/tinker_rl_cookbook")
-    inside = Path("results/tinker_rl_cookbook")
+    inside = Path("agent_runs")
+    outside = Path("../agent_runs")
+    if inside.exists():
+        return inside
     if outside.exists():
         return outside
     return inside
@@ -753,10 +755,10 @@ def default_results_root() -> Path:
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Visual diagnostics for hosted RL run artifacts.")
     p.add_argument("--results-root", type=Path, default=default_results_root())
-    p.add_argument("--run-glob", default="*")
+    p.add_argument("--run-glob", default="**/runs/*")
     p.add_argument("--max-runs", type=int, default=30)
     p.add_argument("--detail-runs", type=int, default=3)
-    p.add_argument("--output-dir", type=Path, default=Path("results/analysis_plots"))
+    p.add_argument("--output-dir", type=Path, default=Path("agent_runs/viz"))
     return p.parse_args()
 
 

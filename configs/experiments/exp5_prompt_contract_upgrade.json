@@ -1,0 +1,10 @@
+{
+  "experiment_slug": "exp5_prompt_contract_upgrade",
+  "output_dir": "agent_runs/exp5_prompt_contract_upgrade/runs",
+  "learning_rate": 3e-05,
+  "include_definitions": true,
+  "include_concepts": true,
+  "forbidden_marker_detection": "both",
+  "forbidden_marker_policy": "penalize",
+  "run_note": "Exp5: prompt contract and raw marker enforcement"
+}

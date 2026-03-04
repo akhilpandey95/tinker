@@ -1,0 +1,7 @@
+{
+  "experiment_slug": "exp4_optimization_exploration",
+  "output_dir": "agent_runs/exp4_optimization_exploration/runs",
+  "learning_rate": 3e-05,
+  "temperature": 1.0,
+  "run_note": "Exp4: optimization and exploration sweep baseline"
+}

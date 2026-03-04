@@ -100,15 +100,20 @@ def repo_root() -> Path:
 def default_data_root() -> Path:
     """Best-effort default data root.
 
-    Tries ../tinker_smolrl_data first (typical layout), then ./tinker_smolrl_data.
+    Prefer repo-local ./data first, then external tinker_smolrl_data fallbacks.
     """
 
     r = repo_root()
-    c1 = (r.parent / "tinker_smolrl_data").resolve()
-    c2 = (r / "tinker_smolrl_data").resolve()
-    if c1.exists():
-        return c1
-    return c2
+    repo_data = (r / "data").resolve()
+    ext = (r.parent / "tinker_smolrl_data").resolve()
+    local_ext = (r / "tinker_smolrl_data").resolve()
+    if repo_data.exists():
+        return repo_data
+    if ext.exists():
+        return ext
+    if local_ext.exists():
+        return local_ext
+    return repo_data
 
 
 def dataset_catalog() -> dict[str, DatasetSpec]:
@@ -237,6 +242,57 @@ def dataset_catalog() -> dict[str, DatasetSpec]:
             thresholds={"consolidating_max": -0.001, "disruptive_min": 0.001, "novelty_margin": 0.15},
         ),
     }
+
+
+# ----------------------------
+# Config overlays
+# ----------------------------
+
+def deep_merge_dict(base: dict[str, Any], override: Mapping[str, Any]) -> dict[str, Any]:
+    for key, value in override.items():
+        if isinstance(base.get(key), dict) and isinstance(value, Mapping):
+            deep_merge_dict(base[key], value)
+        else:
+            base[key] = value
+    return base
+
+
+def load_config_overlays(config_paths: Sequence[Path]) -> tuple[dict[str, Any], list[Path]]:
+    merged: dict[str, Any] = {}
+    resolved_paths: list[Path] = []
+    for raw_path in config_paths:
+        cfg_path = Path(raw_path).expanduser().resolve()
+        if not cfg_path.exists():
+            raise FileNotFoundError(f"Config file not found: {cfg_path}")
+        payload = json.loads(cfg_path.read_text(encoding="utf-8"))
+        if not isinstance(payload, dict):
+            raise ValueError(f"Config file must contain a JSON object: {cfg_path}")
+        deep_merge_dict(merged, payload)
+        resolved_paths.append(cfg_path)
+    return merged, resolved_paths
+
+
+def apply_config_defaults(parser: argparse.ArgumentParser, merged: Mapping[str, Any]) -> list[str]:
+    dest_to_action: dict[str, argparse.Action] = {}
+    for action in parser._actions:
+        if not action.dest or action.dest == argparse.SUPPRESS:
+            continue
+        dest_to_action[action.dest] = action
+
+    defaults: dict[str, Any] = {}
+    ignored: list[str] = []
+    for key, value in merged.items():
+        action = dest_to_action.get(str(key))
+        if action is None:
+            ignored.append(str(key))
+            continue
+        if action.type is Path and value is not None and not isinstance(value, Path):
+            defaults[str(key)] = Path(str(value))
+        else:
+            defaults[str(key)] = value
+    if defaults:
+        parser.set_defaults(**defaults)
+    return sorted(ignored)
 
 
 # ----------------------------
@@ -1033,12 +1089,17 @@ def add_bool_arg(parser: argparse.ArgumentParser, name: str, *, default: bool, h
     parser.set_defaults(**{dest: default})
 
 
-def parse_args() -> argparse.Namespace:
-    cat = dataset_catalog()
-
+def build_parser(dataset_keys: Sequence[str]) -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description="Mini CLI preflight for SciSciNet cookbook workflow")
+    p.add_argument(
+        "--config",
+        type=Path,
+        action="append",
+        default=[],
+        help="JSON config overlay(s); later files override earlier files.",
+    )
     p.add_argument("--data-root", type=Path, default=default_data_root())
-    p.add_argument("--dataset-key", choices=sorted(cat.keys()), default="sci_balanced_from2m_no_ovr_rl_balanced")
+    p.add_argument("--dataset-key", choices=sorted(dataset_keys), default="sci_balanced_from2m_no_ovr_rl_balanced")
 
     p.add_argument(
         "--split-mode",
@@ -1101,7 +1162,33 @@ def parse_args() -> argparse.Namespace:
 
     p.add_argument("--write-manifest", type=Path)
     add_bool_arg(p, "--print-catalog", default=False, help="Print dataset catalog and exit")
-    return p.parse_args()
+    return p
+
+
+def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
+    argv_list = list(argv) if argv is not None else sys.argv[1:]
+    cat = dataset_catalog()
+
+    pre = argparse.ArgumentParser(add_help=False)
+    pre.add_argument("--config", type=Path, action="append", default=[])
+    pre_args, _ = pre.parse_known_args(argv_list)
+
+    merged_cfg, resolved_cfg_paths = load_config_overlays(pre_args.config)
+
+    parser = build_parser(tuple(cat.keys()))
+    ignored_cfg_keys = apply_config_defaults(parser, merged_cfg)
+    args = parser.parse_args(argv_list)
+
+    args.config = [Path(pth).expanduser().resolve() for pth in (args.config or [])]
+    args.config_resolved = [str(pth) for pth in resolved_cfg_paths]
+    args.config_ignored_keys = ignored_cfg_keys
+    if ignored_cfg_keys:
+        print(
+            "[mini] Ignored config keys not recognized by this CLI:",
+            ", ".join(ignored_cfg_keys),
+            file=sys.stderr,
+        )
+    return args
 
 
 def try_git_commit(root: Path) -> str | None:
@@ -1255,6 +1342,8 @@ def main() -> None:
         "python": sys.executable,
         "git_commit": try_git_commit(repo_root()),
         "repo_root": str(repo_root()),
+        "config_files": [str(pth) for pth in getattr(args, "config_resolved", [])],
+        "config_ignored_keys": list(getattr(args, "config_ignored_keys", [])),
         "data_root": str(data_root),
         "dataset_key": spec.key,
         "dataset_description": spec.description,
@@ -1305,7 +1394,7 @@ def main() -> None:
     out = args.write_manifest
     if out is None:
         ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        out = repo_root() / "results" / "tinker_rl_cookbook" / f"mini_preflight_{spec.key}_{ts}.manifest.json"
+        out = repo_root() / "agent_runs" / "preflight" / f"mini_preflight_{spec.key}_{ts}.manifest.json"
     out = Path(out).expanduser().resolve()
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(manifest, ensure_ascii=True, sort_keys=True, indent=2) + "\n", encoding="utf-8")
