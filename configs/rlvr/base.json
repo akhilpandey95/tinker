@@ -1,7 +1,0 @@
-{
-  "deprecated": true,
-  "status": "archived",
-  "archived_copy": "configs/deprecated/rlvr_base.pre_experiment_specs.20260304.json",
-  "replacement": "configs/experiments/base_hosted.json",
-  "note": "Legacy RLVR config retained as a stub; current workflow is src/sciscinet_cookbook_hosted_runner.py with configs/experiments/*.json"
-}

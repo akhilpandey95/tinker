@@ -1,7 +1,0 @@
-{
-  "deprecated": true,
-  "status": "archived",
-  "archived_copy": "configs/deprecated/tinker_rl_disruption_single_turn.pre_experiment_specs.20260304.json",
-  "replacement": "configs/experiments/base_hosted.json",
-  "note": "Legacy tinker_rl config retained as a stub; use configs/experiments/*.json with src/sciscinet_cookbook_hosted_runner.py."
-}

@@ -1,8 +1,0 @@
-{
-  "experiment_slug": "exp3_reward_reweighting",
-  "output_dir": "agent_runs/exp3_reward_reweighting/runs",
-  "reward_disruption_consolidating": 1.0,
-  "reward_disruption_disruptive": 3.0,
-  "reward_disruption_neutral": 1.0,
-  "run_note": "Exp3: upweight disruptive reward"
-}

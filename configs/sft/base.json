@@ -1,7 +1,0 @@
-{
-  "deprecated": true,
-  "status": "archived",
-  "archived_copy": "configs/deprecated/sft_base.pre_experiment_specs.20260304.json",
-  "replacement": "configs/experiments/base_hosted.json",
-  "note": "Legacy SFT baseline config retained as a stub; it is outside the current 3-script workflow."
-}
