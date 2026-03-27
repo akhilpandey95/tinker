@@ -123,6 +123,16 @@ class SFTExample:
     full_text: str
 
 
+@dataclass(frozen=True)
+class TokenizedSFTExample:
+    openalex_id: str
+    gold_label: str
+    teacher_confidence: str
+    input_ids: list[int]
+    attention_mask: list[int]
+    prompt_length: int
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--model-name", default=DEFAULT_MODEL_NAME)
@@ -179,6 +189,22 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--save-steps", type=int, default=250)
     parser.add_argument("--save-total-limit", type=int, default=2)
     parser.add_argument("--dataloader-num-workers", type=int, default=0)
+    parser.add_argument(
+        "--dataloader-pin-memory",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
+    parser.add_argument(
+        "--dataloader-persistent-workers",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
+    parser.add_argument(
+        "--group-by-length",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+    )
+    parser.add_argument("--pad-to-multiple-of", type=int, default=8)
     parser.add_argument("--gradient-checkpointing", action="store_true", default=True)
     parser.add_argument("--no-gradient-checkpointing", dest="gradient_checkpointing", action="store_false")
     parser.add_argument("--trust-remote-code", action="store_true")
@@ -560,8 +586,58 @@ def filter_examples_by_length(
     return kept, stats
 
 
+def tokenize_examples_for_training(
+    tokenizer: Any,
+    examples: list[SFTExample],
+    max_length: int,
+    batch_size: int = 256,
+) -> list[TokenizedSFTExample]:
+    tokenization_kwargs = {
+        "add_special_tokens": not bool(getattr(tokenizer, "chat_template", None))
+    }
+    tokenized_examples: list[TokenizedSFTExample] = []
+
+    for start in range(0, len(examples), batch_size):
+        batch = examples[start : start + batch_size]
+        prompt_batch = tokenizer(
+            [example.prompt_text for example in batch],
+            truncation=True,
+            max_length=max_length,
+            **tokenization_kwargs,
+        )["input_ids"]
+        full_batch = tokenizer(
+            [example.full_text for example in batch],
+            truncation=True,
+            max_length=max_length,
+            **tokenization_kwargs,
+        )
+        full_input_ids = full_batch["input_ids"]
+        full_attention_masks = full_batch["attention_mask"]
+
+        for example, prompt_ids, full_ids, full_mask in zip(
+            batch,
+            prompt_batch,
+            full_input_ids,
+            full_attention_masks,
+            strict=True,
+        ):
+            prompt_length = min(len(prompt_ids), len(full_ids))
+            tokenized_examples.append(
+                TokenizedSFTExample(
+                    openalex_id=example.openalex_id,
+                    gold_label=example.gold_label,
+                    teacher_confidence=example.teacher_confidence,
+                    input_ids=list(full_ids),
+                    attention_mask=list(full_mask),
+                    prompt_length=prompt_length,
+                )
+            )
+
+    return tokenized_examples
+
+
 class PromptCompletionDataset:
-    def __init__(self, examples: list[SFTExample]) -> None:
+    def __init__(self, examples: list[TokenizedSFTExample]) -> None:
         self.examples = examples
 
     def __len__(self) -> int:
@@ -573,56 +649,40 @@ class PromptCompletionDataset:
             "openalex_id": example.openalex_id,
             "gold_label": example.gold_label,
             "teacher_confidence": example.teacher_confidence,
-            "prompt_text": example.prompt_text,
-            "full_text": example.full_text,
+            "input_ids": example.input_ids,
+            "attention_mask": example.attention_mask,
+            "prompt_length": example.prompt_length,
+            "length": len(example.input_ids),
         }
 
 
 class CompletionOnlyCollator:
-    def __init__(self, tokenizer: Any, max_length: int) -> None:
+    def __init__(self, tokenizer: Any, pad_to_multiple_of: int | None = None) -> None:
         self.tokenizer = tokenizer
-        self.max_length = max_length
-        self.add_special_tokens = not bool(getattr(tokenizer, "chat_template", None))
+        self.pad_to_multiple_of = pad_to_multiple_of
 
     def __call__(self, features: list[dict[str, Any]]) -> dict[str, Any]:
-        import torch
-
-        prompt_texts = [feature["prompt_text"] for feature in features]
-        full_texts = [feature["full_text"] for feature in features]
-
-        tokenized_prompts = self.tokenizer(
-            prompt_texts,
-            padding=False,
-            truncation=True,
-            max_length=self.max_length,
-            add_special_tokens=self.add_special_tokens,
-        )["input_ids"]
-
-        tokenized_full = self.tokenizer(
-            full_texts,
+        batch = self.tokenizer.pad(
+            [
+                {
+                    "input_ids": feature["input_ids"],
+                    "attention_mask": feature["attention_mask"],
+                }
+                for feature in features
+            ],
             return_tensors="pt",
             padding=True,
-            truncation=True,
-            max_length=self.max_length,
-            add_special_tokens=self.add_special_tokens,
+            pad_to_multiple_of=self.pad_to_multiple_of,
         )
 
-        labels = tokenized_full["input_ids"].clone()
-        labels[tokenized_full["attention_mask"] == 0] = -100
+        labels = batch["input_ids"].clone()
+        labels[batch["attention_mask"] == 0] = -100
 
-        for row_index, prompt_ids in enumerate(tokenized_prompts):
-            prompt_len = min(len(prompt_ids), labels.shape[1])
+        for row_index, feature in enumerate(features):
+            prompt_len = min(int(feature["prompt_length"]), labels.shape[1])
             labels[row_index, :prompt_len] = -100
 
-        batch = {
-            "input_ids": tokenized_full["input_ids"],
-            "attention_mask": tokenized_full["attention_mask"],
-            "labels": labels,
-        }
-
-        if "token_type_ids" in tokenized_full:
-            batch["token_type_ids"] = tokenized_full["token_type_ids"]
-
+        batch["labels"] = labels
         return batch
 
 
@@ -849,6 +909,11 @@ def load_model(args: argparse.Namespace) -> tuple[Any, dict[str, Any]]:
     if not torch.cuda.is_available():
         raise EnvironmentError("CUDA is required for 4-bit QDoRA training.")
 
+    torch.backends.cuda.matmul.allow_tf32 = True
+    torch.backends.cudnn.allow_tf32 = True
+    if hasattr(torch, "set_float32_matmul_precision"):
+        torch.set_float32_matmul_precision("high")
+
     use_bf16 = bool(torch.cuda.is_bf16_supported())
     compute_dtype = torch.bfloat16 if use_bf16 else torch.float16
     local_rank = int(os.environ.get("LOCAL_RANK", "0"))
@@ -867,7 +932,17 @@ def load_model(args: argparse.Namespace) -> tuple[Any, dict[str, Any]]:
     if args.attn_implementation is not None:
         model_kwargs["attn_implementation"] = args.attn_implementation
 
-    model = AutoModelForCausalLM.from_pretrained(args.model_name, **model_kwargs)
+    try:
+        model = AutoModelForCausalLM.from_pretrained(args.model_name, **model_kwargs)
+    except Exception as exc:
+        if args.attn_implementation != "flash_attention_2":
+            raise
+        print(
+            "flash_attention_2 unavailable during model load; retrying with sdpa.",
+            f"Original error: {exc}",
+        )
+        model_kwargs["attn_implementation"] = "sdpa"
+        model = AutoModelForCausalLM.from_pretrained(args.model_name, **model_kwargs)
     model.config.use_cache = False
     model = prepare_model_for_kbit_training(
         model,
@@ -920,6 +995,10 @@ def build_training_arguments(args: argparse.Namespace, output_dir: Path) -> Any:
     use_fp16 = torch.cuda.is_available() and not use_bf16
     max_steps = getattr(args, "max_steps", -1)
     warmup_steps = getattr(args, "warmup_steps", None)
+    dataloader_num_workers = getattr(args, "dataloader_num_workers", 0)
+    dataloader_persistent_workers = bool(
+        getattr(args, "dataloader_persistent_workers", True)
+    ) and dataloader_num_workers > 0
 
     report_to = [] if args.report_to == "none" else [args.report_to]
     raw_kwargs: dict[str, Any] = {
@@ -946,7 +1025,10 @@ def build_training_arguments(args: argparse.Namespace, output_dir: Path) -> Any:
         "seed": args.seed,
         "data_seed": args.seed,
         "logging_first_step": True,
-        "dataloader_num_workers": args.dataloader_num_workers,
+        "dataloader_num_workers": dataloader_num_workers,
+        "dataloader_pin_memory": getattr(args, "dataloader_pin_memory", True),
+        "dataloader_persistent_workers": dataloader_persistent_workers,
+        "group_by_length": getattr(args, "group_by_length", False),
         "ddp_find_unused_parameters": False,
     }
 
@@ -989,8 +1071,16 @@ def train_model(
     import inspect
     from transformers import Trainer
 
-    train_dataset = PromptCompletionDataset(train_examples)
-    collator = CompletionOnlyCollator(tokenizer, args.max_length)
+    tokenized_train_examples = tokenize_examples_for_training(
+        tokenizer,
+        train_examples,
+        args.max_length,
+    )
+    train_dataset = PromptCompletionDataset(tokenized_train_examples)
+    collator = CompletionOnlyCollator(
+        tokenizer,
+        pad_to_multiple_of=getattr(args, "pad_to_multiple_of", None),
+    )
     training_args = build_training_arguments(args, output_dir)
 
     raw_trainer_kwargs: dict[str, Any] = {
@@ -1037,6 +1127,26 @@ def train_model(
     return trainer, metrics
 
 
+def prepare_model_for_eval(model: Any) -> None:
+    # Generation can break if the PEFT wrapper or wrapped model still has
+    # gradient checkpointing enabled from training.
+    model.eval()
+    for candidate in (
+        model,
+        getattr(model, "base_model", None),
+        getattr(getattr(model, "base_model", None), "model", None),
+    ):
+        if candidate is None:
+            continue
+        if hasattr(candidate, "gradient_checkpointing_disable"):
+            candidate.gradient_checkpointing_disable()
+        if hasattr(candidate, "config"):
+            candidate.config.use_cache = True
+        generation_config = getattr(candidate, "generation_config", None)
+        if generation_config is not None:
+            generation_config.use_cache = True
+
+
 def evaluate_split(
     model: Any,
     tokenizer: Any,
@@ -1062,6 +1172,7 @@ def evaluate_split(
         write_jsonl(output_dir / f"predictions_{split_name}.jsonl", [])
         return empty_metrics
 
+    prepare_model_for_eval(model)
     tokenization_kwargs = {
         "add_special_tokens": not bool(getattr(tokenizer, "chat_template", None))
     }
@@ -1070,59 +1181,61 @@ def evaluate_split(
     prompt_max_length = max(128, args.max_length - args.eval_max_new_tokens)
 
     predictions: list[dict[str, Any]] = []
-    for start in range(0, len(examples), args.per_device_eval_batch_size):
-        batch = examples[start : start + args.per_device_eval_batch_size]
-        encoded = tokenizer(
-            [example.prompt_text for example in batch],
-            return_tensors="pt",
-            padding=True,
-            truncation=True,
-            max_length=prompt_max_length,
-            **tokenization_kwargs,
-        )
-        encoded = {name: tensor.to(model.device) for name, tensor in encoded.items()}
-
-        with torch.inference_mode():
-            generated = model.generate(
-                **encoded,
-                max_new_tokens=args.eval_max_new_tokens,
-                do_sample=False,
-                pad_token_id=tokenizer.pad_token_id,
-                eos_token_id=tokenizer.eos_token_id,
+    try:
+        for start in range(0, len(examples), args.per_device_eval_batch_size):
+            batch = examples[start : start + args.per_device_eval_batch_size]
+            encoded = tokenizer(
+                [example.prompt_text for example in batch],
+                return_tensors="pt",
+                padding=True,
+                truncation=True,
+                max_length=prompt_max_length,
+                **tokenization_kwargs,
             )
+            encoded = {name: tensor.to(model.device) for name, tensor in encoded.items()}
 
-        new_tokens = generated[:, encoded["input_ids"].shape[1] :]
-        decoded = tokenizer.batch_decode(new_tokens, skip_special_tokens=True)
+            with torch.inference_mode():
+                generated = model.generate(
+                    **encoded,
+                    max_new_tokens=args.eval_max_new_tokens,
+                    do_sample=False,
+                    pad_token_id=tokenizer.pad_token_id,
+                    eos_token_id=tokenizer.eos_token_id,
+                )
 
-        for example, raw_completion in zip(batch, decoded, strict=True):
-            raw = DisruptionJSONContract.analyze_raw_completion(raw_completion)
-            clean = DisruptionJSONContract.analyze_clean_completion(raw_completion)
-            label_match = int(
-                bool(raw["payload_valid"] and raw["label"] == example.gold_label)
-            )
-            predictions.append(
-                {
-                    "openalex_id": example.openalex_id,
-                    "gold_label": example.gold_label,
-                    "teacher_confidence": example.teacher_confidence,
-                    "completion_raw": raw_completion,
-                    "pred_label": raw["label"],
-                    "pred_confidence": raw["confidence"],
-                    "raw_status": raw["status"],
-                    "clean_status": clean["status"],
-                    "parse_ok": int(raw["raw_json_loads"]),
-                    "format_strict_ok": int(raw["status"] == "ok"),
-                    "clean_parse_ok": int(clean["json_loads"]),
-                    "clean_payload_valid": int(clean["payload_valid"]),
-                    "raw_payload_valid": int(raw["payload_valid"]),
-                    "label_match": label_match,
-                    "raw_has_fence": int(raw["raw_has_fence"]),
-                    "raw_has_think": int(raw["raw_has_think"]),
-                    "raw_exact_json_only": int(raw["raw_exact_json_only"]),
-                }
-            )
+            new_tokens = generated[:, encoded["input_ids"].shape[1] :]
+            decoded = tokenizer.batch_decode(new_tokens, skip_special_tokens=True)
 
-    tokenizer.padding_side = previous_padding_side
+            for example, raw_completion in zip(batch, decoded, strict=True):
+                raw = DisruptionJSONContract.analyze_raw_completion(raw_completion)
+                clean = DisruptionJSONContract.analyze_clean_completion(raw_completion)
+                label_match = int(
+                    bool(raw["payload_valid"] and raw["label"] == example.gold_label)
+                )
+                predictions.append(
+                    {
+                        "openalex_id": example.openalex_id,
+                        "gold_label": example.gold_label,
+                        "teacher_confidence": example.teacher_confidence,
+                        "completion_raw": raw_completion,
+                        "pred_label": raw["label"],
+                        "pred_confidence": raw["confidence"],
+                        "raw_status": raw["status"],
+                        "clean_status": clean["status"],
+                        "parse_ok": int(raw["raw_json_loads"]),
+                        "format_strict_ok": int(raw["status"] == "ok"),
+                        "clean_parse_ok": int(clean["json_loads"]),
+                        "clean_payload_valid": int(clean["payload_valid"]),
+                        "raw_payload_valid": int(raw["payload_valid"]),
+                        "label_match": label_match,
+                        "raw_has_fence": int(raw["raw_has_fence"]),
+                        "raw_has_think": int(raw["raw_has_think"]),
+                        "raw_exact_json_only": int(raw["raw_exact_json_only"]),
+                    }
+                )
+    finally:
+        tokenizer.padding_side = previous_padding_side
+
     metrics = compute_eval_metrics(predictions, split_name)
     write_json(output_dir / f"metrics_{split_name}.json", metrics)
     write_jsonl(output_dir / f"predictions_{split_name}.jsonl", predictions)
@@ -1341,7 +1454,7 @@ def main() -> None:
         output_dir=args.output_dir,
     )
 
-    trainer.model.config.use_cache = True
+    prepare_model_for_eval(trainer.model)
     val_metrics = evaluate_split(
         model=trainer.model,
         tokenizer=tokenizer,
