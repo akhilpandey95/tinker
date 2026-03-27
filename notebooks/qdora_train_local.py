@@ -1163,9 +1163,22 @@ def evaluate_split(
             "n_examples": 0,
             "parse_ok": None,
             "format_strict_ok": None,
+            "clean_parse_ok": None,
+            "clean_payload_valid": None,
+            "raw_label_match": None,
+            "raw_macro_f1": None,
+            "raw_per_class_recall": {label: None for label in LABELS},
+            "raw_confusion_matrix": None,
+            "raw_calibration": None,
+            "clean_label_match": None,
+            "clean_macro_f1": None,
+            "clean_per_class_recall": {label: None for label in LABELS},
+            "clean_confusion_matrix": None,
+            "clean_calibration": None,
             "label_match": None,
             "macro_f1": None,
             "per_class_recall": {label: None for label in LABELS},
+            "confusion_matrix": None,
             "calibration": None,
         }
         write_json(output_dir / f"metrics_{split_name}.json", empty_metrics)
@@ -1209,8 +1222,11 @@ def evaluate_split(
             for example, raw_completion in zip(batch, decoded, strict=True):
                 raw = DisruptionJSONContract.analyze_raw_completion(raw_completion)
                 clean = DisruptionJSONContract.analyze_clean_completion(raw_completion)
-                label_match = int(
+                raw_label_match = int(
                     bool(raw["payload_valid"] and raw["label"] == example.gold_label)
+                )
+                clean_label_match = int(
+                    bool(clean["payload_valid"] and clean["label"] == example.gold_label)
                 )
                 predictions.append(
                     {
@@ -1218,8 +1234,12 @@ def evaluate_split(
                         "gold_label": example.gold_label,
                         "teacher_confidence": example.teacher_confidence,
                         "completion_raw": raw_completion,
-                        "pred_label": raw["label"],
-                        "pred_confidence": raw["confidence"],
+                        "pred_label": clean["label"],
+                        "pred_confidence": clean["confidence"],
+                        "raw_pred_label": raw["label"],
+                        "raw_pred_confidence": raw["confidence"],
+                        "clean_pred_label": clean["label"],
+                        "clean_pred_confidence": clean["confidence"],
                         "raw_status": raw["status"],
                         "clean_status": clean["status"],
                         "parse_ok": int(raw["raw_json_loads"]),
@@ -1227,7 +1247,9 @@ def evaluate_split(
                         "clean_parse_ok": int(clean["json_loads"]),
                         "clean_payload_valid": int(clean["payload_valid"]),
                         "raw_payload_valid": int(raw["payload_valid"]),
-                        "label_match": label_match,
+                        "label_match": clean_label_match,
+                        "raw_label_match": raw_label_match,
+                        "clean_label_match": clean_label_match,
                         "raw_has_fence": int(raw["raw_has_fence"]),
                         "raw_has_think": int(raw["raw_has_think"]),
                         "raw_exact_json_only": int(raw["raw_exact_json_only"]),
@@ -1250,13 +1272,60 @@ def compute_eval_metrics(
     parse_ok = sum(row["parse_ok"] for row in predictions) / n
     format_strict_ok = sum(row["format_strict_ok"] for row in predictions) / n
     clean_parse_ok = sum(row["clean_parse_ok"] for row in predictions) / n
-    label_match = sum(row["label_match"] for row in predictions) / n
+    clean_payload_valid = sum(row["clean_payload_valid"] for row in predictions) / n
 
+    raw_metrics = _compute_classification_metrics(
+        predictions,
+        pred_label_key="raw_pred_label",
+        pred_confidence_key="raw_pred_confidence",
+        label_match_key="raw_label_match",
+    )
+    clean_metrics = _compute_classification_metrics(
+        predictions,
+        pred_label_key="clean_pred_label",
+        pred_confidence_key="clean_pred_confidence",
+        label_match_key="clean_label_match",
+    )
+    gold_counts = Counter(row["gold_label"] for row in predictions)
+
+    return {
+        "split": split_name,
+        "n_examples": n,
+        "parse_ok": parse_ok,
+        "format_strict_ok": format_strict_ok,
+        "clean_parse_ok": clean_parse_ok,
+        "clean_payload_valid": clean_payload_valid,
+        "raw_label_match": raw_metrics["label_match"],
+        "raw_macro_f1": raw_metrics["macro_f1"],
+        "raw_per_class_recall": raw_metrics["per_class_recall"],
+        "raw_confusion_matrix": raw_metrics["confusion_matrix"],
+        "raw_calibration": raw_metrics["calibration"],
+        "clean_label_match": clean_metrics["label_match"],
+        "clean_macro_f1": clean_metrics["macro_f1"],
+        "clean_per_class_recall": clean_metrics["per_class_recall"],
+        "clean_confusion_matrix": clean_metrics["confusion_matrix"],
+        "clean_calibration": clean_metrics["calibration"],
+        "label_match": clean_metrics["label_match"],
+        "macro_f1": clean_metrics["macro_f1"],
+        "per_class_recall": clean_metrics["per_class_recall"],
+        "gold_label_counts": {label: int(gold_counts.get(label, 0)) for label in LABELS},
+        "confusion_matrix": clean_metrics["confusion_matrix"],
+        "calibration": clean_metrics["calibration"],
+    }
+
+
+def _compute_classification_metrics(
+    predictions: list[dict[str, Any]],
+    *,
+    pred_label_key: str,
+    pred_confidence_key: str,
+    label_match_key: str,
+) -> dict[str, Any]:
     gold_counts = Counter(row["gold_label"] for row in predictions)
     correct_by_class = Counter(
         row["gold_label"]
         for row in predictions
-        if row["label_match"] == 1
+        if row[label_match_key] == 1
     )
     per_class_recall = {
         label: (
@@ -1272,35 +1341,34 @@ def compute_eval_metrics(
         for gold_label in LABELS
     }
     for row in predictions:
-        pred_label = row["pred_label"] if row["pred_label"] in LABELS else "invalid"
+        pred_label = row[pred_label_key] if row[pred_label_key] in LABELS else "invalid"
         confusion[row["gold_label"]][pred_label] += 1
 
-    macro_f1 = _compute_macro_f1(predictions)
-    calibration = _compute_calibration(predictions)
-
     return {
-        "split": split_name,
-        "n_examples": n,
-        "parse_ok": parse_ok,
-        "format_strict_ok": format_strict_ok,
-        "clean_parse_ok": clean_parse_ok,
-        "label_match": label_match,
-        "macro_f1": macro_f1,
+        "label_match": sum(row[label_match_key] for row in predictions) / len(predictions),
+        "macro_f1": _compute_macro_f1(predictions, pred_label_key=pred_label_key),
         "per_class_recall": per_class_recall,
-        "gold_label_counts": {label: int(gold_counts.get(label, 0)) for label in LABELS},
         "confusion_matrix": confusion,
-        "calibration": calibration,
+        "calibration": _compute_calibration(
+            predictions,
+            pred_confidence_key=pred_confidence_key,
+            label_match_key=label_match_key,
+        ),
     }
 
 
-def _compute_macro_f1(predictions: list[dict[str, Any]]) -> float:
+def _compute_macro_f1(
+    predictions: list[dict[str, Any]],
+    *,
+    pred_label_key: str,
+) -> float:
     f1_scores: list[float] = []
     for label in LABELS:
         tp = 0
         fp = 0
         fn = 0
         for row in predictions:
-            pred_label = row["pred_label"] if row["pred_label"] in LABELS else None
+            pred_label = row[pred_label_key] if row[pred_label_key] in LABELS else None
             gold_label = row["gold_label"]
             if pred_label == label and gold_label == label:
                 tp += 1
@@ -1318,11 +1386,16 @@ def _compute_macro_f1(predictions: list[dict[str, Any]]) -> float:
     return float(sum(f1_scores) / len(f1_scores))
 
 
-def _compute_calibration(predictions: list[dict[str, Any]]) -> dict[str, Any]:
+def _compute_calibration(
+    predictions: list[dict[str, Any]],
+    *,
+    pred_confidence_key: str,
+    label_match_key: str,
+) -> dict[str, Any]:
     valid_rows = [
         row
         for row in predictions
-        if row["pred_confidence"] in CONFIDENCE_TO_SCORE
+        if row[pred_confidence_key] in CONFIDENCE_TO_SCORE
     ]
     if not valid_rows:
         return {
@@ -1339,13 +1412,15 @@ def _compute_calibration(predictions: list[dict[str, Any]]) -> dict[str, Any]:
     accuracy_sum = 0.0
 
     for confidence_name in STRICT_CONFIDENCE_VALUES:
-        bucket_rows = [row for row in valid_rows if row["pred_confidence"] == confidence_name]
+        bucket_rows = [
+            row for row in valid_rows if row[pred_confidence_key] == confidence_name
+        ]
         if not bucket_rows:
             buckets[confidence_name] = None
             continue
 
         confidence_value = CONFIDENCE_TO_SCORE[confidence_name]
-        accuracy = sum(row["label_match"] for row in bucket_rows) / len(bucket_rows)
+        accuracy = sum(row[label_match_key] for row in bucket_rows) / len(bucket_rows)
         confidence_sum += confidence_value * len(bucket_rows)
         accuracy_sum += accuracy * len(bucket_rows)
         ece += abs(accuracy - confidence_value) * len(bucket_rows) / len(valid_rows)

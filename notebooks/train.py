@@ -1,3 +1,8 @@
+# This Source Code Form is subject to the terms of the
+# CC BY-NC-SA 4.0 License. If a copy of the same was not
+# distributed with this file, You can obtain one at
+# https://github.com/akhilpandey95/tinker/blob/main/LICENSE.
+
 from __future__ import annotations
 
 import json
@@ -9,33 +14,33 @@ import subprocess
 import importlib.util
 from pathlib import Path
 
+# constants
 SEED = 2026
 random.seed(SEED)
 WORKDIR = Path.cwd()
-#LLM = '/home/ubuntu/models/Qwen3.5-9B'
-LLM = '/home/ubuntu/models/Qwen3-8B'
+#LLM = '/root/models/Qwen3.5-9B'
+LLM = '/root/models/Qwen3-8B'
 DEBUG_MAX_STEPS = 250
 DEBUG_VAL_SIZE = 200
 DEBUG_TEST_SIZE = 100
 RAW_COMPLETION_PREVIEW_COUNT = 5
 os.environ["HF_TOKEN"] = "oops"
+os.environ.setdefault("PYTORCH_ALLOC_CONF", "expandable_segments:True")
 
+# system info
 print('python', sys.version)
 print('workdir', WORKDIR)
 subprocess.run(['nvidia-smi'], check=False)
 
+# data
 DATASET_PATH = Path('../data/sci_balanced_from2m_no_ovr.rl_balanced.jsonl')
 SPLITS_PATH = Path('../data/sci_balanced_from2m_no_ovr.splits.json')
-
+TRAINER_PATH = WORKDIR / 'qdora_train_local.py'
 required_paths = [DATASET_PATH, SPLITS_PATH]
-missing = [str(path) for path in required_paths if not path.exists()]
-if missing:
-    raise FileNotFoundError(f'Missing required local dataset files: {missing}')
 
 for path in required_paths:
     print(path.name, 'exists, size_mb=', round(path.stat().st_size / 1024**2, 2))
 
-TRAINER_PATH = WORKDIR / 'qdora_train_local.py'
 print('trainer_size_kb =', round(TRAINER_PATH.stat().st_size / 1024, 1))
 
 spec = importlib.util.spec_from_file_location('qdora_train_local', TRAINER_PATH)
@@ -68,9 +73,11 @@ def print_prediction_preview(path: Path, split_name: str, limit: int) -> None:
                 {
                     'gold_label': row.get('gold_label'),
                     'pred_label': row.get('pred_label'),
+                    'raw_pred_label': row.get('raw_pred_label'),
                     'raw_status': row.get('raw_status'),
                     'clean_status': row.get('clean_status'),
                     'label_match': row.get('label_match'),
+                    'raw_label_match': row.get('raw_label_match'),
                     'completion_raw': completion,
                 },
             )
@@ -78,6 +85,20 @@ def print_prediction_preview(path: Path, split_name: str, limit: int) -> None:
             if shown >= limit:
                 break
     print(f'{split_name}_preview_count =', shown)
+
+
+def env_int(name: str, default: int) -> int:
+    raw = os.environ.get(name)
+    if raw is None:
+        return default
+    return int(raw)
+
+
+def env_bool(name: str, default: bool) -> bool:
+    raw = os.environ.get(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
 
 CONFIG = {
     'model_name': LLM,
@@ -95,9 +116,9 @@ CONFIG = {
     'seed': 0,
     'max_length': 1024,
     'eval_max_new_tokens': 64,
-    'per_device_train_batch_size': 8,
-    'per_device_eval_batch_size': 16,
-    'gradient_accumulation_steps': 4,
+    'per_device_train_batch_size': env_int('TINKER_TRAIN_BATCH_SIZE', 4),
+    'per_device_eval_batch_size': env_int('TINKER_EVAL_BATCH_SIZE', 8),
+    'gradient_accumulation_steps': env_int('TINKER_GRAD_ACCUM_STEPS', 8),
     'num_train_epochs': 1.0,
     'max_steps': DEBUG_MAX_STEPS,
     'learning_rate': 1e-5,
@@ -110,14 +131,14 @@ CONFIG = {
     'save_strategy': 'no',
     'save_steps': 250,
     'save_total_limit': 2,
-    'dataloader_num_workers': 4,
-    'dataloader_pin_memory': True,
-    'dataloader_persistent_workers': True,
-    'group_by_length': True,
-    'pad_to_multiple_of': 8,
-    'gradient_checkpointing': False,
+    'dataloader_num_workers': env_int('TINKER_DATALOADER_WORKERS', 4),
+    'dataloader_pin_memory': env_bool('TINKER_DATALOADER_PIN_MEMORY', True),
+    'dataloader_persistent_workers': env_bool('TINKER_DATALOADER_PERSISTENT_WORKERS', True),
+    'group_by_length': env_bool('TINKER_GROUP_BY_LENGTH', True),
+    'pad_to_multiple_of': env_int('TINKER_PAD_TO_MULTIPLE_OF', 8),
+    'gradient_checkpointing': env_bool('TINKER_GRADIENT_CHECKPOINTING', True),
     'trust_remote_code': False,
-    'attn_implementation': 'flash_attention_2',
+    'attn_implementation': os.environ.get('TINKER_ATTN_IMPLEMENTATION', 'flash_attention_2'),
     'lora_rank': 64,
     'lora_alpha': 128,
     'lora_dropout': 0.05,
@@ -219,17 +240,20 @@ qdora_train_local.write_json(args.output_dir / 'train_metrics.json', train_metri
 
 print('output_dir        =', args.output_dir)
 print('train_global_step =', train_metrics.get('global_step'))
-print('val_label_match   =', val_metrics.get('label_match'))
-print('test_label_match  =', test_metrics.get('label_match'))
-print('test_macro_f1     =', test_metrics.get('macro_f1'))
+print('val_clean_label_match =', val_metrics.get('clean_label_match'))
+print('test_clean_label_match =', test_metrics.get('clean_label_match'))
+print('test_clean_macro_f1 =', test_metrics.get('clean_macro_f1'))
 
 print('output_dir         =', args.output_dir)
 print('train_examples     =', manifest['dataset']['kept_examples']['train'])
 print('test_examples      =', manifest['dataset']['kept_examples']['test'])
 print('train_global_step  =', train_metrics.get('global_step'))
 print('latest_checkpoint  =', train_metrics.get('latest_trainer_checkpoint'))
-print('test_label_match   =', test_metrics.get('label_match'))
-print('test_macro_f1      =', test_metrics.get('macro_f1'))
+print('test_raw_label_match =', test_metrics.get('raw_label_match'))
+print('test_clean_label_match =', test_metrics.get('clean_label_match'))
+print('test_clean_macro_f1 =', test_metrics.get('clean_macro_f1'))
 print('test_format_strict =', test_metrics.get('format_strict_ok'))
 print('test_parse_ok      =', test_metrics.get('parse_ok'))
-print('test_calibration   =', test_metrics.get('calibration'))
+print('test_clean_parse_ok =', test_metrics.get('clean_parse_ok'))
+print('test_clean_payload_valid =', test_metrics.get('clean_payload_valid'))
+print('test_clean_calibration =', test_metrics.get('clean_calibration'))
