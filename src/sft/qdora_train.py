@@ -79,6 +79,7 @@ per_device_eval_batch_size = 8
 eval_max_new_tokens = 64
 val_eval_size = 2000
 test_eval_size = 2000
+use_liger_kernel = True
 lora_rank = 64
 lora_alpha = 128
 lora_dropout = 0.05
@@ -188,6 +189,7 @@ logger.info(
     dataset_num_proc,
     dataset_batch_size,
 )
+logger.info("Liger kernel enabled: %s", use_liger_kernel)
 
 # calc model-tokenizer time
 end = time.time()
@@ -370,6 +372,15 @@ def _build_sft_config() -> tuple[SFTConfig, dict[str, Any]]:
     else:
         trainer_dataset_kwargs["dataset_batch_size"] = dataset_batch_size
 
+    if use_liger_kernel:
+        if "use_liger_kernel" in supported:
+            raw_kwargs["use_liger_kernel"] = True
+        else:
+            raise RuntimeError(
+                "This TRL build does not support use_liger_kernel in SFTConfig. "
+                "Upgrade trl or disable use_liger_kernel."
+            )
+
     if "eval_strategy" in supported:
         raw_kwargs["eval_strategy"] = "epoch"
     elif "evaluation_strategy" in supported:
@@ -481,8 +492,7 @@ else:
             "test": shuffled_dataset.select(range(min(val_end, total_rows), total_rows)),
         }
     )
-    logger.warning(
-        "Manifest split coverage is too low for the RL-balanced JSONL: %s. "
+    logger.warning("Manifest split coverage is too low for the RL-balanced JSONL: %s. "
         "Falling back to deterministic seeded JSONL splits.",
         {split: round(coverage, 4) for split, coverage in split_coverage.items()},
     )
@@ -505,34 +515,17 @@ test_dataset = sft_dataset["test"]
 val_metrics_dataset = val_dataset.select(range(min(val_eval_size, len(val_dataset))))
 test_metrics_dataset = test_dataset.select(range(min(test_eval_size, len(test_dataset))))
 
-logger.info(
-    "Loaded Tinker SFT splits from %s with train=%s val=%s test=%s",
-    data_path,
-    len(train_dataset),
-    len(val_dataset),
-    len(test_dataset),
-)
+logger.info("Loaded Tinker SFT splits from %s with train=%s val=%s test=%s", data_path, len(train_dataset), len(val_dataset), len(test_dataset))
 logger.info(
     "Training text field is available at dataset['train']['text']; example id=%s label=%s",
     train_dataset[0]["openalex_id"] if len(train_dataset) else "n/a",
     train_dataset[0]["disruption_label"] if len(train_dataset) else "n/a",
 )
-logger.info(
-    "Held-out generation eval will use val=%s test=%s examples",
-    len(val_metrics_dataset),
-    len(test_metrics_dataset),
-)
+logger.info("Held-out generation eval will use val=%s test=%s examples", len(val_metrics_dataset), len(test_metrics_dataset),)
 
-trainer_train_dataset = train_dataset.remove_columns(
-    [column for column in train_dataset.column_names if column != "text"]
-)
-trainer_val_dataset = val_metrics_dataset.remove_columns(
-    [column for column in val_metrics_dataset.column_names if column != "text"]
-)
-data_collator = DataCollatorForLanguageModeling(
-    tokenizer=tokenizer,
-    mlm=False,
-)
+trainer_train_dataset = train_dataset.remove_columns([column for column in train_dataset.column_names if column != "text"])
+trainer_val_dataset = val_metrics_dataset.remove_columns([column for column in val_metrics_dataset.column_names if column != "text"])
+data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer,mlm=False)
 training_args, trainer_dataset_kwargs = _build_sft_config()
 
 logger.info("Initializing SFTTrainer...")
