@@ -26,6 +26,7 @@ import os
 import json
 import random
 import argparse
+import inspect
 from pathlib import Path
 from collections import Counter
 from typing import Any, Iterable
@@ -70,9 +71,26 @@ def default_splits_path() -> Path:
     return repo_root() / "sci_balanced_from2m_no_ovr.splits.json"
 
 
-def default_output_dir() -> Path:
+def model_slug(model_name: str) -> str:
+    raw_name = Path(str(model_name).rstrip("/")).name or str(model_name)
+    pieces: list[str] = []
+    last_was_sep = False
+    for char in raw_name.lower():
+        if char.isalnum():
+            pieces.append(char)
+            last_was_sep = False
+            continue
+        if not last_was_sep:
+            pieces.append("_")
+        last_was_sep = True
+    slug = "".join(pieces).strip("_")
+    return slug or "model"
+
+
+def default_output_dir(model_name: str = DEFAULT_MODEL_NAME) -> Path:
     stamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
-    return repo_root() / "qdora_sft_runs" / f"qdora_sft_{stamp}"
+    slug = model_slug(model_name)
+    return repo_root() / f"qdora_sft_run_{slug}" / f"{slug}_{stamp}"
 
 DISRUPTION_LABEL_GUIDANCE = [
     "Interpret the labels using these operational definitions:",
@@ -210,7 +228,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--trust-remote-code", action="store_true")
     parser.add_argument(
         "--attn-implementation",
-        choices=("eager", "sdpa", "flash_attention_2"),
+        choices=("eager", "sdpa", "flash_attention_2", "flash_attention_3"),
         default=None,
     )
     parser.add_argument("--lora-rank", type=int, default=64)
@@ -499,11 +517,23 @@ def render_messages(
 ) -> str:
     chat_template = getattr(tokenizer, "chat_template", None)
     if chat_template:
-        return tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=add_generation_prompt,
-        )
+        render_kwargs: dict[str, Any] = {
+            "tokenize": False,
+            "add_generation_prompt": add_generation_prompt,
+        }
+        try:
+            signature = inspect.signature(tokenizer.apply_chat_template)
+        except (TypeError, ValueError):
+            signature = None
+        if signature is not None and (
+            "enable_thinking" in signature.parameters
+            or any(
+                parameter.kind == inspect.Parameter.VAR_KEYWORD
+                for parameter in signature.parameters.values()
+            )
+        ):
+            render_kwargs["enable_thinking"] = False
+        return tokenizer.apply_chat_template(messages, **render_kwargs)
 
     rendered: list[str] = []
     for message in messages:
@@ -511,6 +541,32 @@ def render_messages(
     if add_generation_prompt:
         rendered.append("ASSISTANT:\n")
     return "\n\n".join(rendered)
+
+
+def render_training_text(
+    tokenizer: Any,
+    messages: list[dict[str, str]],
+    target_json: str,
+    *,
+    prompt_text: str | None = None,
+) -> str:
+    chat_template = getattr(tokenizer, "chat_template", None)
+    if isinstance(chat_template, str) and "<think>" in chat_template:
+        if prompt_text is None:
+            prompt_text = render_messages(
+                tokenizer,
+                messages,
+                add_generation_prompt=True,
+            )
+        eos_token = getattr(tokenizer, "eos_token", None) or ""
+        eos_suffix = f"{eos_token}\n" if eos_token else ""
+        return f"{prompt_text}{target_json}{eos_suffix}"
+
+    return render_messages(
+        tokenizer,
+        messages + [{"role": "assistant", "content": target_json}],
+        add_generation_prompt=False,
+    )
 
 
 def build_sft_examples(
@@ -527,10 +583,11 @@ def build_sft_examples(
             messages,
             add_generation_prompt=True,
         )
-        full_text = render_messages(
+        full_text = render_training_text(
             tokenizer,
-            messages + [{"role": "assistant", "content": target_json}],
-            add_generation_prompt=False,
+            messages,
+            target_json,
+            prompt_text=prompt_text,
         )
         examples.append(
             SFTExample(
@@ -935,10 +992,10 @@ def load_model(args: argparse.Namespace) -> tuple[Any, dict[str, Any]]:
     try:
         model = AutoModelForCausalLM.from_pretrained(args.model_name, **model_kwargs)
     except Exception as exc:
-        if args.attn_implementation != "flash_attention_2":
+        if args.attn_implementation not in {"flash_attention_2", "flash_attention_3"}:
             raise
         print(
-            "flash_attention_2 unavailable during model load; retrying with sdpa.",
+            f"{args.attn_implementation} unavailable during model load; retrying with sdpa.",
             f"Original error: {exc}",
         )
         model_kwargs["attn_implementation"] = "sdpa"

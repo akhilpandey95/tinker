@@ -35,7 +35,7 @@ subprocess.run(['nvidia-smi'], check=False)
 # data
 DATASET_PATH = Path('../data/sci_balanced_from2m_no_ovr.rl_balanced.jsonl')
 SPLITS_PATH = Path('../data/sci_balanced_from2m_no_ovr.splits.json')
-TRAINER_PATH = WORKDIR / 'qdora_train_local.py'
+TRAINER_PATH = WORKDIR / 'qdora_train.py'
 required_paths = [DATASET_PATH, SPLITS_PATH]
 
 for path in required_paths:
@@ -50,7 +50,7 @@ spec.loader.exec_module(qdora_train_local)
 
 print('default_dataset_path =', qdora_train_local.default_dataset_path())
 print('default_splits_path  =', qdora_train_local.default_splits_path())
-print('default_output_dir   =', qdora_train_local.default_output_dir())
+print('default_output_dir   =', qdora_train_local.default_output_dir(LLM))
 
 
 def print_prediction_preview(path: Path, split_name: str, limit: int) -> None:
@@ -100,6 +100,8 @@ def env_bool(name: str, default: bool) -> bool:
         return default
     return raw.strip().lower() in {"1", "true", "yes", "on"}
 
+MODEL_SLUG = qdora_train_local.model_slug(LLM)
+
 CONFIG = {
     'model_name': LLM,
     'dataset_path': DATASET_PATH,
@@ -111,7 +113,7 @@ CONFIG = {
     'train_size': 100_000,
     'val_size': DEBUG_VAL_SIZE,
     'test_size': DEBUG_TEST_SIZE,
-    'output_dir': WORKDIR / 'qdora_sft_runs' / 'colab_h100_qwen3_8b_debug_250step',
+    'output_dir': WORKDIR / f'qdora_sft_run_{MODEL_SLUG}' / f'colab_h100_{MODEL_SLUG}_debug_{DEBUG_MAX_STEPS}step',
     'overwrite_output_dir': True,
     'seed': 0,
     'max_length': 1024,
@@ -138,7 +140,7 @@ CONFIG = {
     'pad_to_multiple_of': env_int('TINKER_PAD_TO_MULTIPLE_OF', 8),
     'gradient_checkpointing': env_bool('TINKER_GRADIENT_CHECKPOINTING', True),
     'trust_remote_code': False,
-    'attn_implementation': os.environ.get('TINKER_ATTN_IMPLEMENTATION', 'flash_attention_2'),
+    'attn_implementation': os.environ.get('TINKER_ATTN_IMPLEMENTATION', 'flash_attention_3'),
     'lora_rank': 64,
     'lora_alpha': 128,
     'lora_dropout': 0.05,
