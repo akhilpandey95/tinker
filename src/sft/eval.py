@@ -331,6 +331,78 @@ def to_wandb_metrics(split_name: str, metrics: dict[str, Any]) -> dict[str, floa
     return payload
 
 
+def build_prediction_row(example: dict[str, Any], raw_completion: str) -> dict[str, Any]:
+    raw = analyze_raw_completion(raw_completion)
+    clean = analyze_clean_completion(raw_completion)
+    gold_label = str(example.get("disruption_label", "") or "").strip().lower()
+    teacher_confidence = example.get("teacher_confidence")
+    if teacher_confidence is not None:
+        teacher_confidence = str(teacher_confidence).strip().lower() or None
+
+    label_match = int(
+        bool(raw["payload_valid"] and raw["label"] == gold_label)
+    )
+    return {
+        "openalex_id": str(example.get("openalex_id", "") or "").strip(),
+        "gold_label": gold_label,
+        "teacher_confidence": teacher_confidence,
+        "completion_raw": raw_completion,
+        "pred_label": raw["label"],
+        "pred_confidence": raw["confidence"],
+        "raw_status": raw["status"],
+        "clean_status": clean["status"],
+        "parse_ok": int(raw["raw_json_loads"]),
+        "format_strict_ok": int(raw["status"] == "ok"),
+        "clean_parse_ok": int(clean["json_loads"]),
+        "clean_payload_valid": int(clean["payload_valid"]),
+        "raw_payload_valid": int(raw["payload_valid"]),
+        "label_match": label_match,
+        "raw_has_fence": int(raw["raw_has_fence"]),
+        "raw_has_think": int(raw["raw_has_think"]),
+        "raw_exact_json_only": int(raw["raw_exact_json_only"]),
+    }
+
+
+def evaluate_completion_rows(
+    rows: list[dict[str, Any]],
+    *,
+    split_name: str,
+    output_dir: str | Path,
+    global_step: int | None = None,
+    file_suffix: str = "",
+    logger=None,
+) -> dict[str, Any]:
+    output_root = Path(output_dir) / "eval"
+    output_root.mkdir(parents=True, exist_ok=True)
+
+    predictions = [
+        build_prediction_row(example=row, raw_completion=str(row.get("completion_raw", "") or ""))
+        for row in rows
+    ]
+    metrics = compute_eval_metrics(predictions, split_name)
+    if global_step is not None:
+        metrics["global_step"] = int(global_step)
+
+    write_json(output_root / f"metrics_{split_name}{file_suffix}.json", metrics)
+    write_jsonl(output_root / f"predictions_{split_name}{file_suffix}.jsonl", predictions)
+
+    wandb_metrics = to_wandb_metrics(split_name, metrics)
+    if wandb.run is not None and wandb_metrics:
+        wandb.log(wandb_metrics, step=global_step)
+
+    if logger is not None:
+        logger.info(
+            "%s generation eval: label_match=%.4f macro_f1=%.4f parse_ok=%.4f clean_parse_ok=%.4f",
+            split_name,
+            metrics["label_match"] or 0.0,
+            metrics["macro_f1"] or 0.0,
+            metrics["parse_ok"] or 0.0,
+            metrics["clean_parse_ok"] or 0.0,
+        )
+
+    return metrics
+
+
 def evaluate_split(
     model,
     tokenizer,
@@ -395,32 +467,15 @@ def evaluate_split(
             decoded = tokenizer.batch_decode(new_tokens, skip_special_tokens=True)
 
             for row_index, raw_completion in enumerate(decoded):
-                raw = analyze_raw_completion(raw_completion)
-                clean = analyze_clean_completion(raw_completion)
-                gold_label = batch["disruption_label"][row_index]
-                label_match = int(
-                    bool(raw["payload_valid"] and raw["label"] == gold_label)
-                )
                 predictions.append(
-                    {
-                        "openalex_id": batch["openalex_id"][row_index],
-                        "gold_label": gold_label,
-                        "teacher_confidence": batch["teacher_confidence"][row_index],
-                        "completion_raw": raw_completion,
-                        "pred_label": raw["label"],
-                        "pred_confidence": raw["confidence"],
-                        "raw_status": raw["status"],
-                        "clean_status": clean["status"],
-                        "parse_ok": int(raw["raw_json_loads"]),
-                        "format_strict_ok": int(raw["status"] == "ok"),
-                        "clean_parse_ok": int(clean["json_loads"]),
-                        "clean_payload_valid": int(clean["payload_valid"]),
-                        "raw_payload_valid": int(raw["payload_valid"]),
-                        "label_match": label_match,
-                        "raw_has_fence": int(raw["raw_has_fence"]),
-                        "raw_has_think": int(raw["raw_has_think"]),
-                        "raw_exact_json_only": int(raw["raw_exact_json_only"]),
-                    }
+                    build_prediction_row(
+                        {
+                            "openalex_id": batch["openalex_id"][row_index],
+                            "disruption_label": batch["disruption_label"][row_index],
+                            "teacher_confidence": batch["teacher_confidence"][row_index],
+                        },
+                        raw_completion,
+                    )
                 )
     finally:
         tokenizer.padding_side = previous_padding_side

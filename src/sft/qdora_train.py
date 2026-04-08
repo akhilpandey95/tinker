@@ -80,6 +80,8 @@ eval_max_new_tokens = 64
 val_eval_size = 2000
 test_eval_size = 2000
 use_liger_kernel = True
+max_train_examples = 50000 
+train_subset_seed = 2026
 lora_rank = 64
 lora_alpha = 128
 lora_dropout = 0.05
@@ -512,6 +514,16 @@ dataset = sft_dataset
 train_dataset = sft_dataset["train"]
 val_dataset = sft_dataset["val"]
 test_dataset = sft_dataset["test"]
+
+if max_train_examples is not None:
+    limited_train_size = min(int(max_train_examples), len(train_dataset))
+    train_dataset = train_dataset.shuffle(seed=train_subset_seed).select(range(limited_train_size))
+    logger.info(
+        "Using a deterministic train subset of %s examples (seed=%s)",
+        len(train_dataset),
+        train_subset_seed,
+    )
+
 val_metrics_dataset = val_dataset.select(range(min(val_eval_size, len(val_dataset))))
 test_metrics_dataset = test_dataset.select(range(min(test_eval_size, len(test_dataset))))
 
